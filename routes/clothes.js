@@ -39,6 +39,11 @@ router.route('/clothes/:id').get(async (req, res) => {
     return res.status(404).render('error', {searchClothesByFilter: i});
   }
 });
-
+router.route('/wishlist').get(async (req, res) => {
+  
+});
+router.route('/rating').get(async (req, res) => {
+  
+});
 
 export default router;
