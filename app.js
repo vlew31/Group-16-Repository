@@ -12,8 +12,7 @@ const handlebarsInstance = exphbs.create({
     asJSON: (obj, spacing) => {
       if (typeof spacing === 'number')
         return new Handlebars.SafeString(JSON.stringify(obj, null, spacing));
-
-      return new Handlebars.SafeString(JSON.stringify(obj));
+        return new Handlebars.SafeString(JSON.stringify(obj));
     },
     partialsDir: ['views/partials/']
   }
