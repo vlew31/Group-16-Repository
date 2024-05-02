@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { searchClothesbyName, searchClothesByFilter } from "../data/clothes.js";
+// import { searchClothesbyName, searchClothesByFilter } from "../data/clothes.js";
 import axios from 'axios';
 
 router.route('/').get(async (req, res) => {
