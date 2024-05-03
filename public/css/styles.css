@@ -63,7 +63,6 @@ h2, h3, h4, h5, h6 {
 nav {
   background-color: #669bbc;
   color: #003049;
-  padding: 8px 0;
 }
 
 nav ul {
@@ -75,20 +74,21 @@ nav ul {
 
 nav ul li {
   flex: 1;
-  font-family:'AwelierEB';
+  font-family: 'AwelierEB';
   font-size: 20pt;
+  background-color: #669bbc; /* Set the default background color */
 }
 
 nav ul li a {
   display: block;
-  padding: 10px 20px;
+  padding: 10px 20px; /* Add padding to create clickable area */
   text-align: center;
   text-decoration: none;
   color: inherit;
 }
 
-nav ul li a:hover {
-  background-color: #2ec4b6;
+nav ul li:hover {
+  background-color: #2ec4b6; /* Change background color on hover */
 }
 
 /* Dropdown menu styles */
