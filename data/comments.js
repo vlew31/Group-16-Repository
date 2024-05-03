@@ -30,7 +30,7 @@ export const createComment = async (
     username: username,
     listingId: listingId,
     comment: comment,
-    commentId: newCommentID.toString(),
+    _id: newCommentID.toString(),
   };
 
   listing.comments.push(newComment);
@@ -46,137 +46,69 @@ export const createComment = async (
   return newComment; 
 };
 
-// export const getAllReviews = async (productId) => {
-//   if(productId === undefined){throw 'Please provide a valid productId!';}
+export const getAllComments = async (listingId) => {
+  if(listingId === undefined){throw 'Please provide a valid listingId!';}
 
-//   productId = productId.trim();
+  listingId = listingId.trim();
 
-//   if(typeof(productId) !== 'string'){throw 'Product ID must be type string!';}
+  if(typeof(listingId) !== 'string'){throw 'Listing ID must be type string!';}
 
-//   if(productId.length == 0){throw 'Product ID cannot be an empty string!';}
+  if(listingId.length == 0){throw 'Listing ID cannot be an empty string!';}
 
-//   if (!ObjectId.isValid(productId)) {throw "Invalid productId!";}
+  if (!ObjectId.isValid(listingId)) {throw "Invalid productId!";}
 
-//   const productCollection = await products();
-//   let product = await productCollection.findOne({_id: new ObjectId(productId)});
+  const listingsCollection = await listings();
+  let listing = await listingsCollection.findOne({_id: new ObjectId(listingId)});
 
-//   if(product == undefined){throw 'No products with the provided productId exist!';}
-//   else if (product.reviews.length == 0 || !product.reviews){return [];}
-//   else{return product.reviews;}
-// };
+  if(listing == undefined){throw 'No listings with the provided listingId exist!';}
+  else if (listing.comments.length == 0 || !listing.comments){return [];}
+  else{return listing.comments;}
+};
 
-// export const getReview = async (reviewId) => {
-//   if (reviewId === undefined) {throw 'Please provide a reviewId!';}
+export const getComment = async (commentId) => {
+  if (commentId === undefined) {throw 'Please provide a commentId!';}
 
-//   reviewId = reviewId.trim();
+  commentId = commentId.trim();
 
-//   if (typeof(reviewId) !== 'string') {throw 'Review ID must be type string!';}
+  if (typeof(commentId) !== 'string') {throw 'Comment ID must be type string!';}
 
-//   if (reviewId.length == 0) {throw 'Review ID cannot be an empty string!';}
+  if (commentId.length == 0) {throw 'Comment ID cannot be an empty string!';}
 
-//   if (!ObjectId.isValid(reviewId)) {throw "Invalid reviewId!";
-//   }
+  if (!ObjectId.isValid(commentId)) {throw "Invalid commentId!";
+  }
 
-//   const productCollection = await products();
-//   const product = await productCollection.findOne({
-//     "reviews._id": reviewId});
+  const listingsCollection = await listings();
+  const listing = await listingsCollection.findOne({
+    "comments._id": commentId});
 
-//   if (!product || !product.reviews) {throw 'Product does not exist with given ID!';}
+  if (!listing || !listing.comments) {throw 'Listing does not exist with given ID!';}
 
-//   const review = product.reviews.find(review => review._id.toString() === reviewId);
+  const comment = listing.reviews.find(comment => comment._id.toString() === commentId);
 
-//   if (!review) {throw 'Review not found!';}
+  if (!comment) {throw 'Comment not found!';}
 
-//   return review;
-// }; 
-
-
-// export const updateReview = async (reviewId, updateObject) => {
-//   if(reviewId === undefined){throw 'Please provide a reviewId!'}
-
-//   reviewId = reviewId.trim();
-
-//   if(typeof(reviewId) !== 'string'){throw 'Review ID must be type string!';}
-
-//   if(reviewId.length == 0){throw 'Review ID cannot be an empty string!';}
-
-//   if (!ObjectId.isValid(reviewId)) {throw "Invalid reviewId!";}
-
-//   if(updateObject === undefined || typeof(updateObject) !== 'object'){throw 'updateObject is not provided!';}
-
-//   updateObject.title = updateObject.title.trim();
-//   updateObject.reviewerName = updateObject.reviewerName.trim();
-//   updateObject.review = updateObject.review.trim();
-
-//   if(typeof(updateObject.title) !== 'string'|| typeof(updateObject.reviewerName) !== 'string' || typeof(updateObject.review) !== 'string'){throw 'Certain fields must be of type string!';}
-
-//   if(updateObject.title.length === 0 || updateObject.reviewerName.length === 0 || updateObject.review.length === 0){throw 'Title, Reviewer Name, and Review cannot be an empty field!';}
+  return comment;
+}; 
 
 
-//   if(typeof(updateObject.rating) !== 'number' || updateObject.rating === undefined || updateObject.rating < 1 || updateObject.rating > 5 || (updateObject.rating.toString().split('.')[1] || '').length > 1){throw 'Rating should be between 1-5 and a maximum of one decimal place!';}
+export const removeComment = async (commentId) => {
+  if (commentId === undefined) { throw 'Please provide a valid commentId!'; }
+  if (commentId.length === 0 || typeof(commentId) !== 'string') { throw 'XommentId must be a non-empty string!'; }
+  if (!ObjectId.isValid(commentId)) { throw "Invalid commentId!"; }
 
-//   const productCollection = await products();
-//   const product = await productCollection.findOne({"reviews._id": reviewId });
+  const listingsCollection = await listings();
+  const listing = await listingsCollection.findOneAndUpdate(
+    { 'comments._id': commentId },
+    { $pull: { comments: { _id: commentId } } },
+    { returnDocument: 'after' }
+  );
 
-//   if (product === undefined || !product.reviews || product.reviews.length === 0){throw 'Product does not exist with given ID!';}
+  if (!listing) { throw 'Listing not found or review not present in listing.'; }
+
+  if (!listing.comments || !Array.isArray(listing.comments)) {
+    throw 'Listing comments are missing or invalid.';
+  }
   
-//   const updatedFields = {};
-//   if ('title' in updateObject) {updatedFields['reviews.$.title'] = updateObject.title;}
-//   if ('reviewerName' in updateObject) {updatedFields['reviews.$.reviewerName'] = updateObject.reviewerName;}
-//   if ('review' in updateObject) {updatedFields['reviews.$.review'] = updateObject.review;}
-//   if ('rating' in updateObject) {updatedFields['reviews.$.rating'] = updateObject.rating;}
-
-//   let currentDate = new Date();
-//   updatedFields['reviews.$.reviewDate'] = currentDate.toLocaleDateString('en-US', {month: '2-digit', day: '2-digit', year: 'numeric'});
-
-//   await productCollection.updateOne(
-//     {'reviews._id': reviewId},
-//     {$set: updatedFields}
-//   );
-
-//   const updatedProduct = await productCollection.findOne({'reviews._id': reviewId});
-//   const totalRatings = updatedProduct.reviews.reduce((acc, curr) => acc + curr.rating, 0);
-//   if (updatedProduct.reviews.length > 0) {
-//     updatedProduct.averageRating = totalRatings / updatedProduct.reviews.length;
-//   } else {
-//     updatedProduct.averageRating = 0;
-//   }
-//   await productCollection.updateOne(
-//     { _id: updatedProduct._id },
-//     { $set: { averageRating: updatedProduct.averageRating} }
-//   );
-
-//   return updatedProduct;
-
-// };
-
-// export const removeReview = async (reviewId) => {
-//   if (reviewId === undefined) { throw 'Please provide a valid reviewID!'; }
-//   if (reviewId.length === 0 || typeof(reviewId) !== 'string') { throw 'ReviewID must be a non-empty string!'; }
-//   if (!ObjectId.isValid(reviewId)) { throw "Invalid reviewId!"; }
-
-//   const productCollection = await products();
-//   const product = await productCollection.findOneAndUpdate(
-//     { 'reviews._id': reviewId },
-//     { $pull: { reviews: { _id: reviewId } } },
-//     { returnDocument: 'after' }
-//   );
-
-//   if (!product) { throw 'Product not found or review not present in product.'; }
-
-//   if (!product.reviews || !Array.isArray(product.reviews)) {
-//     throw 'Product reviews are missing or invalid.';
-//   }
-
-//   const totalRatings = product.reviews.reduce((acc, curr) => acc + curr.rating, 0);
-
-//   product.averageRating = totalRatings / product.reviews.length;
-
-//   await productCollection.updateOne(
-//     { _id: product._id },
-//     { $set: { averageRating: product.averageRating} }
-//   );
-  
-//   return product;
-// };
+  return listing;
+};
 
