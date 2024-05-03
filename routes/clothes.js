@@ -11,6 +11,18 @@ router.route('/about').get(async (req, res) => {
   res.render('about', { title: 'About Us' });
 });
 
+router.route('/user').get(async (req, res) => {
+  res.render('user', { title: 'User Profile' });
+});
+
+router.route('/upload').get(async (req, res) => {
+  res.render('upload', { title: 'Upload' });
+});
+
+router.route('/search').get(async (req, res) => {
+  res.render('search', { title: 'Search Results' });
+});
+
 router
   .route('/')
   .get(async (req, res) => {
