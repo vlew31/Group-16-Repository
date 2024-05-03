@@ -1,4 +1,4 @@
-//import { users } from '../config/mongoCollections.js';
+import { users } from '../config/mongoCollections.js';
 import bcrypt from 'bcrypt';
 const saltRounds = 2;
 
@@ -63,10 +63,13 @@ export const registerUser = async (
     role: r
   }
 
-  let user = await userList.insertOne(newUser);
-  if (!user.insertedCount === 0) {
+  let insertedUser = await userList.insertOne(newUser);
+  if (!insertedUser.insertedCount === 0) {
     throw "username taken. try again";
   }
+
+  newUser._id =  newUser._id.toString();
+
   return { signupCompleted: true };
 
 };
@@ -109,6 +112,39 @@ export const loginUser = async (username, password) => {
     username: findUser.username,  
     role: findUser.role
   };
-
 };
+
+export const get = async (userId) => {
+  if(userId === undefined){
+    throw 'id not provided';
+  } else if(typeof userId !== 'string' || userId.trim().length === 0){
+    throw 'parameter is not a valid id';
+  } else if(!ObjectId.isValid(userId.trim())){
+    throw 'id is not a valid ObjectID'
+  } 
+  const userCollection = await users();
+  const userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
+  if(userToFind === null){
+    throw 'no user with that id';
+  }
+
+  userToFind._id = userToFind._id.toString();
+  
+  return userToFind;
+};
+
+
+export const getAll = async () => {
+
+  const userCollection = await users();
+  let userList = await userCollection.find({}).project({_id: 1, userame: 1}).toArray();
+
+  if(!userList){
+    throw 'prducts not found';
+  }
+
+  return userList;
+};
+
+
 
