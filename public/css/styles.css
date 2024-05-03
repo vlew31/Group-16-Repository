@@ -36,18 +36,24 @@ body {
 
 /* Header styles */
 header {
-  border-bottom: 2px solid #2ec4b6;
   padding: 20px 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  margin: 0;
+  font-family: 'AwelierB';
+  text-align: center;
+  font-size: 30pt;
+}
+
+h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
 /* Navigation styles */
 nav {
-  background-color: #2ec4b6;
-  color: white;
+  background-color: #669bbc;
+  color: #003049;
   padding: 8px 0;
 }
 
