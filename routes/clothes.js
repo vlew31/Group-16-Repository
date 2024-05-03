@@ -4,12 +4,10 @@ import { clothesData } from '../data/index.js'
 const router = express.Router();
 
 router.route('/').get(async (req, res) => {
-  //code here for GET will render the home handlebars file
   res.render('home', { title: '$waggle' });
 });
 
 router.route('/about').get(async (req, res) => {
-  //code here for GET will render the home handlebars file
   res.render('about', { title: 'About Us' });
 });
 
