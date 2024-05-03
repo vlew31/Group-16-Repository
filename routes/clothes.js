@@ -1,60 +1,15 @@
-// import express from 'express';
-// const router = express.Router();
-// // import { searchClothesbyName, searchClothesByFilter } from "../data/clothes.js";
-// import axios from 'axios';
-
-// router.route('/').get(async (req, res) => {
-//   res.render('home', {title: "Swaggle"});
-// });
-
-// router.route('/searchClothes').post(async (req, res) => {
-//   //code here for POST this is where your form will be submitting searchMoviesByName and then call your data function passing in the searchMoviesByName and then rendering the search results of up to 20 Movies.
-//   let clothes = req.body.searchClothesbyName;
-//   if (!clothes) {
-//     return res.status(404).render('error', {searchClothesbyName: clothes});
-//   } 
-//   const c = clothes.trim();
-//   if (c === '') {
-//     return res.status(404).render('error', {searchClothesbyName: clothes});
-//   }
-//   try {
-//     const result = await searchClothesbyName(c);
-//     res.render('clothesSearchResults', { clothes: c, result: c, title: "Clothes Found"});
-
-//   } catch (e) {
-//     return res.status(404).render('error', {searchClothesbyName: 'Clothes Not Found'});
-//   }
-// });
-
-// router.route('/clothes/:id').get(async (req, res) => {
-//   let i = req.params.id;
-//   try {
-//     i = i.trim();
-//     let clothes = await searchClothesByFilter(i);
-//     if (!i || i.length === 0) {
-//       return res.status(404).send(e);
-//     }
-//     return res.status(404).render('clothesByFilter', {clothes: i, title: "Clothes Found"});
-//   } catch (e) {
-//     return res.status(404).render('error', {searchClothesByFilter: i});
-//   }
-// });
-// router.route('/wishlist').get(async (req, res) => {
-  
-// });
-// router.route('/rating').get(async (req, res) => {
-  
-// });
-
-// export default router;
-
-// Import the express router as shown in the lecture code
-// Note: please do not forget to export the router!
-
 import express from 'express';
 import { clothesData } from '../data/index.js'
 
 const router = express.Router();
+
+router.route('/').get(async (req, res) => {
+  res.render('home', { title: '$waggle' });
+});
+
+router.route('/about').get(async (req, res) => {
+  res.render('about', { title: 'About Us' });
+});
 
 router
   .route('/')
@@ -152,5 +107,53 @@ router
       return res.status(400).send({error: e});
     }
   });
+
+  router.route('/searchclothes').post(async (req, res) => {
+    //code here for POST this is where your form will be submitting searchclothessByName and then call your data function passing in the searchclothessByName and then rendering the search results of up to 20 clothess.
+  
+    try {
+      const searchTerm = req.body.searchclothessByName;
+  
+      if (!searchTerm || searchTerm.trim() == '') {
+        return res.status(400).render('error', { title: 'Error', error: 'Search term is required.' });
+      }
+  
+      const page1 = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${searchTerm}&page=1`);
+      const clothess1 = page1.data.Search || [];
+  
+      const page2 = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${searchTerm}&page=2`);
+      const clothess2 = page2.data.Search || [];
+  
+      const clothess = clothess1.concat(clothess2);
+  
+      if (clothess.length === 0) {
+        return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
+    }
+  
+      res.render('clothesSearchResults', { title: 'clothess Found', searchTerm, clothess });
+    } catch (error) {
+      console.log(error);
+      res.status(500).render('error', { title: 'Error', error: 'Server Error' });
+    }
+  });
+  
+  router.route('/clothes/:id').get(async (req, res) => {
+    //code here for GET a single clothes
+    try {
+      const clothesId = req.params.id;
+      const response = await axios.get(`http://www.omdbapi.com/?apikey=CS546&i=${clothesId}`);
+      const clothes = response.data;
+  
+      if (clothes.Response === 'False') {
+        return res.status(404).render('error', { title: 'Error', error: 'clothes not found' });
+      }
+  
+      res.render('clothesByID', { title: clothes.Title, clothes });
+    } catch (error) {
+      console.log(error);
+      res.status(500).render('error', { title: 'Error', error: 'Server Error' });
+    }
+  });
+  
 
 export default router;
