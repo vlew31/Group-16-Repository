@@ -109,3 +109,23 @@ addToCartButton.addEventListener('click', () => {
         wallet.purchaseItem(cartItem);
     });
 });
+
+const addFundsButton = document.getElementById('add-funds-btn');
+const addFundsInput = document.getElementById('add-funds-input');
+
+addFundsButton.addEventListener('click', () => {
+    const amount = parseFloat(addFundsInput.value);
+    if (isNaN(amount)) {
+        console.log('Invalid amount. Please enter a valid number.');
+        return;
+    }
+    wallet.addFunds(amount);
+    addFundsInput.value = '';
+});
+
+addFunds(amount) {
+    this.funds += amount;
+    console.log(`Added ${amount} to the wallet. Total funds: ${this.funds}`);
+    const walletAmountElement = document.getElementById('wallet-amount');
+    walletAmountElement.textContent = this.funds.toFixed(2);
+}

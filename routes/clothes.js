@@ -27,14 +27,6 @@ router.route('/search').get(async (req, res) => {
   res.render('search', { title: 'Search Results' });
 });
 
-router.route('/men').get(async (req, res) => {
-  res.render('men', { title: 'Men'});
-});
-
-router.route('/women').get(async (req, res) => {
-  res.render('women', { title: 'Women'});
-});
-
 router
   .route('/')
   .get(async (req, res) => {
