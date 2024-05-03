@@ -4,9 +4,11 @@
             <p class="welcome"></p>
         </header>
         <p class="home">Use the search bar below to search for clothes:</p>
-        <form action="/search" method="POST">
+        <form action="/search">
+        {{!-- method="POST" --}}
             <label for="searchByName"></label>
             <input type="text" id="searchByName" name="searchByName">
             <input type="submit" value="Search">
         </form>
+        
 </section>
