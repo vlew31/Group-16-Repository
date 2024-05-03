@@ -1,12 +1,25 @@
 <section class="home">
-        <header>
-            <h1>$waggle</h1>
-            <p class="welcome"></p>
-        </header>
-        <p class="home">Use the search bar below to search for clothes:</p>
-        <form action="/search" method="POST">
-            <label for="searchByName"></label>
-            <input type="text" id="searchByName" name="searchByName">
-            <input type="submit" value="Search">
-        </form>
+    <header>
+        <h1>$waggle</h1>
+        <p class="welcome"></p>
+    </header>
+    <p class="home">Use the search bar below to search for clothes:</p>
+    <form action="/search" method="POST">
+        <label for="searchByName"></label>
+        <input type="text" id="searchByName" name="searchByName">
+        <input type="submit" value="Search">
+    </form>
+</section>
+
+<section>
+    <header>
+        <h2>Recently added listings:</h2>
+    </header>
+    <ol class="clothes-list">
+        {{#each clothes}}
+        <li>
+            {{ clothes }}
+        </li>
+        {{/each}}
+    </ol>
 </section>
