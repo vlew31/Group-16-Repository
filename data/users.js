@@ -1,5 +1,5 @@
 //import { users } from '../config/mongoCollections.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 const saltRounds = 2;
 
 export const registerUser = async (
@@ -51,6 +51,11 @@ export const registerUser = async (
     throw "invalid role input";
   }
 
+  const usersCollection = await users();
+  const existingUser = await usersCollection.findOne({ username: validatedUsername });
+  if (existingUser) {
+    throw new Error('Error: Username already exists');
+  }
   const userList = await users();
 
   let h = await bcrypt.hash(password, saltRounds);
@@ -93,14 +98,16 @@ export const loginUser = async (username, password) => {
   }
 
   const userList = await users();
+  const user = await usersCollection.findOne({username: validatedUsername });
   const findUser = await userList.findOne({ username: u });
 
   if (!findUser) {
     throw "Either the username or password is invalid";
   }
 
-  if (await bcrypt.compare(password, findUser.password) == false) {
-    throw "Either the username or password is invalid";
+  const passwordMatch = await bcrypt.compare(p, user.password);
+  if (!passwordMatch) {
+    throw new Error('Password is invalid');
   }
   return {
     firstName: findUser.firstName, 
