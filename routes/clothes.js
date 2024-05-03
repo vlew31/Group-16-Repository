@@ -13,6 +13,11 @@ router.route('/about').get(async (req, res) => {
   res.render('about', { title: 'About Us' });
 });
 
+router.route('/home').get(async (req, res) => {
+  //code here for GET will render the home handlebars file
+  res.render('home', { title: 'Home' });
+});
+
 router
   .route('/')
   .get(async (req, res) => {
