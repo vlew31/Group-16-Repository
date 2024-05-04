@@ -35,7 +35,11 @@ router
       const users = await userData.getAll();
       const simplifiedUsers = users.map(user => ({
         _id: user._id,
-        username: user.username
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username,
+        role: user.role
       }));
       res.json(simplifiedUsers);
     } catch (e) {
@@ -61,7 +65,7 @@ router
   });
 
 router
-  .route('/users/:userId')
+  .route('/users/:_id')
   .get(async (req, res) => {
     const userId = req.params._id;
     try {
@@ -74,6 +78,34 @@ router
         res.status(404).json({ error: 'User not found' });
       } else {
         res.status(400).json({ error: e.message });
+      }
+    }
+  })
+  .delete(async (req, res) => {
+    try {
+      let deletedUser = await userData.remove(req.params._id);
+      res.status(200).json({ _id: deletedUser, deleted: true });
+    } catch (e) {
+      res.status(404).json({error: e});
+    }
+  })
+  .put(async (req, res) => {
+    try {
+      const updatedUser = await userData.update(
+        req.params._id,
+        req.body.firstName,
+        req.body.lastName,
+        req.body.email,
+        req.body.username,
+        req.body.password,
+        req.body.role,
+      );
+      res.status(200).json(updatedUser);
+    } catch (e) {
+      if(e === 'could not update'){
+        res.status(404).json({error: 'user not found'});
+      } else {
+        return res.status(400).send({error: e});
       }
     }
   });
