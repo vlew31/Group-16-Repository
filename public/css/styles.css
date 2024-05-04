@@ -354,7 +354,8 @@ a {
 
 .file-input-container {
   text-align: center;
-=======
+}
+
 .player {
   display: flex;
   flex-direction: column;
