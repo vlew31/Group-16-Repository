@@ -3,13 +3,14 @@
         <h1 class="upload-heading-1">Create a Listing:</h1>
     </header>
 
-    <!-- Upload Clothing Items -->
     <h2>Upload Clothing Items</h2>
     <form id="uploadForm" action="/listings" method="POST">
         <label for="seller" class="upload-label">Seller:</label>
         <input type="text" name="seller" id="seller" required class="upload-input">
-        <label for="photo" class="upload-label">Photos (separate links with commas):</label>
-        <input type="text" name="photo" id="photo" required class="upload-input" placeholder="Enter photo links separated by commas">
+
+        <label for="photos" class="upload-label">Photos (Urls split by commas):</label>
+        <input type="photos[]" name="photos" id="photos" required class="upload-input">
+
         <label for="title" class="upload-label">Title:</label>
         <input type="text" name="title" id="title" required class="upload-input">
         <label for="description" class="upload-label">Description:</label>
@@ -69,7 +70,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     const photoLinks = photoInput.value.split(',').map(link => link.trim());
 
     if (selectedColor === 'Select One' || selectedGender === 'Select One' || selectedCondition === 'Select One' || photoLinks.length === 0) {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault();
         let message = 'Please select:\n';
         if (selectedColor === 'Select One') {
             message += '- Color\n';
