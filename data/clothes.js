@@ -294,3 +294,21 @@ export const update = async (
 
   return updatedclothesWithId;
 };
+
+export async function searchByName(searchTerm) {
+  try {
+
+    listingId = listingId.trim();
+    if (!ObjectId.isValid(listingId)){
+      throw 'Invalid ObjectId';
+    }
+  
+    const clothesCollection = await listings();
+    const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i' } }).toArray();
+
+    return searchResults;
+  } catch (error) {
+      console.error('Error searching listings by name:', error);
+      throw error;
+  }
+}

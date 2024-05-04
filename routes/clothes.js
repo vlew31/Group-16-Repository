@@ -157,33 +157,57 @@ router
   //   }
   // });
 
-  router.route('/searchclothes').post(async (req, res) => {
-    //code here for POST this is where your form will be submitting searchclothessByName and then call your data function passing in the searchclothessByName and then rendering the search results of up to 20 clothess.
+  // router.route('/searchclothes').post(async (req, res) => {
+  //   //code here for POST this is where your form will be submitting searchclothessByName and then call your data function passing in the searchclothessByName and then rendering the search results of up to 20 clothess.
+  
+  //   try {
+  //     const searchTerm = req.body.searchclothessByName;
+  
+  //     if (!searchTerm || searchTerm.trim() == '') {
+  //       return res.status(400).render('error', { title: 'Error', error: 'Search term is required.' });
+  //     }
+  
+  //     const page1 = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${searchTerm}&page=1`);
+  //     const clothess1 = page1.data.Search || [];
+  
+  //     const page2 = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${searchTerm}&page=2`);
+  //     const clothess2 = page2.data.Search || [];
+  
+  //     const clothess = clothess1.concat(clothess2);
+  
+  //     if (clothess.length === 0) {
+  //       return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
+  //   }
+  
+  //     res.render('clothesSearchResults', { title: 'clothess Found', searchTerm, clothess });
+  //   } catch (error) {
+  //     console.log(error);
+  //     res.status(500).render('error', { title: 'Error', error: 'Server Error' });
+  //   }
+  // });
+  
+  
+  router.route('/searchResults').post(async (req, res) => {
+    //code here for POST this is where your form will be submitting searchByName and then call your data function passing in the searchByName and then rendering the search results.
   
     try {
-      const searchTerm = req.body.searchclothessByName;
-  
-      if (!searchTerm || searchTerm.trim() == '') {
-        return res.status(400).render('error', { title: 'Error', error: 'Search term is required.' });
+      const searchTerm = req.body.searchclothesByName;
+
+      // if (!searchTerm || searchTerm.trim() === '') {
+      //     return res.status(400).render('error', { title: 'Error', error: 'Search term is required.' });
+      // }
+
+      const searchResults = await clothesData.searchByName(searchTerm);
+
+      if (searchResults.length === 0) {
+          return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
       }
-  
-      const page1 = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${searchTerm}&page=1`);
-      const clothess1 = page1.data.Search || [];
-  
-      const page2 = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${searchTerm}&page=2`);
-      const clothess2 = page2.data.Search || [];
-  
-      const clothess = clothess1.concat(clothess2);
-  
-      if (clothess.length === 0) {
-        return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
-    }
-  
-      res.render('clothesSearchResults', { title: 'clothess Found', searchTerm, clothess });
-    } catch (error) {
+
+      res.render('clothesSearchResults', { title: 'Clothes Found', searchTerm, searchResults });
+  } catch (error) {
       console.log(error);
       res.status(500).render('error', { title: 'Error', error: 'Server Error' });
-    }
-  });  
+  }
+});
 
 export default router;
