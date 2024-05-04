@@ -19,6 +19,10 @@ router.route('/upload').get(async (req, res) => {
   res.render('upload', { title: 'Upload' });
 });
 
+router.route('/listing').get(async (req, res) => {
+  res.render('listing', { title: 'Listing' });
+});
+
 router.route('/cart').get(async (req, res) => {
   res.render('cart', { title: 'Cart/Wishlist' });
 });
@@ -40,28 +44,30 @@ router
   .post(async (req, res) => {
     try {
       const {
-          clothesName,
-          clothesDescription,
-          modelNumber,
-          price,
-          manufacturer,
-          manufacturerWebsite,
-          keywords,
-          categories,
-          dateReleased,
-          discontinued
+        seller,
+        title,
+        description,
+        article,
+        size,
+        color,
+        gender,
+        price,
+        condition,
+        tags,
+        photos
       } = req.body;
       const newclothes = await clothesData.create(
-          clothesName,
-          clothesDescription,
-          modelNumber,
-          price,
-          manufacturer,
-          manufacturerWebsite,
-          keywords,
-          categories,
-          dateReleased,
-          discontinued
+        seller,
+        title,
+        description,
+        article,
+        size,
+        color,
+        gender,
+        price,
+        condition,
+        tags,
+        photos
       );
       res.status(200).json(newclothes);
     } catch (e) {
@@ -73,7 +79,7 @@ router
   .route('/listings/:listingsId')
   .get(async (req, res) => {
     try {
-      const clothes = await clothesData.get(req.params.clothesId);
+      const clothes = await clothesData.get(req.params.listingsId);
       res.status(200).json(clothes);
     } catch (e) {
       if (e === 'Invalid ObjectId') {

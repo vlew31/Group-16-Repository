@@ -1,58 +1,33 @@
-<section class="home">
-        <header>
-            <h1>$waggle</h1>
-            <p class="welcome"></p>
-        </header>
-        <p class="home">Use the search bar below to search for clothes:</p>
-        <form action="/search">
-            <label for="searchByName"></label>
-            <input type="text" id="searchByName" name="searchByName">
-            <input type="submit" value="Search">
-        </form>
-        
-</section>
+<div class="listing">
+  <h2 id="listing-title"></h2>
+  <p><strong>Seller:</strong> <span id="listing-seller"></span></p>
+  <p><strong>Description:</strong> <span id="listing-description"></span></p>
+  <p><strong>Price:</strong> $<span id="listing-price"></span></p>
+  <div id="photos-container"></div>
+</div>
 
-<section>
-  <header>
-      <h2>Recently added listings:</h2>
-  </header>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Fetch the JSON data from the server
+  fetch('http://localhost:3000/listings')
+    .then(response => response.json())
+    .then(data => {
+      // Get the individual listing from the data
+      const listing = data[0]; // Assuming there's only one listing in this example
 
-  <div id="listings-container"></div>
-  <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    fetch('http://localhost:3000/listings')
-      .then(response => response.json())
-      .then(data => {
-        const listingsContainer = document.getElementById('listings-container');
-
-        data.forEach(listing => {
-          const listingDiv = document.createElement('div');
-          listingDiv.classList.add('listing');
-
-          const listingLink = document.createElement('a');
-          listingLink.href = `/listings/id`;
-
-          listingLink.appendChild(listingDiv);
-
-          listingDiv.innerHTML = 
-              `<h2>${listing.title}</h2>
-              <p><strong>Seller: </strong>${listing.seller}</p>
-              <img src="${listing.photos[0]}" alt="${listing.title}">
-              <p><strong>Description: </strong>${listing.description}</p>
-              <p><strong>Article: </strong>${listing.article}</p>
-              <p><strong>Gender: </strong>${listing.gender}</p>              
-              <p><strong>Size: </strong>${listing.size}</p>
-              <p><strong>Color: </strong>${listing.color}</p>
-              <p><strong>Condition: </strong>${listing.condition}</p>
-              <p><strong>Price: </strong>${listing.price}</p>
-              <p><strong>Tags: </strong>${listing.tags}</p>
-              <p><strong>Comments: </strong>${listing.comments}</p>
-              <p><strong>Rating: </strong>${listing.rating}</p>`;
-          
-          listingsContainer.appendChild(listingLink);
-        });
-      })
-      .catch(error => console.error('Error fetching listings:', error));
-  });
-  </script>
-</section>
+      // Populate the HTML elements with listing information
+      document.getElementById('listing-title').textContent = listing.title;
+      document.getElementById('listing-seller').textContent = listing.seller;
+      document.getElementById('listing-description').textContent = listing.description;
+      document.getElementById('listing-price').textContent = listing.price.toFixed(2);
+      const photosContainer = document.getElementById('photos-container');
+      listing.photos.forEach(photoUrl => {
+        const img = document.createElement('img');
+        img.src = photoUrl;
+        img.alt = listing.title;
+        photosContainer.appendChild(img);
+      });
+    })
+    .catch(error => console.error('Error fetching listing:', error));
+});
+</script>
