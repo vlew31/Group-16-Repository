@@ -9,7 +9,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   // Fetch the JSON data from the server
-  fetch('http://localhost:3000/listings')
+  fetch(`http://localhost:3000/listings/${listings._id}`)
     .then(response => response.json())
     .then(data => {
       // Get the individual listing from the data
