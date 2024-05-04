@@ -30,7 +30,7 @@
                 listingDiv.classList.add('listing');
 
                 const listingLink = document.createElement('a');
-                listingLink.href = `/listing?id=${listing.id}`; 
+                listingLink.href = `/listings/${listing._id}`;
                 listingLink.appendChild(listingDiv);
 
                 listingDiv.innerHTML = 
@@ -43,11 +43,7 @@
                     <p><strong>Size: </strong>${listing.size}</p>
                     <p><strong>Color: </strong>${listing.color}</p>
                     <p><strong>Condition: </strong>${listing.condition}</p>
-                    <p><strong>Price: </strong>${listing.price}</p>
-                    <p><strong>Tags: </strong>${listing.tags}</p>
-                    <p><strong>Comments: </strong>${listing.comments}</p>
-                    <p><strong>Rating: </strong>${listing.rating}</p>`;
-                
+                    <p><strong>Price: </strong>${listing.price}</p>`;
                 listingsContainer.appendChild(listingLink);
             });
             })
