@@ -28,11 +28,11 @@ router.route('/search').get(async (req, res) => {
 });
 
 router
-  .route('/clothes')
+  .route('/listings')
   .get(async (req, res) => {
     try {
-      const clothess = await clothesData.getAll();
-      return res.json(clothess);
+      const clothes = await clothesData.getAll();
+      return res.json(clothes);
     } catch (e) {
       return res.status(400).json({ error: e });
     }

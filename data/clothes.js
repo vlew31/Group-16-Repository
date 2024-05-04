@@ -121,7 +121,7 @@ export const getAll = async () => {
 
   let clothesList = await clothesCollection
   .find({})
-  .project({ _id: 1, clothesName: 1 })
+  // .project({ _id: 1, clothesName: 1 })
   .toArray();
 
   if (!clothesList.length) throw 'No clothes found';
