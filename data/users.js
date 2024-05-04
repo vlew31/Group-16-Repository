@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-//import { users } from '../config/mongoCollections.js';
-import bcrypt from 'bcryptjs';
-const saltRounds = 2;
-=======
 // import { users } from '../config/mongoCollections.js';
 // import {ObjectId} from 'mongodb';
 // import bcrypt from 'bcrypt';
 // const saltRounds = 2;
->>>>>>> 616883dfa5d674809746087bc253f8a9c0743946
 
 // export const registerUser = async (
 //   firstName,
@@ -246,42 +240,6 @@ export const registerUser = async (
 		throw "ERR: Invalid role";
 	}
 
-<<<<<<< HEAD
-  const upper = /[A-Z]/;
-  const number = /[0-9]/;
-  const specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-  if(typeof p !== 'string' || p.length < 8 || !upper.test(p) || !number.test(p) || !specialChar.test(p)) {
-    throw "invalid password input from registerUser";
-  }
-
-
-  if(r !== 'user' && r !== 'admin') {
-    throw "invalid role input";
-  }
-
-  const usersCollection = await users();
-  const existingUser = await usersCollection.findOne({ username: validatedUsername });
-  if (existingUser) {
-    throw new Error('Error: Username already exists');
-  }
-  const userList = await users();
-
-  let h = await bcrypt.hash(password, saltRounds);
-  let newUser = {
-    firstName: fn,
-    lastName: ln,
-    email: e,
-    username: u,
-    password: h,
-    role: r
-  }
-
-  let user = await userList.insertOne(newUser);
-  if (!user.insertedCount === 0) {
-    throw "username taken. try again";
-  }
-  return { signupCompleted: true };
-=======
 	//TODO! change 2 to 16 or smthing
 	const hashedPassword = await bcrypt.hash(password, 2);
 	const newUser = {
@@ -293,7 +251,6 @@ export const registerUser = async (
 		role: lowercaseRole,
 	};
 	const insertedUser = await usersCollection.insertOne(newUser);
->>>>>>> 616883dfa5d674809746087bc253f8a9c0743946
 
 	if (insertedUser.insertedId) {
 		return { signupCompleted: true };
@@ -337,27 +294,6 @@ export const loginUser = async (username, password) => {
 		throw "Either the username or password is invalid";
 	}
 
-<<<<<<< HEAD
-  const userList = await users();
-  const user = await usersCollection.findOne({username: validatedUsername });
-  const findUser = await userList.findOne({ username: u });
-
-  if (!findUser) {
-    throw "Either the username or password is invalid";
-  }
-
-  const passwordMatch = await bcrypt.compare(p, user.password);
-  if (!passwordMatch) {
-    throw new Error('Password is invalid');
-  }
-  return {
-    firstName: findUser.firstName, 
-    lastName: findUser.lastName, 
-    email: findUser.email,
-    username: findUser.username,  
-    role: findUser.role
-  };
-=======
 	const newUser = await usersCollection.findOne(
 		{ username: username },
 		{ projection: { password: 0 } }
@@ -369,7 +305,6 @@ export const loginUser = async (username, password) => {
 		username: storedUsername,
 		role
 	} = newUser;
->>>>>>> 616883dfa5d674809746087bc253f8a9c0743946
 
 	return {
 		firstName,
