@@ -11,7 +11,8 @@ await db.dropDatabase();
 let fortniteMerch = undefined;
 let beaMerch = undefined;
 let cartiMerch = undefined;
-let donuts = undefined;
+let denimVest = undefined;
+let starJorts = undefined;
 
 async function testCreateProducts() { //creates a listing
 	try {
@@ -71,7 +72,25 @@ async function testCreateProducts() { //creates a listing
 		console.log(e);
 	}
 	try {
-		cartiMerch = await clothesData.create(
+		starJorts = await clothesData.create(
+			"vlew31",
+			"Aelfric Eden Star Patchwork Jorts",
+			"Jorts with star patchwork in the middle.",
+			"Jorts",
+			"30",
+			"Blue",
+			"Unisex",
+			45.00,
+			"New",
+			["Denim", "Star"],
+			["https://i.pinimg.com/564x/5f/aa/e4/5faae4bfc8bd71fc6b3a15b8e329d6a9.jpg"]
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		denimVest = await clothesData.create(
 			"joelleAn",
 			"Denim Vest",
 			"Backless denim vest with denim ribbon",
