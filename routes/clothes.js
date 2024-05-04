@@ -20,20 +20,36 @@ router.route('/upload').get(async (req, res) => {
   res.render('upload', { title: 'Upload' });
 });
 
+// router.route('/listings/:listingId').get(async (req, res) => {
+//   const listingId = req.params.listingId;
+
+//   try {
+//     const listing = await clothesData.get(req.params.listingId);
+//     if (!listing) {
+//       return res.status(404).send('Listing not found');
+//     }
+//     res.render('listing', { title: listing.title, listing: listing });
+//   } catch (err) {
+//     console.error('Error fetching listing:', err);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
+
 router.route('/listings/:listingId').get(async (req, res) => {
   const listingId = req.params.listingId;
 
   try {
-    const listing = await clothesData.get(req.params.listingId);
+    const listing = await clothesData.get(listingId);
     if (!listing) {
       return res.status(404).send('Listing not found');
     }
-    res.render('listing', { title: listing.title, listing: listing });
+    res.render('listing', { listing, listingId }); // Pass listingId to the template
   } catch (err) {
     console.error('Error fetching listing:', err);
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 router.route('/cart').get(async (req, res) => {
   res.render('cart', { title: 'Cart/Wishlist' });
@@ -88,19 +104,19 @@ router
   });
 
 router
-  .route('/listings/:listingsId')
-  .get(async (req, res) => {
-    try {
-      const clothes = await clothesData.get(req.params.clothesId);
-      res.status(200).json(clothes);
-    } catch (e) {
-      if (e === 'Invalid ObjectId') {
-        res.status(400).json({ error: 'Invalid clothes ID.' });
-      } else {
-        res.status(400).json({ error: e });
-      }
-    }
-  })
+  // .route('/listings/:listingsId')
+  // .get(async (req, res) => {
+  //   try {
+  //     const clothes = await clothesData.get(req.params.clothesId);
+  //     res.status(200).json(clothes);
+  //   } catch (e) {
+  //     if (e === 'Invalid ObjectId') {
+  //       res.status(400).json({ error: 'Invalid clothes ID.' });
+  //     } else {
+  //       res.status(400).json({ error: e });
+  //     }
+  //   }
+  // })
   .delete(async (req, res) => {
     try {
       const result = await clothesData.remove(req.params.listingsId);

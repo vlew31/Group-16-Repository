@@ -1,33 +1,21 @@
 <div class="listing">
-  <h2 id="listing-title"></h2>
-  <p><strong>Seller:</strong> <span id="listing-seller"></span></p>
-  <p><strong>Description:</strong> <span id="listing-description"></span></p>
-  <p><strong>Price:</strong> $<span id="listing-price"></span></p>
-  <div id="photos-container"></div>
+  <h4>{{ listing.title }}</h4>
+  <div class="photos-container">
+    {{#each listing.photos}}
+      <img class="small-photo" src="{{ this }}" alt="Listing Photo">
+    {{/each}}
+  </div>
+  <p><span class="key">Seller:</span>  <span class="value">{{ listing.seller }}</span></p>
+  <p><span class="key"> Description:</span> <span class="value"> {{ listing.description }}</span></p>
+  <p><span class="key"> Article:</span> <span class="value"> {{ listing.article }}</span></p>
+  <p><span class="key"> Size:</span> <span class="value"> {{ listing.size }}</span></p>
+  <p><span class="key"> Color:</span> <span class="value"> {{ listing.color }}</span></p>
+  <p><span class="key"> Gender:</span> <span class="value">{{ listing.gender }}</span></p>
+  <p><span class="key"> Price:</span> <span class="value"> ${{ listing.price }}</span></p>
+  <p><span class="key"> Condition:</span> <span class="value">{{ listing.condition }}</span></p>
+  <p><span class="key">Tags:</span> 
+    {{#each listing.tags}}
+      <span class="tag">{{ this }}</span>
+    {{/each}}
+  </p>
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  // Fetch the JSON data from the server
-  fetch(`http://localhost:3000/listings/${listings._id}`)
-    .then(response => response.json())
-    .then(data => {
-      // Get the individual listing from the data
-      const listing = data[0]; // Assuming there's only one listing in this example
-
-      // Populate the HTML elements with listing information
-      document.getElementById('listing-title').textContent = listing.title;
-      document.getElementById('listing-seller').textContent = listing.seller;
-      document.getElementById('listing-description').textContent = listing.description;
-      document.getElementById('listing-price').textContent = listing.price.toFixed(2);
-      const photosContainer = document.getElementById('photos-container');
-      listing.photos.forEach(photoUrl => {
-        const img = document.createElement('img');
-        img.src = photoUrl;
-        img.alt = listing.title;
-        photosContainer.appendChild(img);
-      });
-    })
-    .catch(error => console.error('Error fetching listing:', error));
-});
-</script>
