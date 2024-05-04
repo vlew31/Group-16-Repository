@@ -20,21 +20,6 @@ router.route('/upload').get(async (req, res) => {
   res.render('upload', { title: 'Upload' });
 });
 
-// router.route('/listings/:listingId').get(async (req, res) => {
-//   const listingId = req.params.listingId;
-
-//   try {
-//     const listing = await clothesData.get(req.params.listingId);
-//     if (!listing) {
-//       return res.status(404).send('Listing not found');
-//     }
-//     res.render('listing', { title: listing.title, listing: listing });
-//   } catch (err) {
-//     console.error('Error fetching listing:', err);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
-
 router.route('/listings/:listingId').get(async (req, res) => {
   const listingId = req.params.listingId;
 
