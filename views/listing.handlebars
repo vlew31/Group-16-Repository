@@ -1,3 +1,21 @@
-<section id="listings-container">
-<h1>listinggggg</h1>
-</section>
+<div class="listing">
+  <h4>{{ listing.title }}</h4>
+  <div class="photos-container">
+    {{#each listing.photos}}
+      <img class="small-photo" src="{{ this }}" alt="Listing Photo">
+    {{/each}}
+  </div>
+  <p><span class="key">Seller:</span>  <span class="value">{{ listing.seller }}</span></p>
+  <p><span class="key"> Description:</span> <span class="value"> {{ listing.description }}</span></p>
+  <p><span class="key"> Article:</span> <span class="value"> {{ listing.article }}</span></p>
+  <p><span class="key"> Size:</span> <span class="value"> {{ listing.size }}</span></p>
+  <p><span class="key"> Color:</span> <span class="value"> {{ listing.color }}</span></p>
+  <p><span class="key"> Gender:</span> <span class="value">{{ listing.gender }}</span></p>
+  <p><span class="key"> Price:</span> <span class="value"> ${{ listing.price }}</span></p>
+  <p><span class="key"> Condition:</span> <span class="value">{{ listing.condition }}</span></p>
+  <p><span class="key">Tags:</span> 
+    {{#each listing.tags}}
+      <span class="tag">{{ this }}</span>
+    {{/each}}
+  </p>
+</div>

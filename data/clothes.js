@@ -31,7 +31,7 @@ export const create = async (
   // if (
   //   typeof clothesName !== 'string' || clothesName === '' || 
   //   typeof clothesDescription !== 'string' || clothesDescription === '' || 
-  //   typeof modelNumber !== 'string' || modelNumber === '' ||
+  //   typeof modeelNumber !== 'string' || modelNumber === '' ||
   //   typeof manufacturer !== 'string' || manufacturer === '' ||
   //   typeof manufacturerWebsite !== 'string' || manufacturerWebsite === '' ||
   //   typeof dateReleased !== 'string' || dateReleased === ''){
@@ -89,6 +89,7 @@ export const create = async (
   const clothesCollection = await listings();
 
   const newclothes = {
+    // userId: userId,
     seller: seller,
     title: title,
     description: description,

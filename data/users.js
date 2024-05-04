@@ -162,11 +162,12 @@ export const registerUser = async (
     email,
     username,
     password,
-    role
+    role,
+	listings
   ) => {
 	firstName = firstName.trim();
 	lastName = lastName.trim();
-  email = email.trim();
+  	email = email.trim();
 	username = username.trim();
 	password = password.trim();
 	role = role.trim();
@@ -248,10 +249,11 @@ export const registerUser = async (
 	const newUser = {
 		firstName: firstName.trim(),
 		lastName: lastName.trim(),
-    email: email.trim(),
+    	email: email.trim(),
 		username: lowercaseUsername,
 		password: hashedPassword,
 		role: lowercaseRole,
+		listings: []
 	};
 	const insertedUser = await usersCollection.insertOne(newUser);
 
@@ -304,17 +306,19 @@ export const loginUser = async (username, password) => {
 	const {
 		firstName,
 		lastName,
-    email,
+   	 	email,
 		username: storedUsername,
-		role
+		role,
+		listings
 	} = newUser;
 
 	return {
 		firstName,
 		lastName,
-    email,
+ 		email,
 		username: storedUsername,
 		role,
+		listings
 	};
 };
 
