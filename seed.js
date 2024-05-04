@@ -8,9 +8,9 @@ const db = await dbConnection();
 await db.dropDatabase();
 
 //defining these here so I can use them later in the function
-let apples = undefined;
-let bananas = undefined;
-let coconuts = undefined;
+let fortniteMerch = undefined;
+let beaMerch = undefined;
+let cartiMerch = undefined;
 let donuts = undefined;
 
 async function testCreateProducts() { //creates a listing
@@ -47,6 +47,42 @@ async function testCreateProducts() { //creates a listing
 			"Refurbished",
 			["Beabadoobee", "Singer", "Filipina", "Denim"],
 			["https://i1.sndcdn.com/artworks-yi5PWVKO8kzMtSPc-tFa0hA-t240x240.jpg"]
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		cartiMerch = await clothesData.create(
+			"keba123",
+			"hello kitty mug",
+			"playboi carti mug from EvilJ0rdan music video!",
+			"accessories",
+			"N/A",
+			"white",
+			"Unisex",
+			20.24,
+			"Used",
+			["Hello Kitty", "Mug", "Playboi Carti", "Underground"],
+			["https://m.media-amazon.com/images/I/61gT1oMuURL.jpg"]
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		cartiMerch = await clothesData.create(
+			"joelleAn",
+			"Denim Vest",
+			"Backless denim vest with denim ribbon",
+			"Vest",
+			"M",
+			"blue",
+			"F",
+			90.00,
+			"Refurbished",
+			["Denim", "Ribbon", "Coquette", "Backless"],
+			["https://i.pinimg.com/736x/37/a6/5e/37a65e3e2779a705216088f5511b9c78.jpg", "https://i.pinimg.com/564x/cc/e8/b5/cce8b5bc9d94193979a446d615d3828b.jpg"]
 		);
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 2");
