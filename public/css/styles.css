@@ -277,3 +277,75 @@ a {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
+.upload-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.upload-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.upload-heading-1 {
+  font-family: 'Sableklish';
+  font-size: 36px;
+  color: #003049;
+}
+
+.upload-heading-2 {
+  font-family: 'AwelierEB';
+  font-size: 24px;
+  color: #003049;
+  margin-bottom: 10px;
+}
+
+.upload-form {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.upload-label {
+  font-family: 'AwelierEB';
+  color: #003049;
+}
+
+.upload-input,
+.upload-textarea,
+.upload-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: 'Awelier';
+  color: #003049;
+}
+
+.upload-textarea {
+  height: 100px;
+}
+
+.upload-submit {
+  background-color: #669bbc;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'AwelierEB';
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.upload-submit:hover {
+  background-color: #2ec4b6;
+}
+
+.file-input-container {
+  text-align: center;
+}
