@@ -70,7 +70,7 @@ router
   });
 
 router
-  .route('/clothes/:clothesId')
+  .route('/listings/:listingsId')
   .get(async (req, res) => {
     try {
       const clothes = await clothesData.get(req.params.clothesId);
