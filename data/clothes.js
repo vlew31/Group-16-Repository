@@ -27,7 +27,6 @@ export const create = async (
   color = color.trim();
   gender = gender.trim();
   condition = condition.trim();
-
   // if (
   //   typeof clothesName !== 'string' || clothesName === '' || 
   //   typeof clothesDescription !== 'string' || clothesDescription === '' || 
@@ -103,16 +102,12 @@ export const create = async (
     comments: [],
     rating: 0
   };
-
   const insertInfo = await clothesCollection.insertOne(newclothes);
-
-  if (insertInfo.insertedCount === 0) {
+  if (insertInfo.insertedCount === 0||!insertInfo.acknowledged) {
       throw "Could not add clothes";
   }
-
   const newId = insertInfo.insertedId.toString();
   const clothes = await get(newId); 
-
   return clothes;
 };
 
@@ -125,8 +120,11 @@ export const getAll = async () => {
   .toArray();
 
   if (!clothesList.length) throw 'No clothes found';
-
-  return clothesList;
+  clothesList = clothesList.map((element) => {
+    element._id = element._id.toString();
+    return element
+  })
+  return productsList;
 };
 
 export const get = async (listingId) => {
@@ -199,6 +197,7 @@ export const update = async (
   if (!listingId || !seller || !title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
     throw "Must provide values for all fields.";
   }
+  if (!ObjectId.isValid(listingId)) throw 'invalid object ID';
 
   seller = seller.trim();
   title = title.trim();
@@ -283,14 +282,17 @@ export const update = async (
 
   const updateInfo = await clothesCollection.updateOne(
     { _id: new ObjectId(listingId) },
-    { $set: updatedclothes }
+    { $set: updatedclothes },
+    {returnDocument: 'after'}
   );
 
   if (updateInfo.modifiedCount === 0) {
     throw 'Could not update clothes with provided id.';
   }
-
-  const updatedclothesWithId = { _id: listingId, ...updatedclothes };
-
-  return updatedclothesWithId;
+  if (!updateInfo) {
+    throw 'could not update product successfully';
+  }
+  updateInfo._id = updateInfo._id.toString();
+  // const updatedclothesWithId = { _id: listingId, ...updatedclothes };
+  return updateInfo;
 };
