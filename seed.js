@@ -11,6 +11,7 @@ let User1 = undefined;
 let User2 = undefined;
 let User3 = undefined;
 let User4 = undefined;
+let User5 = undefined;
 
 
 async function testRegisterUser(){
@@ -21,7 +22,9 @@ async function testRegisterUser(){
 			"ivillanu@stevens.edu",
 			"ivillanu",
 			"ivillanu123",
-			"admin"
+			"admin",
+			// [],
+			39.39
 		);
 	} catch(e) {
 		console.log("Uh-oh, not supposed to see me");
@@ -34,7 +37,9 @@ async function testRegisterUser(){
 			"fake_email@gmail.com",
 			"Keba12345", 
 			"Keba1234",
-			"admin"
+			"admin",
+			// [],
+			1000
 		);
 	} catch(e) {
 		console.log("Uh-oh, not supposed to see me");
@@ -47,7 +52,9 @@ async function testRegisterUser(){
 			"super_fake_email@gmail.com",
 			"Belalipop", 
 			"YeatLover",
-			"admin"
+			"admin",
+			// [],
+			4000
 		);
 	} catch(e) {
 		console.log("Uh-oh, not supposed to see me");
@@ -60,7 +67,24 @@ async function testRegisterUser(){
 			"real_email@gmail.com",
 			"Missbelly", 
 			"BeaLover",
-			"user"
+			"user",
+			// [],
+			200
+		);
+	} catch(e) {
+		console.log("Uh-oh, not supposed to see me");
+		console.log(e);
+	}
+	try {
+		User5 = await userData.registerUser(
+			"Bill",
+			"Doors",
+			"hotmail@gmail.com",
+			"Richguy123", 
+			"ImRichHaha",
+			"user",
+			// [],
+			40000
 		);
 	} catch(e) {
 		console.log("Uh-oh, not supposed to see me");

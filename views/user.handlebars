@@ -52,7 +52,7 @@
     // Function to fetch user data
     async function fetchUserData() {
         try {
-            const response = await fetch(`http://localhost:3000/users/663697c9688675c9ef30de2f`);
+            const response = await fetch(`http://localhost:3000/users/6636ac25ecdee6803ea547f9`);
             if (!response.ok) {
                 throw new Error('Failed to fetch user data');
             }
@@ -77,6 +77,7 @@
                 <li>Last Name: ${userId.lastName}</li>
                 <li>Email: ${userId.email}</li>
                 <li>Role: ${userId.role}</li>
+                <li>Balance: $${userId.balance}</li>
             </ul>
         `;
         // Optionally, display other user data here if needed

@@ -40,22 +40,25 @@ router
         email: user.email,
         username: user.username,
         role: user.role
+        // balance: user.balance
       }));
-      res.json(simplifiedUsers);
+      return res.json(simplifiedUsers);
     } catch (e) {
       res.status(400).json({ error: e.message });
     }
   })
   .post(async (req, res) => {
     try {
-      const { firstName, lastName, email, username, password, role } = req.body;
+      const { firstName, lastName, email, username, password, role, listings, balance } = req.body;
       const newUser = await userData.registerUser(
         firstName,
         lastName,
         email,
         username,
         password,
-        role
+        role,
+        // listings,
+        balance
       );
       return res.json(newUser);
     } catch (e) {
@@ -99,6 +102,8 @@ router
         req.body.username,
         req.body.password,
         req.body.role,
+        req.body.listings,
+        req.body.balance,
       );
       res.status(200).json(updatedUser);
     } catch (e) {
