@@ -154,6 +154,8 @@
 //import mongo collections, bcrypt and implement the following data functions
 import { users } from "../config/mongoCollections.js";
 import bcrypt from "bcryptjs";
+import {ObjectId} from 'mongodb';
+
 export const registerUser = async (
     firstName,
     lastName,
@@ -314,4 +316,35 @@ export const loginUser = async (username, password) => {
 		username: storedUsername,
 		role,
 	};
+};
+
+export const getAll = async () => {
+
+  const userCollection = await users();
+  let userList = await userCollection.find({}).project({_id: 1, username: 1}).toArray();
+
+  if(!userList){
+    throw 'users not found';
+  }
+
+  return userList;
+};
+
+export const get = async (userId) => {
+  if(userId === undefined){
+    throw 'id not provided';
+  } else if(typeof userId !== 'string' || userId.trim().length === 0){
+    throw 'parameter is not a valid id';
+  } else if(!ObjectId.isValid(userId.trim())){
+    throw 'id is not a valid ObjectID'
+  } 
+  const userCollection = await users();
+  const userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
+  if(userToFind === null){
+    throw 'no user with that id';
+  }
+
+  userToFind._id = userToFind._id.toString();
+  
+  return userToFind;
 };
