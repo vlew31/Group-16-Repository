@@ -144,3 +144,16 @@ footer {
   text-align: left; /* Align the content to the left */
 }
 
+.button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #8ecae6;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #0056b3; /* Darker shade of blue on hover */
+}
+
