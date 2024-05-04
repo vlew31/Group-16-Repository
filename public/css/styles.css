@@ -153,14 +153,14 @@ footer {
 .button {
   display: inline-block;
   padding: 5px 10px;
-  background-color: #8ecae6;
+  background-color:#669bbc;
   color: white;
   text-decoration: none;
   border-radius: 5px;
 }
 
 .button:hover {
-  background-color: #0056b3; /* Darker shade of blue on hover */
+  background-color: #8ecae6;
 }
 
 .player {
