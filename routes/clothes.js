@@ -211,7 +211,7 @@ router
     //code here for POST this is where your form will be submitting searchByName and then call your data function passing in the searchByName and then rendering the search results.
   
     try {
-      const searchTerm = req.body.searchclothesByName;
+      const searchTerm = req.body.searchByName;
 
       // if (!searchTerm || searchTerm.trim() === '') {
       //     return res.status(400).render('error', { title: 'Error', error: 'Search term is required.' });
@@ -223,7 +223,7 @@ router
           return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
       }
 
-      res.render('clothesSearchResults', { title: 'Clothes Found', searchTerm, searchResults });
+      res.render('searchResults', { title: 'Clothes Found', searchTerm, searchResults });
   } catch (error) {
       console.log(error);
       res.status(500).render('error', { title: 'Error', error: 'Server Error' });
