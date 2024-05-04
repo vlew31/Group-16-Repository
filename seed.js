@@ -13,10 +13,9 @@ let bananas = undefined;
 let coconuts = undefined;
 let donuts = undefined;
 
-async function testCreateProducts() {
-	console.log(`Let's add some "apples"!`);
+async function testCreateProducts() { //creates a listing
 	try {
-		apples = await clothesData.create(
+		fortniteMerch = await clothesData.create(
 
 			"      missbelly     ",
 			"fortnite merch",
@@ -31,18 +30,12 @@ async function testCreateProducts() {
 			["https://downersclub.com/wp-content/uploads/2023/11/Nettspend.jpg", "https://cdn1.epicgames.com/offer/fn/Blade_2560x1440_2560x1440-95718a8046a942675a0bc4d27560e2bb"]
 			
 		);
-
-		console.log("Success!, Apples has created");
-		console.log(apples);
-		console.log("-----------");
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 1");
 		console.log(e);
 	}
-	console.log("----------");
-	console.log("Let's add some Bananas!");
 	try {
-		bananas = await clothesData.create(
+		beaMerch = await clothesData.create(
 			"belalipop",
 			"beabadoobee merch",
 			"I <3 BEABADOOBEE",
@@ -55,9 +48,6 @@ async function testCreateProducts() {
 			["Beabadoobee", "Singer", "Filipina", "Denim"],
 			["https://i1.sndcdn.com/artworks-yi5PWVKO8kzMtSPc-tFa0hA-t240x240.jpg"]
 		);
-		console.log("Success!, Bananas has created");
-		console.log(bananas);
-		console.log("-----------");
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 2");
 		console.log(e);
