@@ -121,7 +121,7 @@ export const getAll = async () => {
 
   let clothesList = await clothesCollection
   .find({})
-  .project({ _id: 1, clothesName: 1 })
+  // .project({ _id: 1, clothesName: 1 })
   .toArray();
 
   if (!clothesList.length) throw 'No clothes found';
@@ -131,15 +131,15 @@ export const getAll = async () => {
 
 export const get = async (listingId) => {
   // let x = new ObjectId();
-  if (!listingId){
-    throw 'Id must be provided';
-  } 
-  if (typeof listingId !== 'string'){
-    throw 'Id must be a string';
-  }
-  if (listingId.trim().length === 0){
-    throw 'Id cannot be an empty string or just spaces';
-  }
+  // if (!listingId){
+  //   throw 'Id must be provided';
+  // } 
+  // if (typeof listingId !== 'string'){
+  //   throw 'Id must be a string';
+  // }
+  // if (listingId.trim().length === 0){
+  //   throw 'Id cannot be an empty string or just spaces';
+  // }
 
   listingId = listingId.trim();
   if (!ObjectId.isValid(listingId)){
