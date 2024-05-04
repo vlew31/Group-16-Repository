@@ -167,39 +167,7 @@ export const registerUser = async (
 	username = username.trim();
 	password = password.trim();
 	role = role.trim();
-	// checkRequiredFields(
-	// 	firstName,
-	// 	lastName,
-	// 	username,
-	// 	password,
-	// 	favoriteQuote,
-	// 	themePreference,
-	// 	role
-	// );
-	// checkIfFieldsAreProperString(
-	// 	firstName,
-	// 	lastName,
-	// 	username,
-	// 	password,
-	// 	favoriteQuote,
-	// 	themePreference,
-	// 	role
-	// );
-	// //first
-	// checkIsProperLength(firstName, 2);
-	// checkMaxLength(firstName, 25);
-	// checkIfContainsNumber(firstName);
-	// //last
-	// checkIsProperLength(lastName, 2);
-	// checkMaxLength(lastName, 25);
-	// checkIfContainsNumber(lastName);
-	// //user
-	// checkIsProperLength(username, 5);
-	// checkMaxLength(username, 10);
-	// checkIfContainsNumber(username);
-
-	// console.log("here1");
-	//check duplicate
+	
 	const lowercaseUsername = username.toLowerCase();
 	const usersCollection = await users();
 	const existingUser = await usersCollection.findOne({
@@ -208,33 +176,7 @@ export const registerUser = async (
 	if (existingUser) {
 		throw "ERR: user already exists";
 	}
-	// console.log("here2");
-
-	//pw
-	// checkIsProperLength(password, 8);
-	// if (
-	// 	/\s/.test(password) ||
-	// 	!/[A-Z]/.test(password) ||
-	// 	!/\d/.test(password) ||
-	// 	!/[!@#$%^&*(),.?":{}|<>]/.test(password)
-	// ) {
-	// 	throw "ERR: invalid password";
-	// }
-
-	//quote
-	// checkIsProperLength(favoriteQuote, 20);
-	// checkMaxLength(favoriteQuote, 255);
-
-	//theme
-	// const lowercaseThemePreference = themePreference.toLowerCase();
-	// if (
-	// 	lowercaseThemePreference !== "light" &&
-	// 	lowercaseThemePreference !== "dark"
-	// ) {
-	// 	throw "ERR: Invalid themePreference";
-	// }
-
-	//role
+  
 	const lowercaseRole = role.toLowerCase();
 	if (lowercaseRole !== "admin" && lowercaseRole !== "user") {
 		throw "ERR: Invalid role";

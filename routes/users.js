@@ -5,18 +5,18 @@ const router = Router();
 
 router
   .route('/users')
-//   .get(async (req, res) => {
-//     try {
-//       const users = await userData.getAll();
-//       const simplifiedUsers = users.map(user => ({
-//         _id: user._id,
-//         username: user.username
-//       }));
-//       res.json(simplifiedUsers);
-//     } catch (e) {
-//       res.status(400).json({ error: e.message });
-//     }
-//   })
+  .get(async (req, res) => {
+    try {
+      const users = await userData.getAll();
+      const simplifiedUsers = users.map(user => ({
+        _id: user._id,
+        username: user.username
+      }));
+      res.json(simplifiedUsers);
+    } catch (e) {
+      res.status(400).json({ error: e.message });
+    }
+  })
   .post(async (req, res) => {
     console.log("hey");
     try {
