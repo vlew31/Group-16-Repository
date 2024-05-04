@@ -104,45 +104,6 @@ if (document.getElementById('registration-form')) {
             return res.status(400).render('error');
         }
         try {
-            let quote = document.getElementById("favQuote").value;
-            if (quote === undefined) {
-                throw "quote input is undefined"
-            }
-            if (typeof quote !== 'string') {
-                throw "quote must be a string"
-            }
-            q = quote.trim();
-            if (fn.length < 20 || fn.length > 255) {
-                throw { code: 400, error: "invalid quote" };
-            }
-        } catch (e) {
-            if (e.code) {
-                return res.status(e.code).render('register', { errors: true, error: e.error })
-            }
-            return res.status(400).render('error');
-        }
-        try {
-            let theme = document.getElementById("thene").value;
-            if (theme === undefined) {
-                throw "theme input is undefined"
-            }
-            else if (typeof theme !== 'string') {
-                throw "theme must be a string"
-            }
-            t = role.trim().toLowerCase();
-            if (t === '') {
-                throw "theme is empty"
-            }
-            if (t !== 'light' && r !== 'dark') {
-                throw "invalid theme"
-            }
-        } catch (e) {
-            if (e.code) {
-                return res.status(e.code).render('register', { errors: true, error: e.error })
-            }
-            return res.status(400).render('error');
-        }
-        try {
             let role = document.getElementById("role").value;
             if (role === undefined) {
                 throw "role input is undefined"

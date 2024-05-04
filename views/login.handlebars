@@ -1,0 +1,54 @@
+{{!-- <main>
+  <header>
+    <h1>Login</h1>
+  </header>
+  <form action="/login" method="POST" id="signup-form">
+        <label for="username">username:</label>
+        <input type="text" name="username" id="username" placeholder="username"><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="password"><br>
+        {{#if error}}
+        <p class="inputError">{{error}}</p>
+        {{/if}}
+        <button type="submit" class="submitButton">Submit</button>
+        <a href="/user/register">No account? Register now!</a>
+  </form>
+</main>
+ --}}
+
+<main class="login">
+    <div class="form-wrapper"></div>
+    <h2 class="h2-login">Log In</h2>
+    <form action="/users/login" method="POST" id="login-form">
+        <div class="input-container">
+            <div class="input-group">
+                <label for="uername">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="passwordInput" name="password" required>
+            </div>
+        </div>
+
+        <ul>
+            {{#each errors}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+        <button type="submit" class="submitButton">Submit</button>
+    </form>
+    {{!-- <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('registration-form').addEventListener('submit', function(event) {
+                    event.preventDefault(); 
+                    this.submit(); 
+                });
+            });
+        </script> --}}
+    <hr class="separator-line">
+        <a href="/users/register">No account? Register now!</a>
+    {{!-- <script src="/public/js/login.js"></script> --}}
+
+</main>
