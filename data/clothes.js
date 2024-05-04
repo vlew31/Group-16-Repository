@@ -3,104 +3,108 @@ import {listings} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
 
 export const create = async (
-  clothesName,
-  clothesDescription,
-  modelNumber,
+  seller,
+  title,
+  description,
+  article,
+  size,
+  color,
+  gender,
   price,
-  manufacturer,
-  manufacturerWebsite,
-  keywords,
-  categories,
-  dateReleased,
-  discontinued
+  condition,
+  tags,
+  photos
 ) => {
-  if (!clothesName || !clothesDescription || !modelNumber || !price || !manufacturer || !manufacturerWebsite || !keywords || !categories || !dateReleased || discontinued === undefined) {
-    throw "Must pass argument for every field.";
-}
+//   if (!title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
+//     throw "Must pass argument for every field.";
+// }
 
-  clothesName = clothesName.trim();
-  clothesDescription = clothesDescription.trim();
-  modelNumber = modelNumber.trim();
-  manufacturer = manufacturer.trim();
-  manufacturerWebsite = manufacturerWebsite.trim();
-  dateReleased = dateReleased.trim();
+  seller = seller.trim();
+  title = title.trim();
+  description = description.trim();
+  article = article.trim();
+  size = size.trim();
+  color = color.trim();
+  gender = gender.trim();
+  condition = condition.trim();
 
-  if (
-    typeof clothesName !== 'string' || clothesName === '' || 
-    typeof clothesDescription !== 'string' || clothesDescription === '' || 
-    typeof modelNumber !== 'string' || modelNumber === '' ||
-    typeof manufacturer !== 'string' || manufacturer === '' ||
-    typeof manufacturerWebsite !== 'string' || manufacturerWebsite === '' ||
-    typeof dateReleased !== 'string' || dateReleased === ''){
-      throw "All fields must be non-empty strings.";
-  }
+  // if (
+  //   typeof clothesName !== 'string' || clothesName === '' || 
+  //   typeof clothesDescription !== 'string' || clothesDescription === '' || 
+  //   typeof modelNumber !== 'string' || modelNumber === '' ||
+  //   typeof manufacturer !== 'string' || manufacturer === '' ||
+  //   typeof manufacturerWebsite !== 'string' || manufacturerWebsite === '' ||
+  //   typeof dateReleased !== 'string' || dateReleased === ''){
+  //     throw "All fields must be non-empty strings.";
+  // }
 
-  if (typeof price !== 'number' || price <= 0) {
-      throw "Price must be a number greater than 0";
-  }
+  // if (typeof price !== 'number' || price <= 0) {
+  //     throw "Price must be a number greater than 0";
+  // }
 
-  const priceString = price.toString();
-  if (priceString.includes('.') && priceString.split('.')[1].length > 2) {
-    throw "Price cannot have more than two decimal places";
-  }
+  // const priceString = price.toString();
+  // if (priceString.includes('.') && priceString.split('.')[1].length > 2) {
+  //   throw "Price cannot have more than two decimal places";
+  // }
 
-  if(manufacturerWebsite.substring(0,10) != 'http://www' || manufacturerWebsite.substring(manufacturerWebsite.length - 4) != '.com'){
-    throw "Invalid website format.";
-  }
+  // if(manufacturerWebsite.substring(0,10) != 'http://www' || manufacturerWebsite.substring(manufacturerWebsite.length - 4) != '.com'){
+  //   throw "Invalid website format.";
+  // }
 
-  if(manufacturerWebsite.length < 20){
-    throw "Website cannot have less than 5 characters.";
-  }
+  // if(manufacturerWebsite.length < 20){
+  //   throw "Website cannot have less than 5 characters.";
+  // }
 
-  if (!Array.isArray(keywords) || !Array.isArray(categories) || keywords.length === 0 || categories.length === 0 || !keywords.every(keyword => typeof keyword === 'string' && keyword.trim() !== '') || !categories.every(category => typeof category === 'string' && category.trim() !== '')) {
-      throw "Invalid keyword or category format.";
-  }
+  // if (!Array.isArray(keywords) || !Array.isArray(categories) || keywords.length === 0 || categories.length === 0 || !keywords.every(keyword => typeof keyword === 'string' && keyword.trim() !== '') || !categories.every(category => typeof category === 'string' && category.trim() !== '')) {
+  //     throw "Invalid keyword or category format.";
+  // }
 
-  const validDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-  if (!validDate.test(dateReleased)) {
-      throw "Invalid date.";
-  }
+  // const validDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+  // if (!validDate.test(dateReleased)) {
+  //     throw "Invalid date.";
+  // }
 
-  const [month, day, year] = dateReleased.split('/').map(Number);
+  // const [month, day, year] = dateReleased.split('/').map(Number);
 
-  const daysInMonth = new Date(year, month, 0).getDate();
-  if (day > daysInMonth) {
-      throw "Invalid date.";
-  }
+  // const daysInMonth = new Date(year, month, 0).getDate();
+  // if (day > daysInMonth) {
+  //     throw "Invalid date.";
+  // }
 
-  if (!Date.parse(`${month}/${day}/${year}`)) {
-      throw "Invalid date.";
-  }
+  // if (!Date.parse(`${month}/${day}/${year}`)) {
+  //     throw "Invalid date.";
+  // }
 
-  const releasedDate = new Date(year, month - 1, day);
-  const currentDate = new Date();
+  // const releasedDate = new Date(year, month - 1, day);
+  // const currentDate = new Date();
 
-  if (releasedDate > currentDate) {
-      throw "Invalid date.";
-  }
+  // if (releasedDate > currentDate) {
+  //     throw "Invalid date.";
+  // }
 
-  if (typeof discontinued !== 'boolean') {
-      throw "Discontinued was not provided or is not a boolean.";
-  }
+  // if (typeof discontinued !== 'boolean') {
+  //     throw "Discontinued was not provided or is not a boolean.";
+  // }
 
-  const clothessCollection = await listings();
+  const clothesCollection = await listings();
 
   const newclothes = {
-    clothesName: clothesName,
-    clothesDescription: clothesDescription,
-    modelNumber: modelNumber,
+    seller: seller,
+    title: title,
+    description: description,
+    article: article,
+    size: size,
+    color: color,
+    gender: gender,
     price: price,
-    manufacturer: manufacturer,
-    manufacturerWebsite: manufacturerWebsite,
-    keywords: keywords,
-    categories: categories,
-    dateReleased: dateReleased,
-    discontinued: discontinued,
-    reviews: [],
-    averageRating: 0
+    condition: condition,
+    tags: tags,
+    photos: photos,
+    comments: [],
+    rating: 0
   };
 
-  const insertInfo = await clothessCollection.insertOne(newclothes);
+  const insertInfo = await clothesCollection.insertOne(newclothes);
 
   if (insertInfo.insertedCount === 0) {
       throw "Could not add clothes";
@@ -113,168 +117,172 @@ export const create = async (
 };
 
 export const getAll = async () => {
-  const clothessCollection = await listings();
+  const clothesCollection = await listings();
 
-  let clothesList = await clothessCollection
+  let clothesList = await clothesCollection
   .find({})
   .project({ _id: 1, clothesName: 1 })
   .toArray();
 
-  if (!clothesList.length) throw 'No clothess found';
+  if (!clothesList.length) throw 'No clothes found';
 
   return clothesList;
 };
 
-export const get = async (clothesId) => {
-  let x = new ObjectId();
-  if (!clothesId){
+export const get = async (listingId) => {
+  // let x = new ObjectId();
+  if (!listingId){
     throw 'Id must be provided';
   } 
-  if (typeof clothesId !== 'string'){
+  if (typeof listingId !== 'string'){
     throw 'Id must be a string';
   }
-  if (clothesId.trim().length === 0){
+  if (listingId.trim().length === 0){
     throw 'Id cannot be an empty string or just spaces';
   }
 
-  clothesId = clothesId.trim();
-  if (!ObjectId.isValid(clothesId)){
+  listingId = listingId.trim();
+  if (!ObjectId.isValid(listingId)){
     throw 'Invalid ObjectId';
   }
 
   const clothesCollection = await listings();
-  const clothes = await clothesCollection.findOne({_id: new ObjectId(clothesId)});
+  const clothes = await clothesCollection.findOne({_id: new ObjectId(listingId)});
   if (clothes === null) throw 'clothes not found';
   clothes._id = clothes._id.toString();
   return clothes;
 };
 
-export const remove = async (clothesId) => {
-  if (!clothesId){
+export const remove = async (listingId) => {
+  if (!listingId){
     throw 'clothes not found';
   } 
-  if (typeof clothesId !== 'string'){
+  if (typeof listingId !== 'string'){
     throw 'Id must be a string';
   } 
-  if (clothesId.trim().length === 0){
+  if (listingId.trim().length === 0){
     throw 'id cannot be an empty string or just spaces';
   }
 
-  clothesId = clothesId.trim();
+  listingId = listingId.trim();
 
-  if (!ObjectId.isValid(clothesId)){
+  if (!ObjectId.isValid(listingId)){
     throw 'Invalid ObjectId';
   } 
 
   const clothesCollection = await listings();
   const deletionInfo = await clothesCollection.findOneAndDelete({
-    _id: new ObjectId(clothesId)
+    _id: new ObjectId(listingId)
   });
 
   if (!deletionInfo) {
-    throw `Could not delete clothes with id of ${clothesId}`;
+    throw `Could not delete clothes with id of ${listingId}`;
   }
 
   return `${deletionInfo.clothesName} has been successfully deleted!`;
 };
 
 export const update = async (
-  clothesId,
-  clothesName,
-  clothesDescription,
-  modelNumber,
+  listingId,
+  seller,
+  title,
+  description,
+  article,
+  size,
+  color,
+  gender,
   price,
-  manufacturer,
-  manufacturerWebsite,
-  keywords,
-  categories,
-  dateReleased,
-  discontinued
+  condition,
+  tags,
+  photos
 ) => {
-  if (!clothesId || !clothesName || !clothesDescription || !modelNumber || !price || !manufacturer || !manufacturerWebsite || !keywords || !categories || !dateReleased || discontinued === undefined) {
+  if (!listingId || !seller || !title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
     throw "Must provide values for all fields.";
   }
 
-  clothesName = clothesName.trim();
-  clothesDescription = clothesDescription.trim();
-  modelNumber = modelNumber.trim();
-  manufacturer = manufacturer.trim();
-  manufacturerWebsite = manufacturerWebsite.trim();
-  dateReleased = dateReleased.trim();
+  seller = seller.trim();
+  title = title.trim();
+  description = description.trim();
+  article = article.trim();
+  size = size.trim();
+  color = color.trim();
+  gender = gender.trim();
+  condition = condition.trim();
 
-  if (
-    typeof clothesId !== "string" ||
-    typeof clothesName !== "string" || clothesName === '' ||
-    typeof clothesDescription !== "string" || clothesDescription === '' ||
-    typeof modelNumber !== "string" || modelNumber === '' ||
-    typeof manufacturer !== "string" || manufacturer === '' ||
-    typeof manufacturerWebsite !== "string" || manufacturerWebsite === '' ||
-    typeof dateReleased !== "string" || dateReleased === ''
-  ) {
-    throw "All fields must be non-empty strings.";
-  }
+  // if (
+  //   typeof listingId !== "string" ||
+  //   typeof clothesName !== "string" || clothesName === '' ||
+  //   typeof clothesDescription !== "string" || clothesDescription === '' ||
+  //   typeof modelNumber !== "string" || modelNumber === '' ||
+  //   typeof manufacturer !== "string" || manufacturer === '' ||
+  //   typeof manufacturerWebsite !== "string" || manufacturerWebsite === '' ||
+  //   typeof dateReleased !== "string" || dateReleased === ''
+  // ) {
+  //   throw "All fields must be non-empty strings.";
+  // }
 
-  if (!ObjectId.isValid(clothesId)) {
-    throw "Invalid ObjectId.";
-  }
+  // if (!ObjectId.isValid(listingId)) {
+  //   throw "Invalid ObjectId.";
+  // }
 
-  if (typeof price !== "number" || price <= 0) {
-    throw "Price must be a number greater than 0.";
-  }
+  // if (typeof price !== "number" || price <= 0) {
+  //   throw "Price must be a number greater than 0.";
+  // }
 
-  const priceString = price.toString();
-  if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
-    throw "Invalid price.";
-  }
+  // const priceString = price.toString();
+  // if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
+  //   throw "Invalid price.";
+  // }
 
-  if (
-    manufacturerWebsite.substring(0, 10) !== "http://www" ||
-    manufacturerWebsite.substring(manufacturerWebsite.length - 4) !== ".com" ||
-    manufacturerWebsite.length < 20
-  ) {
-    throw "Invalid website.";
-  }
+  // if (
+  //   manufacturerWebsite.substring(0, 10) !== "http://www" ||
+  //   manufacturerWebsite.substring(manufacturerWebsite.length - 4) !== ".com" ||
+  //   manufacturerWebsite.length < 20
+  // ) {
+  //   throw "Invalid website.";
+  // }
 
-  if (
-    !Array.isArray(keywords) || !Array.isArray(categories) ||
-    keywords.length === 0 || categories.length === 0 ||
-    !keywords.every(keyword => typeof keyword === 'string' && keyword.trim() !== '') ||
-    !categories.every(category => typeof category === 'string' && category.trim() !== '')
-  ) {
-    throw "Invalid keywords or categories format.";
-  }
+  // if (
+  //   !Array.isArray(keywords) || !Array.isArray(categories) ||
+  //   keywords.length === 0 || categories.length === 0 ||
+  //   !keywords.every(keyword => typeof keyword === 'string' && keyword.trim() !== '') ||
+  //   !categories.every(category => typeof category === 'string' && category.trim() !== '')
+  // ) {
+  //   throw "Invalid keywords or categories format.";
+  // }
 
-  const validDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-  if (!validDate.test(dateReleased)) {
-    throw "Invalid date.";
-  }
+  // const validDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+  // if (!validDate.test(dateReleased)) {
+  //   throw "Invalid date.";
+  // }
 
-  const [month, day, year] = dateReleased.split('/').map(Number);
-  const daysInMonth = new Date(year, month, 0).getDate();
-  if (day > daysInMonth || !Date.parse(`${month}/${day}/${year}`)) {
-    throw "Invalid date.";
-  }
+  // const [month, day, year] = dateReleased.split('/').map(Number);
+  // const daysInMonth = new Date(year, month, 0).getDate();
+  // if (day > daysInMonth || !Date.parse(`${month}/${day}/${year}`)) {
+  //   throw "Invalid date.";
+  // }
 
-  if (typeof discontinued !== 'boolean') {
-    throw "Discontinued must be a boolean value.";
-  }
+  // if (typeof discontinued !== 'boolean') {
+  //   throw "Discontinued must be a boolean value.";
+  // }
 
-  const clothessCollection = await listings();
+  const clothesCollection = await listings();
   const updatedclothes = {
-    clothesName: clothesName,
-    clothesDescription: clothesDescription,
-    modelNumber: modelNumber,
+    seller: seller,
+    title: title,
+    description: description,
+    article: article,
+    size: size,
+    color: color,
+    gender: gender,
     price: price,
-    manufacturer: manufacturer,
-    manufacturerWebsite: manufacturerWebsite,
-    keywords: keywords,
-    categories: categories,
-    dateReleased: dateReleased,
-    discontinued: discontinued,
+    condition: condition,
+    tags: tags,
+    photos: photos
   };
 
-  const updateInfo = await clothessCollection.updateOne(
-    { _id: new ObjectId(clothesId) },
+  const updateInfo = await clothesCollection.updateOne(
+    { _id: new ObjectId(listingId) },
     { $set: updatedclothes }
   );
 
@@ -282,7 +290,7 @@ export const update = async (
     throw 'Could not update clothes with provided id.';
   }
 
-  const updatedclothesWithId = { _id: clothesId, ...updatedclothes };
+  const updatedclothesWithId = { _id: listingId, ...updatedclothes };
 
   return updatedclothesWithId;
 };
