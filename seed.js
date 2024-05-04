@@ -12,6 +12,7 @@ let User2 = undefined;
 let User3 = undefined;
 let User4 = undefined;
 
+
 async function testRegisterUser(){
 	try {
 		User1 = await userData.registerUser(
@@ -78,7 +79,6 @@ let moonTee = undefined;
 async function testCreateProducts() { //creates a listing
 	try {
 		fortniteMerch = await clothesData.create(
-
 			"      missbelly     ",
 			"fortnite merch",
 			"limited edition fortnite nettspend collab",
