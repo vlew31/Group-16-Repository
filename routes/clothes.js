@@ -28,7 +28,7 @@ router.route('/search').get(async (req, res) => {
 });
 
 router
-  .route('/')
+  .route('/clothes')
   .get(async (req, res) => {
     try {
       const clothess = await clothesData.getAll();
@@ -70,7 +70,7 @@ router
   });
 
 router
-  .route('/:clothesId')
+  .route('/clothes/:clothesId')
   .get(async (req, res) => {
     try {
       const clothes = await clothesData.get(req.params.clothesId);
