@@ -9,7 +9,7 @@
         <input type="text" name="seller" id="seller" required class="upload-input">
 
         <label for="photos" class="upload-label">Photos (Urls split by commas):</label>
-        <input type="photos[]" name="photos" id="photos" required class="upload-input">
+        <input type="photos" name="photos" id="photos" required class="upload-input">
 
         <label for="title" class="upload-label">Title:</label>
         <input type="text" name="title" id="title" required class="upload-input">
@@ -41,7 +41,7 @@
             <option value="unisex">Unisex</option>
         </select>
         <label for="price" class="upload-label">Price:</label>
-        <input type="number" name="price" id="price" required class="upload-input">
+        <input type="number" name="price" id="price" required class="upload-input" min="0">
         <label for="condition" class="upload-label">Condition:</label>
         <select name="condition" id="condition" required class="upload-select">
             <option>Select One</option>
