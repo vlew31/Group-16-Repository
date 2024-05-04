@@ -1,7 +1,7 @@
 // This file should set up the express server as shown in the lecture code
-import { productData, reviewData } from "./data/index.js";
+import { userData, clothesData } from "./data/index.js";
 
-import { dbConnection, closeConnection } from "./config/mongoConnection.js";
+import { dbConnection } from "./config/mongoConnection.js";
 //lets drop the database each time this is run
 
 const db = await dbConnection();
@@ -14,20 +14,24 @@ let coconuts = undefined;
 let donuts = undefined;
 
 async function testCreateProducts() {
-	console.log("Let's add some apples!");
+	console.log(`Let's add some "apples"!`);
 	try {
-		apples = await productData.create(
-			"      Apples      ",
-			"Keeps the doctor away",
-			"XYZ123",
-			3.41,
-			"  Lin Industries",
-			"http://www.LININ.com",
-			["Food", "Fruits"],
-			["Delicious", "Yummy"],
-			"05/05/2004",
-			false
+		apples = await clothesData.create(
+
+			"      missbelly     ",
+			"fortnite merch",
+			"limited edition fortnite nettspend collab",
+			"hoodie",
+			"XXS",
+			"blue",
+			"Unisex",
+			49.99,
+			"New",
+			["Nettspend", "Underground", "Fortnite", "Merch"],
+			["https://downersclub.com/wp-content/uploads/2023/11/Nettspend.jpg", "https://cdn1.epicgames.com/offer/fn/Blade_2560x1440_2560x1440-95718a8046a942675a0bc4d27560e2bb"]
+			
 		);
+
 		console.log("Success!, Apples has created");
 		console.log(apples);
 		console.log("-----------");
@@ -38,17 +42,18 @@ async function testCreateProducts() {
 	console.log("----------");
 	console.log("Let's add some Bananas!");
 	try {
-		bananas = await productData.create(
-			"bananas",
-			"Keeps the doctor away",
-			"XYZ123",
-			6.66,
-			"Lin Industries",
-			"http://www.LININ.com",
-			["Food", "Fruits"],
-			["Delicious", "Yummy"],
-			"05/05/2004",
-			false
+		bananas = await clothesData.create(
+			"belalipop",
+			"beabadoobee merch",
+			"I <3 BEABADOOBEE",
+			"jorts",
+			"XXL",
+			"black",
+			"F",
+			19.91,
+			"Refurbished",
+			["Beabadoobee", "Singer", "Filipina", "Denim"],
+			["https://i1.sndcdn.com/artworks-yi5PWVKO8kzMtSPc-tFa0hA-t240x240.jpg"]
 		);
 		console.log("Success!, Bananas has created");
 		console.log(bananas);
@@ -64,7 +69,7 @@ async function testRemove() {
 	console.log("Let's remove some Bananas!");
 	if (bananas) {
 		try {
-			console.log(await productData.remove(bananas._id.toString()));
+			console.log(await clothesData.remove(bananas._id.toString()));
 			console.log("Success! Removed the second product");
 			console.log("-----------");
 		} catch (e) {
@@ -78,7 +83,7 @@ async function testRemove() {
 async function testUpdate() {
 	console.log("Let's update some apples!");
 	try {
-		apples = await productData.update(
+		apples = await clothesData.update(
 			apples._id.toString(),
 			"Not Apples",
 			"Keeps the WITCH away",
@@ -92,7 +97,7 @@ async function testUpdate() {
 			false
 		);
 		console.log("Success!, Apples has updated");
-		console.log(await productData.get(apples._id.toString()));
+		console.log(await clothesData.get(apples._id.toString()));
 		console.log("-----------");
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 4");
@@ -100,7 +105,7 @@ async function testUpdate() {
 	}
 }
 async function testGetAll() {
-	console.log(await productData.getAll());
+	console.log(await clothesData.getAll());
 }
 
 async function testCreateReview() {
@@ -114,7 +119,7 @@ async function testCreateReview() {
 		);
 		// rev1 = reviewData.logfunction();
 		console.log("Success!, Apples has been reviewed");
-		console.log(await productData.get(apples._id.toString()));
+		console.log(await clothesData.get(apples._id.toString()));
 		console.log("-----------");
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 5");
@@ -124,7 +129,7 @@ async function testCreateReview() {
 
 async function testGetAllReview() {
 	try {
-		coconuts = await productData.create(
+		coconuts = await clothesData.create(
 			"Coconuts",
 			"Coconut crabs away",
 			"XY  Z123",
@@ -162,7 +167,7 @@ async function testGetAllReview() {
 
 async function testGetReview() {
 	try {
-		coconuts = await productData.create(
+		coconuts = await clothesData.create(
 			"Coconuts",
 			"Coconut crabs away",
 			"XY  Z123",
@@ -183,7 +188,7 @@ async function testGetReview() {
 		);
 		// rev1 = reviewData.logfunction();
 		console.log("Success!, Got a reviews of coconuts");
-		let coco = await productData.get(coconuts._id.toString());
+		let coco = await clothesData.get(coconuts._id.toString());
 		const rev1_string = coco.reviews[0]._id.toString();
 		console.log(rev1_string);
 		console.log(await reviewData.getReview(rev1_string));
@@ -197,7 +202,7 @@ async function testGetReview() {
 
 async function testUpdateReview() {
 	try {
-		coconuts = await productData.create(
+		coconuts = await clothesData.create(
 			"Coconuts",
 			"Coconut crabs away",
 			"XY  Z123",
@@ -226,7 +231,7 @@ async function testUpdateReview() {
 		);
 
 		console.log("Success!, Got an updated reviews of coconuts");
-		let coco = await productData.get(coconuts._id.toString());
+		let coco = await clothesData.get(coconuts._id.toString());
 		const rev1_string = coco.reviews[0]._id.toString();
 
 		const updated = {
@@ -247,7 +252,7 @@ async function testUpdateReview() {
 }
 async function testRemoveReview() {
 	try {
-		donuts = await productData.create(
+		donuts = await clothesData.create(
 			"Donuts",
 			"dodoodododo",
 			"XY  Z123",
@@ -281,7 +286,7 @@ async function testRemoveReview() {
 			"he",
 			1
 		);
-		let dodo = await productData.get(donuts._id.toString());
+		let dodo = await clothesData.get(donuts._id.toString());
 		const rev1_string = dodo.reviews[0]._id.toString();
 		const a = await reviewData.removeReview(rev1_string);
 		console.log("Success!, Removed a review from donuts");
@@ -294,12 +299,12 @@ async function testRemoveReview() {
 }
 
 await testCreateProducts();
-await testUpdate();
-await testRemove();
-await testCreateReview();
-await testGetAllReview();
-await testGetReview();
-await testUpdateReview();
-await testRemoveReview();
-await closeConnection();
-console.log("Done!");
+// await testUpdate();
+// await testRemove();
+// await testCreateReview();
+// await testGetAllReview();
+// await testGetReview();
+// await testUpdateReview();
+// await testRemoveReview();
+// await closeConnection();
+// console.log("Done!");

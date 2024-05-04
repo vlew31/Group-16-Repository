@@ -13,6 +13,11 @@
   src: url(AwelierB.otf);
 }
 
+@font-face {
+  font-family: 'Sableklish';
+  src: url(Sableklish.ttf);
+}
+
 /* Reset default styles */
 html, body {
   margin: 0;
@@ -21,11 +26,12 @@ html, body {
 
 /* Global styles */
 body {
-  font-family: 'Cambria', 'Times New Roman', serif;
+  font-family: 'AwelierEB';
   font-size: 16px;
   line-height: 1.5;
   background-color: #edede9;
-  color: #2ec4b6;
+  color: #003049;
+  text-align: center;
 }
 
 .container {
@@ -36,17 +42,28 @@ body {
 
 /* Header styles */
 header {
-  padding: 20px 0;
+  padding: 0px;
+  border-bottom: none; /* Add this line to remove the bottom border */
 }
 
 h1 {
   margin: 0;
-  font-family: 'AwelierB';
+  font-family: 'Sableklish';
   text-align: center;
-  font-size: 30pt;
+  font-size: 70pt;
+  color: #003049;
+  background-color: #edf6f9;
+  line-height: 1; /* Add this line to reset line height */
+  margin-bottom: 20px; /* Adjust margin-bottom as needed */
 }
 
-h2, h3, h4, h5, h6 {
+h2{
+  margin: 0;
+  font-size: 30pt;
+  color: #003049;
+}
+
+h3, h4, h5, h6 {
   margin: 0;
 }
 
@@ -54,7 +71,6 @@ h2, h3, h4, h5, h6 {
 nav {
   background-color: #669bbc;
   color: #003049;
-  padding: 8px 0;
 }
 
 nav ul {
@@ -66,20 +82,21 @@ nav ul {
 
 nav ul li {
   flex: 1;
-  font-family:'AwelierEB';
+  font-family: 'AwelierEB';
   font-size: 20pt;
+  background-color: #669bbc; /* Set the default background color */
 }
 
 nav ul li a {
   display: block;
-  padding: 10px 20px;
+  padding: 10px 20px; /* Add padding to create clickable area */
   text-align: center;
   text-decoration: none;
   color: inherit;
 }
 
-nav ul li a:hover {
-  background-color: #2ec4b6;
+nav ul li:hover {
+  background-color: #2ec4b6; /* Change background color on hover */
 }
 
 /* Dropdown menu styles */
@@ -114,3 +131,45 @@ nav ul li a:hover {
   background-color: #f1f1f1;
 }
 
+header{
+  padding: 0;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #669bbc;
+  color: #003049;
+  text-align: center;
+  padding: 1px;
+}
+
+.filters {
+  text-align: left; /* Align the content to the left */
+}
+
+.button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #8ecae6;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #0056b3; /* Darker shade of blue on hover */
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player img {
+  width: 100px; /* Set the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}

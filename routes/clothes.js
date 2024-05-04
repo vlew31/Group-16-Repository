@@ -19,6 +19,10 @@ router.route('/upload').get(async (req, res) => {
   res.render('upload', { title: 'Upload' });
 });
 
+router.route('/cart').get(async (req, res) => {
+  res.render('cart', { title: 'Cart/Wishlist' });
+});
+
 router.route('/search').get(async (req, res) => {
   res.render('search', { title: 'Search Results' });
 });
