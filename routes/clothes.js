@@ -97,7 +97,7 @@ router
         tags,
         photos
       );
-      res.status(200).json(newclothes);
+      return res.redirect('/'); 
     } catch (e) {
       return res.status(400).json({ error: e });
     }
