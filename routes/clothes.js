@@ -84,6 +84,17 @@ router
         tags,
         photos
       } = req.body;
+
+      let photoUrls = [];
+
+      if (typeof photos === 'string' && photos.includes(',')) {
+        photoUrls = photos.split(',');
+      } else if (typeof photos === 'string') {
+        photoUrls.push(photos);
+      } else if (Array.isArray(photos)) {
+        photoUrls = photos;
+      }
+
       const newclothes = await clothesData.create(
         seller,
         title,
@@ -95,9 +106,9 @@ router
         price,
         condition,
         tags,
-        photos
+        photoUrls
       );
-      res.status(200).json(newclothes);
+      return res.redirect('/'); 
     } catch (e) {
       return res.status(400).json({ error: e });
     }
