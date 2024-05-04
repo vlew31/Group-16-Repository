@@ -2,6 +2,7 @@ import express from 'express';
 import { clothesData } from '../data/index.js'
 
 const router = express.Router();
+router.use(express.json());
 
 router.route('/').get(async (req, res) => {
   res.render('home', { title: '$waggle' });
@@ -15,9 +16,43 @@ router.route('/user').get(async (req, res) => {
   res.render('user', { title: 'User Profile' });
 });
 
-router.route('/upload').get(async (req, res) => {
-  res.render('upload', { title: 'Upload' });
-});
+router
+  .route('/upload')
+  .get(async (req, res) => {
+    res.render('upload', { title: 'Upload' });
+  })
+  .post(async (req, res) => {
+    try {
+      const {
+        title,
+        description,
+        article,
+        size,
+        color,
+        gender,
+        price,
+        condition,
+        tags,
+        photo
+    } = req.body;
+      const newclothes = await clothesData.create(
+        req.body.title,
+        req.body.description,
+        req.body.article,
+        req.body.size,
+        req.body.color,
+        req.body.gender,
+        req.body.price,
+        req.body.condition,
+        req.body.tags,
+        req.body.photo
+      );
+      // res.status(200).json(newclothes);
+      res.redirect('/');
+    } catch (e) {
+      return res.status(400).json({ error: e });
+    }
+  });
 
 router.route('/cart').get(async (req, res) => {
   res.render('cart', { title: 'Cart/Wishlist' });
@@ -37,36 +72,36 @@ router
       return res.status(400).json({ error: e });
     }
   })
-  .post(async (req, res) => {
-    try {
-      const {
-          clothesName,
-          clothesDescription,
-          modelNumber,
-          price,
-          manufacturer,
-          manufacturerWebsite,
-          keywords,
-          categories,
-          dateReleased,
-          discontinued
-      } = req.body;
-      const newclothes = await clothesData.create(
-          clothesName,
-          clothesDescription,
-          modelNumber,
-          price,
-          manufacturer,
-          manufacturerWebsite,
-          keywords,
-          categories,
-          dateReleased,
-          discontinued
-      );
-      res.status(200).json(newclothes);
-    } catch (e) {
-      return res.status(400).json({ error: e });
-    }
+  // .post(async (req, res) => {
+  //   try {
+  //     const {
+  //         clothesName,
+  //         clothesDescription,
+  //         modelNumber,
+  //         price,
+  //         manufacturer,
+  //         manufacturerWebsite,
+  //         keywords,
+  //         categories,
+  //         dateReleased,
+  //         discontinued
+  //     } = req.body;
+  //     const newclothes = await clothesData.create(
+  //       req.body.clothesName,
+  //       req.body.clothesDescription,
+  //       req.body.modelNumber,
+  //       req.body.price,
+  //       req.body.manufacturer,
+  //       req.body.manufacturerWebsite,
+  //       req.body.keywords,
+  //       req.body.categories,
+  //       req.body.dateReleased,
+  //       req.body.discontinued
+  //     );
+  //     res.status(200).json(newclothes);
+  //   } catch (e) {
+  //     return res.status(400).json({ error: e });
+  //   }
   });
 
 router
@@ -86,24 +121,33 @@ router
     }
   })
   .delete(async (req, res) => {
-    try {
-      const result = await clothesData.remove(req.params.clothesId);
-      const deleted = !!result;
-      res.status(200).json({ _id: req.params.clothesId, deleted: deleted });
-    } catch (e) {
-      if (e === 'Invalid ObjectId') {
-        res.status(400).json({ error: 'Invalid clothes ID.' });
-      } else if (e === 'clothes not found') {
-        res.status(404).json({ error: 'clothes not found.' });
-      } else {
-      return res.status(400).json({ error: e});
-      }
+    let id = req.params.clothesId;
+    // try {
+    //   const result = await clothesData.remove(req.params.clothesId);
+    //   const deleted = !!result;
+    //   res.status(200).json({ _id: req.params.clothesId, deleted: deleted });
+    // } catch (e) {
+    //   if (e === 'Invalid ObjectId') {
+    //     res.status(400).json({ error: 'Invalid clothes ID.' });
+    //   } else if (e === 'clothes not found') {
+    //     res.status(404).json({ error: 'clothes not found.' });
+    //   } else {
+    //   return res.status(400).json({ error: e});
+    //   }
+    // }
+    try{
+      const result = await clothesData.remove(id);
+      return res.status(200).json(result);
+    }catch(e){
+      return res.status(404).json(e);
     }
   })
   .put(async (req, res) => {
+    let id = req.params.productId;
+    let newListing = req.body;
     try {
       const updatedclothes = await clothesData.update(
-        req.params.clothesId,
+        id,
         req.body.clothesName,
         req.body.clothesDescription,
         req.body.modelNumber,
@@ -115,7 +159,7 @@ router
         req.body.dateReleased,
         req.body.discontinued
       );
-      return res.status(200).json(updatedclothes);
+      return res.json(updatedclothes);
     } catch (e) {
       if(e === 'Could not update clothes with provided id.'){
         res.status(404).json({error: 'clothes not found.'});
