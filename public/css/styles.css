@@ -63,6 +63,12 @@ h2{
   color: #003049;
 }
 
+h3, h4, h5, h6 {
+  margin: 0;
+  font-size: 30pt;
+  color: #003049;
+}
+
 h5, h6 {
   margin: 0;
 }
@@ -348,4 +354,14 @@ a {
 
 .file-input-container {
   text-align: center;
+=======
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player img {
+  width: 100px; /* Set the width as needed */
+  height: auto; /* Maintain aspect ratio */
 }
