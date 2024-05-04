@@ -1,8 +1,10 @@
 // This data file should export all functions using the ES6 standard as shown in the lecture code
-import {listings} from '../config/mongoCollections.js';
+import {listings,users} from '../config/mongoCollections.js';
+import * as user from './users.js';
 import {ObjectId} from 'mongodb';
 
 export const create = async (
+  sellerId,
   seller,
   title,
   description,
@@ -102,12 +104,23 @@ export const create = async (
     comments: [],
     rating: 0
   };
+
   const insertInfo = await clothesCollection.insertOne(newclothes);
+  const newClothesId = insertInfo.insertedId.toString();
+  const clothes = await get(newClothesId);
+  const userCollection = await users();
+  const parseId = ObjectId(sellerId);
+  const currUser = await userCollection.findOne({ _id: parseId });
+  currUser.listings.push(clothes);
+  await userCollection.updateOne({ _id: parseId }, { $set: currUser });
   if (insertInfo.insertedCount === 0||!insertInfo.acknowledged) {
       throw "Could not add clothes";
   }
-  const newId = insertInfo.insertedId.toString();
-  const clothes = await get(newId); 
+  currUser['listings'] = list;
+  await userCollection.updateOne(
+    { _id: parseId },
+    { $set: movie }
+  );
   return clothes;
 };
 
