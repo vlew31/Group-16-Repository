@@ -6,29 +6,3 @@
   <div id="photos-container"></div>
   <button id="cartButton">Add to Cart</button>
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  // Fetch the JSON data from the server
-  fetch(`http://localhost:3000/listings/${listings._id}`)
-    .then(response => response.json())
-    .then(data => {
-      // Get the individual listing from the data
-      const listing = data[0]; // Assuming there's only one listing in this example
-
-      // Populate the HTML elements with listing information
-      document.getElementById('listing-title').textContent = listing.title;
-      document.getElementById('listing-seller').textContent = listing.seller;
-      document.getElementById('listing-description').textContent = listing.description;
-      document.getElementById('listing-price').textContent = listing.price.toFixed(2);
-      const photosContainer = document.getElementById('photos-container');
-      listing.photos.forEach(photoUrl => {
-        const img = document.createElement('img');
-        img.src = photoUrl;
-        img.alt = listing.title;
-        photosContainer.appendChild(img);
-      });
-    })
-    .catch(error => console.error('Error fetching listing:', error));
-});
-</script>
