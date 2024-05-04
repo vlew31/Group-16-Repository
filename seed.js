@@ -7,17 +7,78 @@ import { dbConnection } from "./config/mongoConnection.js";
 const db = await dbConnection();
 await db.dropDatabase();
 
-//defining these here so I can use them later in the function
-let apples = undefined;
-let bananas = undefined;
-let coconuts = undefined;
-let donuts = undefined;
+let User1 = undefined;
+let User2 = undefined;
+let User3 = undefined;
+let User4 = undefined;
 
-async function testCreateProducts() {
-	console.log(`Let's add some "apples"!`);
+
+async function testRegisterUser(){
 	try {
-		apples = await clothesData.create(
+		User1 = await userData.registerUser(
+			"Isabelle",
+			"Villanueva",
+			"ivillanu@stevens.edu",
+			"ivillanu",
+			"ivillanu123",
+			"admin"
+		);
+	} catch(e) {
+		console.log("Uh-oh, not supposed to see me");
+		console.log(e);
+	}
+	try {
+		User2 = await userData.registerUser(
+			"Kieron",
+			"Ampaw",
+			"fake_email@gmail.com",
+			"Keba12345", 
+			"Keba1234",
+			"admin"
+		);
+	} catch(e) {
+		console.log("Uh-oh, not supposed to see me");
+		console.log(e);
+	}
+	try {
+		User3 = await userData.registerUser(
+			"Belal",
+			"Eltemsah",
+			"super_fake_email@gmail.com",
+			"Belalipop", 
+			"YeatLover",
+			"admin"
+		);
+	} catch(e) {
+		console.log("Uh-oh, not supposed to see me");
+		console.log(e);
+	}
+	try {
+		User4 = await userData.registerUser(
+			"isa",
+			"villanu",
+			"real_email@gmail.com",
+			"Missbelly", 
+			"BeaLover",
+			"user"
+		);
+	} catch(e) {
+		console.log("Uh-oh, not supposed to see me");
+		console.log(e);
+	}
+}
 
+//defining these here so I can use them later in the function
+let fortniteMerch = undefined;
+let beaMerch = undefined;
+let cartiMerch = undefined;
+let denimVest = undefined;
+let starJorts = undefined;
+let moonTee = undefined;
+
+async function testCreateProducts() { //creates a listing
+	try {
+		fortniteMerch = await clothesData.create(
 			"      missbelly     ",
 			"fortnite merch",
 			"limited edition fortnite nettspend collab",
@@ -31,18 +92,12 @@ async function testCreateProducts() {
 			["https://downersclub.com/wp-content/uploads/2023/11/Nettspend.jpg", "https://cdn1.epicgames.com/offer/fn/Blade_2560x1440_2560x1440-95718a8046a942675a0bc4d27560e2bb"]
 			
 		);
-
-		console.log("Success!, Apples has created");
-		console.log(apples);
-		console.log("-----------");
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 1");
 		console.log(e);
 	}
-	console.log("----------");
-	console.log("Let's add some Bananas!");
 	try {
-		bananas = await clothesData.create(
+		beaMerch = await clothesData.create(
 			"belalipop",
 			"beabadoobee merch",
 			"I <3 BEABADOOBEE",
@@ -55,251 +110,86 @@ async function testCreateProducts() {
 			["Beabadoobee", "Singer", "Filipina", "Denim"],
 			["https://i1.sndcdn.com/artworks-yi5PWVKO8kzMtSPc-tFa0hA-t240x240.jpg"]
 		);
-		console.log("Success!, Bananas has created");
-		console.log(bananas);
-		console.log("-----------");
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		cartiMerch = await clothesData.create(
+			"keba123",
+			"hello kitty mug",
+			"playboi carti mug from EvilJ0rdan music video!",
+			"accessories",
+			"N/A",
+			"white",
+			"Unisex",
+			20.24,
+			"Used",
+			["Hello Kitty", "Mug", "Playboi Carti", "Underground"],
+			["https://m.media-amazon.com/images/I/61gT1oMuURL.jpg"]
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		starJorts = await clothesData.create(
+			"vlew31",
+			"Aelfric Eden Star Patchwork Jorts",
+			"Jorts with star patchwork in the middle.",
+			"Jorts",
+			"30",
+			"Blue",
+			"Unisex",
+			45.00,
+			"New",
+			["Denim", "Star"],
+			["https://i.pinimg.com/564x/5f/aa/e4/5faae4bfc8bd71fc6b3a15b8e329d6a9.jpg"]
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		denimVest = await clothesData.create(
+			"joelleAn",
+			"Denim Vest",
+			"Backless denim vest with denim ribbon",
+			"Vest",
+			"M",
+			"blue",
+			"F",
+			90.00,
+			"Refurbished",
+			["Denim", "Ribbon", "Coquette", "Backless"],
+			["https://i.pinimg.com/736x/37/a6/5e/37a65e3e2779a705216088f5511b9c78.jpg", "https://i.pinimg.com/564x/cc/e8/b5/cce8b5bc9d94193979a446d615d3828b.jpg"]
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		moonTee = await clothesData.create(
+			"missbelly",
+			"Trip to the Moon Mesh Tee",
+			"Cropped tee with mesh fabric",
+			"Tee",
+			"S",
+			"Other",
+			"F",
+			48.00,
+			"New",
+			["Mesh", "Moon", "Street Style"],
+			["https://i.pinimg.com/736x/67/16/85/671685f5580e935b903519e96e892c94.jpg", "https://i.pinimg.com/736x/db/e4/51/dbe451c0af54a2bd40b2437a58b68487.jpg"]
+		);
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 2");
 		console.log(e);
 	}
 }
 
-async function testRemove() {
-	console.log("----------");
-	console.log("Let's remove some Bananas!");
-	if (bananas) {
-		try {
-			console.log(await clothesData.remove(bananas._id.toString()));
-			console.log("Success! Removed the second product");
-			console.log("-----------");
-		} catch (e) {
-			console.log("Uh-oh, not supposed to see me - 3");
-			console.log(e);
-		}
-	} else {
-		console.log("Bananas product creation failed");
-	}
-}
-async function testUpdate() {
-	console.log("Let's update some apples!");
-	try {
-		apples = await clothesData.update(
-			apples._id.toString(),
-			"Not Apples",
-			"Keeps the WITCH away",
-			"XY  Z123",
-			3.01,
-			"Lin Industries",
-			"http://www.LININ.com",
-			["Food", "Fruits"],
-			["Delicious", "ASJDSD"],
-			"03/20/2024",
-			false
-		);
-		console.log("Success!, Apples has updated");
-		console.log(await clothesData.get(apples._id.toString()));
-		console.log("-----------");
-	} catch (e) {
-		console.log("Uh-oh, not supposed to see me - 4");
-		console.log(e);
-	}
-}
-async function testGetAll() {
-	console.log(await clothesData.getAll());
-}
-
-async function testCreateReview() {
-	try {
-		rev1 = await reviewData.createReview(
-			apples._id.toString(),
-			"WOw",
-			"me",
-			"cool",
-			3
-		);
-		// rev1 = reviewData.logfunction();
-		console.log("Success!, Apples has been reviewed");
-		console.log(await clothesData.get(apples._id.toString()));
-		console.log("-----------");
-	} catch (e) {
-		console.log("Uh-oh, not supposed to see me - 5");
-		console.log(e);
-	}
-}
-
-async function testGetAllReview() {
-	try {
-		coconuts = await clothesData.create(
-			"Coconuts",
-			"Coconut crabs away",
-			"XY  Z123",
-			3.01,
-			"Lin Industries",
-			"http://www.LININ.com",
-			["Food", "Fruits"],
-			["Delicious", "ASJDSD"],
-			"03/20/2024",
-			false
-		);
-		const rev2 = await reviewData.createReview(
-			coconuts._id.toString(),
-			"COCONUT 1",
-			"me",
-			"cool",
-			3.1
-		);
-		const rev3 = await reviewData.createReview(
-			coconuts._id.toString(),
-			"COCONUT 3",
-			"me",
-			"NOT COOL",
-			3.2
-		);
-		// rev1 = reviewData.logfunction();
-		console.log("Success!, Got both of the reviews of coconuts");
-		console.log(await reviewData.getAllReviews(coconuts._id.toString()));
-		console.log("-----------");
-	} catch (e) {
-		console.log("Uh-oh, not supposed to see me - 6");
-		console.log(e);
-	}
-}
-
-async function testGetReview() {
-	try {
-		coconuts = await clothesData.create(
-			"Coconuts",
-			"Coconut crabs away",
-			"XY  Z123",
-			3.01,
-			"Lin Industries",
-			"http://www.LININ.com",
-			["Food", "Fruits"],
-			["Delicious", "ASJDSD"],
-			"03/20/2024",
-			false
-		);
-		const rev2 = await reviewData.createReview(
-			coconuts._id.toString(),
-			"COCONUT 1",
-			"me",
-			"cool",
-			3
-		);
-		// rev1 = reviewData.logfunction();
-		console.log("Success!, Got a reviews of coconuts");
-		let coco = await clothesData.get(coconuts._id.toString());
-		const rev1_string = coco.reviews[0]._id.toString();
-		console.log(rev1_string);
-		console.log(await reviewData.getReview(rev1_string));
-		// console.log(await reviewData.getReview(coconuts.reviews[0]));
-		console.log("-----------");
-	} catch (e) {
-		console.log("Uh-oh, not supposed to see me - 7");
-		console.log(e);
-	}
-}
-
-async function testUpdateReview() {
-	try {
-		coconuts = await clothesData.create(
-			"Coconuts",
-			"Coconut crabs away",
-			"XY  Z123",
-			3.01,
-			"Lin Industries",
-			"http://www.LININ.com",
-			["Food", "Fruits"],
-			["Delicious", "ASJDSD"],
-			"03/20/2024",
-			false
-		);
-		//tests if rev2 has been updated - error test here
-		const rev2 = await reviewData.createReview(
-			coconuts._id.toString(),
-			"COCONUT 1",
-			"me",
-			"cool",
-			3
-		);
-		const rev3 = await reviewData.createReview(
-			coconuts._id.toString(),
-			"COCONUT awesome",
-			"me",
-			"cool",
-			5
-		);
-
-		console.log("Success!, Got an updated reviews of coconuts");
-		let coco = await clothesData.get(coconuts._id.toString());
-		const rev1_string = coco.reviews[0]._id.toString();
-
-		const updated = {
-			title: "BAD COCONUT",
-			reviewerName: "COCONUT HATER",
-			review: "NOT COOL",
-			rating: 1.3,
-		};
-		const a = await reviewData.updateReview(rev1_string, updated);
-		console.log(await reviewData.getAllReviews(coconuts._id.toString()));
-		console.log("-----------");
-		console.log("updateReview printed correctly?:");
-		console.log(a);
-	} catch (e) {
-		console.log("Uh-oh, not supposed to see me - 8");
-		console.log(e);
-	}
-}
-async function testRemoveReview() {
-	try {
-		donuts = await clothesData.create(
-			"Donuts",
-			"dodoodododo",
-			"XY  Z123",
-			3.01,
-			"Lin Industries",
-			"http://www.LININ.com",
-			["Food", "Fruits"],
-			["Delicious", "ASJDSD"],
-			"03/20/2024",
-			false
-		);
-		//tests if rev2 has been updated - error test here
-		const rev2 = await reviewData.createReview(
-			donuts._id.toString(),
-			"DONUT FAN 123",
-			"you",
-			"eh",
-			2
-		);
-		const rev3 = await reviewData.createReview(
-			donuts._id.toString(),
-			"DONUT FAN GGGGGG",
-			"youuself",
-			"he",
-			4
-		);
-		const rev4 = await reviewData.createReview(
-			donuts._id.toString(),
-			"DONUT FAN ASDASDSD",
-			"youuself",
-			"he",
-			1
-		);
-		let dodo = await clothesData.get(donuts._id.toString());
-		const rev1_string = dodo.reviews[0]._id.toString();
-		const a = await reviewData.removeReview(rev1_string);
-		console.log("Success!, Removed a review from donuts");
-		console.log(a);
-		console.log("-----------");
-	} catch (e) {
-		console.log("Uh-oh, not supposed to see me - 9");
-		console.log(e);
-	}
-}
-
 await testCreateProducts();
-// await testUpdate();
+await testRegisterUser();
 // await testRemove();
 // await testCreateReview();
 // await testGetAllReview();

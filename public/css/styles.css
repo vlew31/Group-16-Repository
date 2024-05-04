@@ -65,6 +65,25 @@ h2{
 
 h3, h4, h5, h6 {
   margin: 0;
+  font-size: 30pt;
+  color: #003049;
+}
+
+h5, h6 {
+  margin: 0;
+}
+
+h4{
+  margin: 0;
+  font-size: 40pt;
+  color: #003049;
+}
+
+h3{
+  margin: 0;
+  font-size: 15pt;
+  color: #003049;
+  font-family: 'AwelierB';
 }
 
 /* Navigation styles */
@@ -153,16 +172,189 @@ footer {
 .button {
   display: inline-block;
   padding: 5px 10px;
-  background-color: #8ecae6;
+  background-color:#669bbc;
   color: white;
   text-decoration: none;
   border-radius: 5px;
 }
 
 .button:hover {
-  background-color: #0056b3; /* Darker shade of blue on hover */
+  background-color: #8ecae6;
 }
 
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player img {
+  width: 100px; /* Set the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+#listings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.listing {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.listing img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  max-height: 200px;
+}
+
+.key {
+  font-family: 'AwelierEB';
+  color: #003049; /* Optional: Change color to your preference */
+  margin-right: 5px; /* Optional: Add some spacing between key and value */
+}
+
+.value {
+  font-family: 'Awelier';
+  color: #669bbc;
+}
+
+a {
+  text-decoration: none; /* Remove underline from links */
+}
+
+#listings-container a {
+  text-decoration: none; /* Remove underline from links inside listingsContainer */
+}
+
+.listing {
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.listing h2 {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #003049;
+}
+
+.listing p {
+  margin-bottom: 5px;
+}
+
+.listing strong {
+  font-family: 'AwelierEB';
+  color: #003049;
+  margin-right: 5px;
+}
+
+.listing .tag {
+  display: inline-block;
+  background-color: #669bbc;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-family: 'Awelier';
+}
+
+.listing .photos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Add this line */
+  margin-top: 10px;
+}
+
+.listing .small-photo {
+  width: 300px;
+  height: 200px;
+  object-fit: contain; /* Maintain aspect ratio without cropping */
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.upload-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.upload-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.upload-heading-1 {
+  font-family: 'Sableklish';
+  font-size: 36px;
+  color: #003049;
+}
+
+.upload-heading-2 {
+  font-family: 'AwelierEB';
+  font-size: 24px;
+  color: #003049;
+  margin-bottom: 10px;
+}
+
+.upload-form {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.upload-label {
+  font-family: 'AwelierEB';
+  color: #003049;
+}
+
+.upload-input,
+.upload-textarea,
+.upload-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: 'Awelier';
+  color: #003049;
+}
+
+.upload-textarea {
+  height: 100px;
+}
+
+.upload-submit {
+  background-color: #669bbc;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'AwelierEB';
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.upload-submit:hover {
+  background-color: #2ec4b6;
+}
+
+.file-input-container {
+  text-align: center;
+=======
 .player {
   display: flex;
   flex-direction: column;

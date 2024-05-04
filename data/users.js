@@ -116,58 +116,93 @@
 //   };
 // };
 
-export const get = async (userId) => {
-  if(userId === undefined){
-    throw 'id not provided';
-  } else if(typeof userId !== 'string' || userId.trim().length === 0){
-    throw 'parameter is not a valid id';
-  } else if(!ObjectId.isValid(userId.trim())){
-    throw 'id is not a valid ObjectID'
-  } 
-  const userCollection = await users();
-  const userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
-  if(userToFind === null){
-    throw 'no user with that id';
-  }
+// export const get = async (userId) => {
+//   if(userId === undefined){
+//     throw 'id not provided';
+//   } else if(typeof userId !== 'string' || userId.trim().length === 0){
+//     throw 'parameter is not a valid id';
+//   } else if(!ObjectId.isValid(userId.trim())){
+//     throw 'id is not a valid ObjectID'
+//   } 
+//   const userCollection = await users();
+//   const userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
+//   if(userToFind === null){
+//     throw 'no user with that id';
+//   }
 
-  userToFind._id = userToFind._id.toString();
+//   userToFind._id = userToFind._id.toString();
   
-  return userToFind;
-};
+//   return userToFind;
+// };
 
 
-export const getAll = async () => {
+// export const getAll = async () => {
 
-  const userCollection = await users();
-  let userList = await userCollection.find({}).project({_id: 1, userame: 1}).toArray();
+//   const userCollection = await users();
+//   let userList = await userCollection.find({}).project({_id: 1, userame: 1}).toArray();
 
-  if(!userList){
-    throw 'prducts not found';
-  }
+//   if(!userList){
+//     throw 'prducts not found';
+//   }
 
-  return userList;
-};
+//   return userList;
+// };
 
 
 
 //import mongo collections, bcrypt and implement the following data functions
 import { users } from "../config/mongoCollections.js";
 import bcrypt from "bcryptjs";
+import {ObjectId} from 'mongodb';
+
 export const registerUser = async (
     firstName,
     lastName,
     email,
     username,
     password,
-    role
+    role,
+	listings
   ) => {
 	firstName = firstName.trim();
 	lastName = lastName.trim();
-  email = email.trim();
+  	email = email.trim();
 	username = username.trim();
 	password = password.trim();
 	role = role.trim();
-	
+	// checkRequiredFields(
+	// 	firstName,
+	// 	lastName,
+	// 	username,
+	// 	password,
+	// 	favoriteQuote,
+	// 	themePreference,
+	// 	role
+	// );
+	// checkIfFieldsAreProperString(
+	// 	firstName,
+	// 	lastName,
+	// 	username,
+	// 	password,
+	// 	favoriteQuote,
+	// 	themePreference,
+	// 	role
+	// );
+	// //first
+	// checkIsProperLength(firstName, 2);
+	// checkMaxLength(firstName, 25);
+	// checkIfContainsNumber(firstName);
+	// //last
+	// checkIsProperLength(lastName, 2);
+	// checkMaxLength(lastName, 25);
+	// checkIfContainsNumber(lastName);
+	// //user
+	// checkIsProperLength(username, 5);
+	// checkMaxLength(username, 10);
+	// checkIfContainsNumber(username);
+
+	// console.log("here1");
+	//check duplicate
 	const lowercaseUsername = username.toLowerCase();
 	const usersCollection = await users();
 	const existingUser = await usersCollection.findOne({
@@ -176,7 +211,33 @@ export const registerUser = async (
 	if (existingUser) {
 		throw "ERR: user already exists";
 	}
+	// console.log("here2");
 
+	//pw
+	// checkIsProperLength(password, 8);
+	// if (
+	// 	/\s/.test(password) ||
+	// 	!/[A-Z]/.test(password) ||
+	// 	!/\d/.test(password) ||
+	// 	!/[!@#$%^&*(),.?":{}|<>]/.test(password)
+	// ) {
+	// 	throw "ERR: invalid password";
+	// }
+
+	//quote
+	// checkIsProperLength(favoriteQuote, 20);
+	// checkMaxLength(favoriteQuote, 255);
+
+	//theme
+	// const lowercaseThemePreference = themePreference.toLowerCase();
+	// if (
+	// 	lowercaseThemePreference !== "light" &&
+	// 	lowercaseThemePreference !== "dark"
+	// ) {
+	// 	throw "ERR: Invalid themePreference";
+	// }
+
+	//role
 	const lowercaseRole = role.toLowerCase();
 	if (lowercaseRole !== "admin" && lowercaseRole !== "user") {
 		throw "ERR: Invalid role";
@@ -187,10 +248,11 @@ export const registerUser = async (
 	const newUser = {
 		firstName: firstName.trim(),
 		lastName: lastName.trim(),
-    email: email.trim(),
+    	email: email.trim(),
 		username: lowercaseUsername,
 		password: hashedPassword,
 		role: lowercaseRole,
+		listings: []
 	};
 	const insertedUser = await usersCollection.insertOne(newUser);
 
@@ -243,16 +305,49 @@ export const loginUser = async (username, password) => {
 	const {
 		firstName,
 		lastName,
-    email,
+   	 	email,
 		username: storedUsername,
-		role
+		role,
+		listings
 	} = newUser;
 
 	return {
 		firstName,
 		lastName,
-    email,
+ 		email,
 		username: storedUsername,
 		role,
+		listings
 	};
+};
+
+export const getAll = async () => {
+
+  const userCollection = await users();
+  let userList = await userCollection.find({}).project({_id: 1, username: 1}).toArray();
+
+  if(!userList){
+    throw 'users not found';
+  }
+
+  return userList;
+};
+
+export const get = async (userId) => {
+  if(userId === undefined){
+    throw 'id not provided';
+  } else if(typeof userId !== 'string' || userId.trim().length === 0){
+    throw 'parameter is not a valid id';
+  } else if(!ObjectId.isValid(userId.trim())){
+    throw 'id is not a valid ObjectID'
+  } 
+  const userCollection = await users();
+  const userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
+  if(userToFind === null){
+    throw 'no user with that id';
+  }
+
+  userToFind._id = userToFind._id.toString();
+  
+  return userToFind;
 };
