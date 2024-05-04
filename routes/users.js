@@ -5,8 +5,27 @@ import { userData } from '../data/index.js'
 const router = Router();
 
 router.route('/').get(async (req, res) => {
-  //code here for GET THIS ROUTE SHOULD NEVER FIRE BECAUSE OF MIDDLEWARE #1 IN SPECS.
-  return res.json({error: 'YOU SHOULD NOT BE HERE!'});
+  res.render('home', { title: '$waggle' });
+});
+
+router.route('/about').get(async (req, res) => {
+  res.render('about', { title: 'About Us' });
+});
+
+router.route('/user').get(async (req, res) => {
+  res.render('user', { title: 'User Profile' });
+});
+
+router.route('/upload').get(async (req, res) => {
+  res.render('upload', { title: 'Upload' });
+});
+
+router.route('/cart').get(async (req, res) => {
+  res.render('cart', { title: 'Cart/Wishlist' });
+});
+
+router.route('/search').get(async (req, res) => {
+  res.render('search', { title: 'Search Results' });
 });
 
 router
@@ -172,20 +191,20 @@ router
   });
 router
   .route('/users')
-//   .get(async (req, res) => {
-//     try {
-//       const users = await userData.getAll();
-//       const simplifiedUsers = users.map(user => ({
-//         _id: user._id,
-//         username: user.username
-//       }));
-//       res.json(simplifiedUsers);
-//     } catch (e) {
-//       res.status(400).json({ error: e.message });
-//     }
-//   })
-  .post(async (req, res) => {
+  .get(async (req, res) => {
     console.log("hey");
+    try {
+      const users = await userData.getAll();
+      const simplifiedUsers = users.map(user => ({
+        _id: user._id,
+        username: user.username
+      }));
+      res.json(simplifiedUsers);
+    } catch (e) {
+      res.status(400).json({ error: e.message });
+    }
+  })
+  .post(async (req, res) => {
     try {
       const { firstName, lastName, email, username, password, role } = req.body;
       const newUser = await userData.registerUser(
@@ -204,9 +223,9 @@ router
   });
 
 router
-  .route('/:userId')
+  .route('/users/:userId')
   .get(async (req, res) => {
-    const userId = req.params.userId;
+    const userId = req.params._id;
     try {
       const user = await userData.get(userId);
       res.status(200).json(user);

@@ -31,7 +31,7 @@ export const create = async (
   // if (
   //   typeof clothesName !== 'string' || clothesName === '' || 
   //   typeof clothesDescription !== 'string' || clothesDescription === '' || 
-  //   typeof modelNumber !== 'string' || modelNumber === '' ||
+  //   typeof modeelNumber !== 'string' || modelNumber === '' ||
   //   typeof manufacturer !== 'string' || manufacturer === '' ||
   //   typeof manufacturerWebsite !== 'string' || manufacturerWebsite === '' ||
   //   typeof dateReleased !== 'string' || dateReleased === ''){
@@ -89,6 +89,7 @@ export const create = async (
   const clothesCollection = await listings();
 
   const newclothes = {
+    // userId: userId,
     seller: seller,
     title: title,
     description: description,
@@ -121,7 +122,7 @@ export const getAll = async () => {
 
   let clothesList = await clothesCollection
   .find({})
-  .project({ _id: 1, clothesName: 1 })
+  // .project({ _id: 1, clothesName: 1 })
   .toArray();
 
   if (!clothesList.length) throw 'No clothes found';
@@ -131,15 +132,15 @@ export const getAll = async () => {
 
 export const get = async (listingId) => {
   // let x = new ObjectId();
-  if (!listingId){
-    throw 'Id must be provided';
-  } 
-  if (typeof listingId !== 'string'){
-    throw 'Id must be a string';
-  }
-  if (listingId.trim().length === 0){
-    throw 'Id cannot be an empty string or just spaces';
-  }
+  // if (!listingId){
+  //   throw 'Id must be provided';
+  // } 
+  // if (typeof listingId !== 'string'){
+  //   throw 'Id must be a string';
+  // }
+  // if (listingId.trim().length === 0){
+  //   throw 'Id cannot be an empty string or just spaces';
+  // }
 
   listingId = listingId.trim();
   if (!ObjectId.isValid(listingId)){
@@ -294,3 +295,21 @@ export const update = async (
 
   return updatedclothesWithId;
 };
+
+export async function searchByName(searchTerm) {
+  try {
+
+    listingId = listingId.trim();
+    if (!ObjectId.isValid(listingId)){
+      throw 'Invalid ObjectId';
+    }
+  
+    const clothesCollection = await listings();
+    const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i' } }).toArray();
+
+    return searchResults;
+  } catch (error) {
+      console.error('Error searching listings by name:', error);
+      throw error;
+  }
+}
