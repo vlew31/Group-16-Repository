@@ -30,7 +30,7 @@
                 listingDiv.classList.add('listing');
 
                 const listingLink = document.createElement('a');
-                listingLink.href = `/listings/{listing.id}`; 
+                listingLink.href = `/listings/${listing._id}`;
                 listingLink.appendChild(listingDiv);
 
                 listingDiv.innerHTML = 
