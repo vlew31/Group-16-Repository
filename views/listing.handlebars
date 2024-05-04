@@ -1,33 +1,35 @@
-<div class="listing">
-  <h2 id="listing-title"></h2>
-  <p><strong>Seller:</strong> <span id="listing-seller"></span></p>
-  <p><strong>Description:</strong> <span id="listing-description"></span></p>
-  <p><strong>Price:</strong> $<span id="listing-price"></span></p>
-  <div id="photos-container"></div>
-</div>
+  <div class="listing">
+    <h2 id="listing-title"></h2>
+    <p><strong>Seller:</strong> <span id="listing-seller"></span></p>
+    <p><strong>Description:</strong> <span id="listing-description"></span></p>
+    <p><strong>Price:</strong> $<span id="listing-price"></span></p>
+    <div id="photos-container"></div>
+  </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  // Fetch the JSON data from the server
-  fetch('http://localhost:3000/listings')
-    .then(response => response.json())
-    .then(data => {
-      // Get the individual listing from the data
-      const listing = data[0]; // Assuming there's only one listing in this example
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get the listing ID from the URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const listingId = urlParams.get('._id');
 
-      // Populate the HTML elements with listing information
-      document.getElementById('listing-title').textContent = listing.title;
-      document.getElementById('listing-seller').textContent = listing.seller;
-      document.getElementById('listing-description').textContent = listing.description;
-      document.getElementById('listing-price').textContent = listing.price.toFixed(2);
-      const photosContainer = document.getElementById('photos-container');
-      listing.photos.forEach(photoUrl => {
-        const img = document.createElement('img');
-        img.src = photoUrl;
-        img.alt = listing.title;
-        photosContainer.appendChild(img);
-      });
-    })
-    .catch(error => console.error('Error fetching listing:', error));
-});
-</script>
+      // Fetch the specific listing data using the ID
+      fetch(`http://localhost:3000/listings/${listingId}`)
+        .then(response => response.json())
+        .then(data => {
+          // Populate the HTML elements with listing information
+          document.getElementById('listing-title').textContent = data.title;
+          document.getElementById('listing-seller').textContent = data.seller;
+          document.getElementById('listing-description').textContent = data.description;
+          document.getElementById('listing-price').textContent = data.price.toFixed(2);
+          const photosContainer = document.getElementById('photos-container');
+          data.photos.forEach(photoUrl => {
+            const img = document.createElement('img');
+            img.src = photoUrl;
+            img.alt = data.title;
+            photosContainer.appendChild(img);
+          });
+        })
+        .catch(error => console.error('Error fetching listing:', error));
+    });
+  </script>
+
