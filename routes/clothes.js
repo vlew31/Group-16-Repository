@@ -31,7 +31,7 @@ router
   .route('/')
   .get(async (req, res) => {
     try {
-      const clothess = await clothesData.getAll();
+      const clothes = await clothesData.getAll();
       return res.json(clothess);
     } catch (e) {
       return res.status(400).json({ error: e });
