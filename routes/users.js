@@ -2,6 +2,7 @@ import { Router } from 'express';
 // import * as userData from '../data/users.js';
 // import { userData } from '../data/index.js'
 import { registerUser, loginUser } from "../data/users.js";
+import xss from 'xss;'
 
 const router = Router();
 
@@ -41,6 +42,14 @@ router
     try {
       const { firstName, lastName, email, username, password, confirmPassword, role } = req.body;
       // Validate input data
+
+      firstName = xss(firstName);
+      lastName = xss(lastName);
+      email = xss(email);
+      password = xss(password);
+      confirmPassword = xss(confirmPassword);
+      role = xss(role);
+
       if(firstName === undefined) {
         throw {code: 400, error: "first name is missing"};
       }
