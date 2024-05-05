@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // import * as userData from '../data/users.js';
-// import { userData } from '../data/index.js'
-import { registerUser, loginUser } from "../data/users.js";
+import { userData } from '../data/index.js'
+import { registerUser, loginUser, getUser, getAll } from "../data/users.js";
 import xss from 'xss';
 
 const router = Router();
@@ -210,38 +210,72 @@ router
     }
   });
 
-router
-  .route('/users')
+// router
+//   .route('/users')
+//   .get(async (req, res) => {
+//     if (!req.session.user) {
+//       return res.redirect('/users/login');
+//     }
+//     else {
+//       console.log(req.session.user);
+//       res.render('user', { title: 'User Profile', user: req.session.user });
+//     }
+//   })
+  //   try {
+  //     const users = await userData.getAll();
+  //     const simplifiedUsers = users.map(user => ({
+  //       _id: user._id,
+  //       username: user.username
+  //     }));
+  //     res.json(simplifiedUsers);
+  //   } catch (e) {
+  //     res.status(400).json({ error: e.message });
+  //   }
+  // })
+  // .post(async (req, res) => {
+  //   try {
+  //     const { firstName, lastName, email, username, password, role } = req.body;
+  //     const newUser = await userData.registerUser(
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       username,
+  //       password,
+  //       role
+  //     );
+  //     return res.json(newUser);
+  //   } catch (e) {
+  //       // console.log("uh oh");
+  //     return res.status(400).json({ error: e.message });
+  //   }
+  // });
+
+  router
+  .route('/user')
   .get(async (req, res) => {
-    console.log("hey");
-    try {
-      const users = await userData.getAll();
-      const simplifiedUsers = users.map(user => ({
-        _id: user._id,
-        username: user.username
-      }));
-      res.json(simplifiedUsers);
-    } catch (e) {
-      res.status(400).json({ error: e.message });
+    if (!req.session.user) {
+      return res.redirect('/users/login');
     }
+    return res.render('user', { title: 'User Profile', ...req.session.user});
   })
   .post(async (req, res) => {
     try {
-      const { firstName, lastName, email, username, password, role } = req.body;
-      const newUser = await userData.registerUser(
-        firstName,
-        lastName,
-        email,
-        username,
-        password,
-        role
-      );
-      return res.json(newUser);
+      // const { firstName, lastName, email, username, password, role } = req.body;
+      // const newUser = await userData.registerUser(
+      //   firstName,
+      //   lastName,
+      //   email,
+      //   username,
+      //   password,
+      //   role
+      // );
+      const user = await userData.getUser(req.session.user.username)
+      return res.json(user);
     } catch (e) {
-        // console.log("uh oh");
       return res.status(400).json({ error: e.message });
     }
   });
+
 
 router
   .route('/users/:userId')
@@ -264,7 +298,7 @@ router
   router.route('/users/logout').get(async (req, res) => {
     req.session.destroy();
     res.clearCookie('AuthenticationState', '', { expires: new Date() });
-    return res.render("logout", {title: "Logout Page"});
+    return res.render("/users/logout", {title: "Logout Page"});
   });
 
 export default router;

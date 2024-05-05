@@ -131,7 +131,11 @@ app.get('/register', (req, res) => {
 
 
 app.use('/user', (req, res, next) => {
-  res.render("user", { title: "User Profile" });
+  if (!(req.session.user)) {
+    return res.redirect("/users/login");
+}
+next();
+  // res.render("user", { title: "User Profile" });
 })
 
 
@@ -146,11 +150,9 @@ app.use('/admin', (req, res, next) => {
 })
 
 
-app.use('/logout', (req, res, next) => {
-  if (!(req.session.user)) {
-      return res.redirect("/login");
-  }
-  next();
+app.use('/logout', (req, res) => {
+    return res.redirect("/users/logout");
+  // next();
 })
 
 configRoutes(app);

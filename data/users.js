@@ -134,6 +134,35 @@ export const loginUser = async (username, password) => {
 
 };
 
+export const getUser= async (username) => {
+	const u = username.trim();
+
+	if(u === undefined) {
+		throw "input must be supplied";
+	}
+
+	const letterChecker = /^[a-zA-Z]+$/;
+	if(typeof u !== 'string' || u.length < 5 || u.length > 10 || !letterChecker.test(u)) {
+		throw "invalid username input";
+	}
+
+	const userList = await users();
+	const findUser = await userList.findOne({ username: u });
+
+	if (!findUser) {
+		throw "Either the username or password is invalid";
+	}
+
+	return {
+		firstName: findUser.firstName, 
+		lastName: findUser.lastName, 
+		email: findUser.email, 
+		username: findUser.username, 
+		role: findUser.role
+	};
+
+} 
+
 export const getAll = async () => {
 
   const userCollection = await users();
