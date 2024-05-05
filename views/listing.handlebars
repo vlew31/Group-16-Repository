@@ -1,10 +1,10 @@
 <div class="listing">
   <h4>{{ listing.title }}</h4>
-    <div class="photos-container center-images">
-      {{#each listing.photos}}
-        <img class="small-photo" src="{{ this }}" alt="Listing Photo">
-      {{/each}}
-    </div>
+  <div class="photos-container">
+    {{#each listing.photos}}
+      <img class="small-photo" src="{{ this }}" alt="Listing Photo">
+    {{/each}}
+  </div>
   <p><span class="key">Seller:</span> <span class="value">{{ listing.seller }}</span></p>
   <p><span class="key">Description:</span> <span class="value">{{ listing.description }}</span></p>
   <p><span class="key">Article:</span> <span class="value">{{ listing.article }}</span></p>
