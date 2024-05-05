@@ -2,7 +2,7 @@ import { Router } from 'express';
 // import * as userData from '../data/users.js';
 // import { userData } from '../data/index.js'
 import { registerUser, loginUser } from "../data/users.js";
-import xss from 'xss;'
+import xss from 'xss';
 
 const router = Router();
 
