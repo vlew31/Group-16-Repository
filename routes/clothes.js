@@ -71,6 +71,7 @@ router
       } = req.body;
 
       let photoUrls = [];
+      let tagArray = [];
 
       if (typeof photos === 'string' && photos.includes(',')) {
         photoUrls = photos.split(',');
@@ -78,6 +79,14 @@ router
         photoUrls.push(photos);
       } else if (Array.isArray(photos)) {
         photoUrls = photos;
+      }
+
+      if (typeof tags === 'string' && tags.includes(',')) {
+        tagArray = tags.split(',');
+      } else if (typeof tags === 'string') {
+        tagArray.push(tags);
+      } else if (Array.isArray(tags)) {
+        tagArray = tags;
       }
 
       const newclothes = await clothesData.create(
@@ -90,7 +99,7 @@ router
         gender,
         price,
         condition,
-        tags,
+        tagArray,
         photoUrls
       );
       return res.redirect('/'); 
