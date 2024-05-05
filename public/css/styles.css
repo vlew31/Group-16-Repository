@@ -280,12 +280,24 @@ a {
 
 .listing .photos-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Add this line */
-  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
-.listing .small-photo {
+.listing .photos-container img {
+  max-width: 100%; /* Ensure images don't exceed container width */
+  max-height: 100%; /* Ensure images don't exceed container height */
+}
+
+.listing .photos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.listing .photos-container img {
   width: 300px;
   height: 200px;
   object-fit: contain; /* Maintain aspect ratio without cropping */
@@ -376,9 +388,47 @@ a {
   height: auto; /* Maintain aspect ratio */
 }
 
+/* .listing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  grid-gap: 20px;
+}
+
+.listing-grid .listing_in_search {
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.listing_in_search img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain; 
+  margin: 0 auto; 
+} */
+
+.listing .photos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.listing .photos-container .small-photo {
+  width: 300px;
+  height: 200px;
+  object-fit: contain;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
 .listing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid with minimum item width of 300px */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;
 }
 
@@ -390,10 +440,10 @@ a {
   margin-bottom: 20px;
 }
 
-.listing img {
+.listing-grid .listing img {
   display: block;
   max-width: 100%;
   height: auto;
-  object-fit: contain; /* Maintain aspect ratio without cropping */
-  margin: 0 auto; /* Center the image horizontally */
+  object-fit: contain;
+  margin: 0 auto;
 }
