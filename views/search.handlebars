@@ -34,10 +34,10 @@
     </div>
     <div>
         <h3>Price Range:</h3>
-        <div><label><input type="checkbox" name="priceRange" value="0-50"> $0 - $50</label></div>
-        <div><label><input type="checkbox" name="priceRange" value="51-100"> $51 - $100</label></div>
-        <div><label><input type="checkbox" name="priceRange" value="101-200"> $101 - $200</label></div>
-        <div><label><input type="checkbox" name="priceRange" value="201"> $201+ </label></div>
+        <div><label><input type="checkbox" name="price" value="0-50"> $0 - $50</label></div>
+        <div><label><input type="checkbox" name="price" value="51-100"> $51 - $100</label></div>
+        <div><label><input type="checkbox" name="price" value="101-200"> $101 - $200</label></div>
+        <div><label><input type="checkbox" name="price" value="201"> $201+ </label></div>
     </div>
     <div>
         <h3>Condition:</h3>
@@ -70,43 +70,7 @@
     {{/if}}
   </div>
   <input type="submit" value="Search">
-  <script>
-  document.addEventListener("DOMContentLoaded", function() {
-      const searchForm = document.getElementById('searchForm');
-      searchForm.addEventListener('submit', function(event) {
-          event.preventDefault();
 
-          const formData = new FormData(searchForm);
-          const searchParams = {};
-
-          // Iterate over form data to capture selected filter options
-          for (const [key, value] of formData.entries()) {
-              if (value && key !== 'searchByName') {
-                  if (!searchParams[key]) {
-                      searchParams[key] = [];
-                  }
-                  searchParams[key].push(value);
-              }
-          }
-
-          // Add search query to params
-          const searchByName = formData.get('searchByName');
-          if (searchByName) {
-              searchParams.searchByName = searchByName;
-          }
-
-          // Convert searchParams to JSON and submit the form
-          const searchParamsJSON = JSON.stringify(searchParams);
-          const hiddenField = document.createElement('input');
-          hiddenField.setAttribute('type', 'hidden');
-          hiddenField.setAttribute('name', 'filters');
-          hiddenField.setAttribute('value', searchParamsJSON);
-          searchForm.appendChild(hiddenField);
-
-          searchForm.submit();
-      });
-  });
-</script>
 </section>
 {{!-- <section>
   <section id="search-results">

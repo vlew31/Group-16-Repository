@@ -306,27 +306,13 @@ export const update = async (
 export async function searchByName(searchTerm,filters) {
   try {
     const clothesCollection = await listings();
-    // const filterQuery = { title: { $regex: searchTerm,$options: 'i' } };
-    // if (filters.size) {
-    //   filterQuery.size = { $in: filters.size };
-    // }
-    // if (filters.color) {
-    //   filterQuery.color = { $in: filters.color };
-    // }
-    // if (filters.gender) {
-    //   filterQuery.gender = { $in: filters.gender };
-    // }
-    // if(filters.condition){
-    //     filterQuery.condition = {$in: filters.condition};
-    // }
-    // if(filters.priceRange){
-    //     filterQuery.priceRange = {$in: filters.priceRange};
-    // }
-    console.log(filters.color[0]);
-    const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i'} },{ color: { $regex: filters.color, $options: 'i'} }).toArray();
-    // for(let i = 0;i<filters.color.length;i++){
-    //   if()
-    // }
+    const searchResults = await clothesCollection.find({ 
+      title: { $regex: searchTerm, $options: 'i' },
+      size: { $in: filters.size.map(size => new RegExp(size, 'i')) },
+      color: { $in: filters.color.map(color => new RegExp(color, 'i')) },
+      // price:
+      condition: { $in: filters.condition.map(condition => new RegExp(condition, 'i')) }
+  }).toArray();
     console.log(searchResults);
     return searchResults;
   } catch (error) {

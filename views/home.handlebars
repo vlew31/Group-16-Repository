@@ -23,9 +23,9 @@
                         const listingDiv = document.createElement('div');
                         listingDiv.classList.add('listing');
 
-                        const listingLink = document.createElement('a');
-                        listingLink.href = `/listings/${listing._id}`;
-                        listingLink.appendChild(listingDiv);
+                const listingLink = document.createElement('a');
+                listingLink.href = `/listings/${listing._id}`;
+                listingLink.appendChild(listingDiv);
 
                         listingDiv.innerHTML =
                             `<h3>${listing.title}</h3>

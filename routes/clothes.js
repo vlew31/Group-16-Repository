@@ -20,38 +20,38 @@ router.route('/user').get(async (req, res) => {
 router.route('/upload').get(async (req, res) => {
   res.render('upload', { title: 'Upload' });
 })
-.post(async (req, res) => {
-  try {
-    const {
-      title,
-      description,
-      article,
-      size,
-      color,
-      gender,
-      price,
-      condition,
-      tags,
-      photo
-  } = req.body;
-    const newclothes = await clothesData.create(
-      req.body.title,
-      req.body.description,
-      req.body.article,
-      req.body.size,
-      req.body.color,
-      req.body.gender,
-      req.body.price,
-      req.body.condition,
-      req.body.tags,
-      req.body.photo
-    );
-    // res.status(200).json(newclothes);
-    res.redirect('/');
-  } catch (e) {
-    return res.status(400).json({ error: e });
-  }
-});
+// .post(async (req, res) => {
+//   try {
+//     const {
+//       title,
+//       description,
+//       article,
+//       size,
+//       color,
+//       gender,
+//       price,
+//       condition,
+//       tags,
+//       photo
+//   } = req.body;
+//     const newclothes = await clothesData.create(
+//       req.body.title,
+//       req.body.description,
+//       req.body.article,
+//       req.body.size,
+//       req.body.color,
+//       req.body.gender,
+//       req.body.price,
+//       req.body.condition,
+//       req.body.tags,
+//       req.body.photo
+//     );
+//     // res.status(200).json(newclothes);
+//     res.redirect('/');
+//   } catch (e) {
+//     return res.status(400).json({ error: e });
+//   }
+// });
 
 router.route('/listings/:listingId').get(async (req, res) => {
   const listingId = req.params.listingId;
@@ -89,16 +89,17 @@ router
   .post(async (req, res) => {
     try {
       const {
-          clothesName,
-          clothesDescription,
-          modelNumber,
-          price,
-          manufacturer,
-          manufacturerWebsite,
-          keywords,
-          categories,
-          dateReleased,
-          discontinued
+        seller,
+        title,
+        description,
+        article,
+        size,
+        color,
+        gender,
+        price,
+        condition,
+        tags,
+        photos
       } = req.body;
 
       let photoUrls = [];
@@ -254,17 +255,16 @@ router
         size: Array.isArray(req.body.size) ? req.body.size : [req.body.size], // Convert to array if single value
         color: Array.isArray(req.body.color) ? req.body.color : [req.body.color],
         gender: Array.isArray(req.body.gender) ? req.body.gender : [req.body.gender],
-        priceRange: Array.isArray(req.body.priceRange) ? req.body.priceRange : [req.body.priceRange],
+        price: Array.isArray(req.body.price) ? req.body.price : [req.body.price],
         condition: Array.isArray(req.body.condition) ? req.body.condition : [req.body.condition]
     };
     console.log('Selected filters:', filters); 
-      const searchResults = await clothesData.searchByName(searchTerm,filters);
+    const searchResults = await clothesData.searchByName(searchTerm,filters);
 
       if (searchResults.length === 0) {
           return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
       }
-
-      res.render('searchResults', { title: 'Clothes Found', searchTerm, searchResults });
+      res.render('searchResults', { title: 'Clothes Found', searchResults });
   } catch (error) {
       console.log(error);
       res.status(500).render('error', { title: 'Error', error: 'Server Error' });
