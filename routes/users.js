@@ -132,7 +132,7 @@ router
   .route('/users/login')
   .get(async (req, res) => {
     if(req.session.user) {
-      res.redirect("/home");
+      res.redirect("/user");
     }
     return res.render("login", { title: "Login Page" });
   })
