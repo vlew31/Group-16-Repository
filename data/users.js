@@ -147,7 +147,6 @@ export const loginUser = async (username, password) => {
 
 };
 
-
   export const getAll = async () => {
 
   const userCollection = await users();
