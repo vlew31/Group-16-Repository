@@ -37,3 +37,28 @@
     {{/if}}
 </body>
 </html>
+{{#if searchResults}}
+    <div class="listing-grid">
+        {{#each searchResults}}
+            <div class="listing">
+                <h2>{{title}}</h2>
+                {{#each photos}}
+                    <img src="{{this}}" alt="Photo" style="max-width: 300px; max-height: 300px;">
+                {{/each}}
+                <p><strong>Seller:</strong> {{seller}}</p>
+                <p><strong>Description:</strong> {{description}}</p>
+                <p><strong>Article:</strong> {{article}}</p>
+                <p><strong>Size:</strong> {{size}}</p>
+                <p><strong>Color:</strong> {{color}}</p>
+                <p><strong>Gender:</strong> {{gender}}</p>
+                <p><strong>Price:</strong> ${{price}}</p>
+                <p><strong>Condition:</strong> {{condition}}</p>
+                <p><strong>Tags:</strong> {{#each tags}}{{this}}, {{/each}}</p>
+                <p><strong>Comments:</strong> {{#if comments.length}}{{#each comments}}{{this}}, {{/each}}{{else}} No comments{{/if}}</p>
+                <p><strong>Rating:</strong> {{rating}}</p>
+            </div>
+        {{/each}}
+    </div>
+{{else}}
+    <p>No results found.</p>
+{{/if}}
