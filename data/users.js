@@ -1,5 +1,4 @@
-
-  //import mongo collections, bcrypt and implement the following data functions
+ //import mongo collections, bcrypt and implement the following data functions
   import { users } from "../config/mongoCollections.js";
   import bcrypt from "bcryptjs";
   const saltRounds = 2;
