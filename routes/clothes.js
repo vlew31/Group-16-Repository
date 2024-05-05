@@ -17,43 +17,56 @@ router.route('/user').get(async (req, res) => {
   res.render('user', { title: 'User Profile' });
 });
 
-router
-  .route('/upload')
-  .get(async (req, res) => {
-    res.render('upload', { title: 'Upload' });
-  })
-  .post(async (req, res) => {
-    try {
-      const {
-        title,
-        description,
-        article,
-        size,
-        color,
-        gender,
-        price,
-        condition,
-        tags,
-        photo
-    } = req.body;
-      const newclothes = await clothesData.create(
-        req.body.title,
-        req.body.description,
-        req.body.article,
-        req.body.size,
-        req.body.color,
-        req.body.gender,
-        req.body.price,
-        req.body.condition,
-        req.body.tags,
-        req.body.photo
-      );
-      // res.status(200).json(newclothes);
-      res.redirect('/');
-    } catch (e) {
-      return res.status(400).json({ error: e });
+router.route('/upload').get(async (req, res) => {
+  res.render('upload', { title: 'Upload' });
+})
+.post(async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      article,
+      size,
+      color,
+      gender,
+      price,
+      condition,
+      tags,
+      photo
+  } = req.body;
+    const newclothes = await clothesData.create(
+      req.body.title,
+      req.body.description,
+      req.body.article,
+      req.body.size,
+      req.body.color,
+      req.body.gender,
+      req.body.price,
+      req.body.condition,
+      req.body.tags,
+      req.body.photo
+    );
+    // res.status(200).json(newclothes);
+    res.redirect('/');
+  } catch (e) {
+    return res.status(400).json({ error: e });
+  }
+});
+
+router.route('/listings/:listingId').get(async (req, res) => {
+  const listingId = req.params.listingId;
+
+  try {
+    const listing = await clothesData.get(listingId);
+    if (!listing) {
+      return res.status(404).send('Listing not found');
     }
-  });
+    res.render('listing', { listing, listingId }); // Pass listingId to the template
+  } catch (err) {
+    console.error('Error fetching listing:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 router.route('/cart').get(async (req, res) => {
   res.render('cart', { title: 'Cart/Wishlist' });
@@ -87,38 +100,59 @@ router
           dateReleased,
           discontinued
       } = req.body;
+
+      let photoUrls = [];
+      let tagArray = [];
+
+      if (typeof photos === 'string' && photos.includes(',')) {
+        photoUrls = photos.split(',');
+      } else if (typeof photos === 'string') {
+        photoUrls.push(photos);
+      } else if (Array.isArray(photos)) {
+        photoUrls = photos;
+      }
+
+      if (typeof tags === 'string' && tags.includes(',')) {
+        tagArray = tags.split(',');
+      } else if (typeof tags === 'string') {
+        tagArray.push(tags);
+      } else if (Array.isArray(tags)) {
+        tagArray = tags;
+      }
+
       const newclothes = await clothesData.create(
-          clothesName,
-          clothesDescription,
-          modelNumber,
-          price,
-          manufacturer,
-          manufacturerWebsite,
-          keywords,
-          categories,
-          dateReleased,
-          discontinued
+        seller,
+        title,
+        description,
+        article,
+        size,
+        color,
+        gender,
+        price,
+        condition,
+        tagArray,
+        photoUrls
       );
-      res.status(200).json(newclothes);
+      return res.redirect('/'); 
     } catch (e) {
       return res.status(400).json({ error: e });
     }
   });
 
 router
-  .route('/listings/:listingsId')
-  .get(async (req, res) => {
-    try {
-      const clothes = await clothesData.get(req.params.listingsId);
-      res.status(200).json(clothes);
-    } catch (e) {
-      if (e === 'Invalid ObjectId') {
-        res.status(400).json({ error: 'Invalid clothes ID.' });
-      } else {
-        res.status(400).json({ error: e });
-      }
-    }
-  })
+  // .route('/listings/:listingsId')
+  // .get(async (req, res) => {
+  //   try {
+  //     const clothes = await clothesData.get(req.params.clothesId);
+  //     res.status(200).json(clothes);
+  //   } catch (e) {
+  //     if (e === 'Invalid ObjectId') {
+  //       res.status(400).json({ error: 'Invalid clothes ID.' });
+  //     } else {
+  //       res.status(400).json({ error: e });
+  //     }
+  //   }
+  // })
   .delete(async (req, res) => {
     try {
       const result = await clothesData.remove(req.params.clothesId);

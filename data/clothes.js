@@ -35,7 +35,7 @@ export const create = async (
   // if (
   //   typeof clothesName !== 'string' || clothesName === '' || 
   //   typeof clothesDescription !== 'string' || clothesDescription === '' || 
-  //   typeof modelNumber !== 'string' || modelNumber === '' ||
+  //   typeof modeelNumber !== 'string' || modelNumber === '' ||
   //   typeof manufacturer !== 'string' || manufacturer === '' ||
   //   typeof manufacturerWebsite !== 'string' || manufacturerWebsite === '' ||
   //   typeof dateReleased !== 'string' || dateReleased === ''){
@@ -93,6 +93,7 @@ export const create = async (
   const clothesCollection = await listings();
 
   const newclothes = {
+    // userId: userId,
     seller: seller,
     title: title,
     description: description,
@@ -323,9 +324,9 @@ export async function searchByName(searchTerm,filters) {
     // }
     console.log(filters.color[0]);
     const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i'} },{ color: { $regex: filters.color, $options: 'i'} }).toArray();
-    for(let i = 0;i<filters.color.length;i++){
-      if()
-    }
+    // for(let i = 0;i<filters.color.length;i++){
+    //   if()
+    // }
     console.log(searchResults);
     return searchResults;
   } catch (error) {
