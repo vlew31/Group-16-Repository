@@ -41,7 +41,7 @@
             <option value="unisex">Unisex</option>
         </select>
         <label for="price" class="upload-label">Price:</label>
-        <input type="number" name="price" id="price" required class="upload-input" min="0">
+        <input type="number" name="price" id="price" required class="upload-input" min="0" oninput="this.value = Math.max(this.value, 0)">
         <label for="condition" class="upload-label">Condition:</label>
         <select name="condition" id="condition" required class="upload-select">
             <option>Select One</option>
@@ -49,8 +49,15 @@
             <option value="used">Refurbished</option>
             <option value="used">Used</option>
         </select>
-        <label for="tags" class="upload-label">Tags:</label>
-        <input type="text" name="tags" id="tags" class="upload-input">
+
+        {{!-- <label for="tags" class="upload-label">Tags (comma-separated):</label>
+        <input type="text" name="tags" id="tags" class="upload-input"> --}}
+
+
+        <label for="tags" class="upload-label">Tags (Split by commas):</label>
+        <input type="tags" name="tags" id="tags" required class="upload-input">
+
+
         <button type="submit" class="upload-submit">Upload</button>
     </form>
 </section>
@@ -68,6 +75,10 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
 
     const photoInput = document.getElementById('photo');
     const photoLinks = photoInput.value.split(',').map(link => link.trim());
+
+    const tagsInput = document.getElementById('tags');
+    const tags = tagsInput.value.split(',').map(tag => tag.trim());
+
 
     if (selectedColor === 'Select One' || selectedGender === 'Select One' || selectedCondition === 'Select One' || photoLinks.length === 0) {
         event.preventDefault();
