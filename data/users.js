@@ -151,7 +151,7 @@
 
 
 //import mongo collections, bcrypt and implement the following data functions
-import { users } from "../config/mongoCollections.js";
+import { listings, users } from "../config/mongoCollections.js";
 import bcrypt from "bcryptjs";
 import {ObjectId} from 'mongodb';
 
@@ -255,7 +255,6 @@ export const registerUser = async (
 		listings: []
 	};
 	const insertedUser = await usersCollection.insertOne(newUser);
-
 	if (insertedUser.insertedId) {
 		return { signupCompleted: true };
 	} else {
@@ -351,3 +350,38 @@ export const get = async (userId) => {
   
   return userToFind;
 };
+
+export const updateUser = async (
+	id,
+    firstName,
+    lastName,
+    email,
+    username,
+    password,
+    role,
+  ) => {
+	const userCollection = await users();
+	let thisUser = await get(id);
+	const userListings = thisUser.listings;
+	password = await bcrypt.hash(password);
+	const updatedUser = {
+    	firstName: firstName,
+    	lastName: lastName,
+    	email: email,
+    	username: username,
+    	password: password,
+    	role: role,
+		listings: userListings
+	}
+	const updatedInfo = await userCollection.findOneAndUpdate(
+		{ _id: id },
+		{ $set: updatedUser },
+		{ returnDocument: 'after' }
+	  );
+	
+	//   if (updatedInfo.lastErrorObject.n === 0) {
+	// 	throw `Error: Could not rename band successfully`;
+	//   }
+	
+	  return validation.idToString(updatedInfo.value);
+  }

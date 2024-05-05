@@ -3,6 +3,7 @@ import { clothesData } from '../data/index.js'
 import { listings } from '../config/mongoCollections.js';
 
 const router = express.Router();
+router.use(express.json());
 
 router.route('/').get(async (req, res) => {
   res.render('home', { title: '$waggle' });
@@ -18,7 +19,39 @@ router.route('/user').get(async (req, res) => {
 
 router.route('/upload').get(async (req, res) => {
   res.render('upload', { title: 'Upload' });
-});
+})
+// .post(async (req, res) => {
+//   try {
+//     const {
+//       title,
+//       description,
+//       article,
+//       size,
+//       color,
+//       gender,
+//       price,
+//       condition,
+//       tags,
+//       photo
+//   } = req.body;
+//     const newclothes = await clothesData.create(
+//       req.body.title,
+//       req.body.description,
+//       req.body.article,
+//       req.body.size,
+//       req.body.color,
+//       req.body.gender,
+//       req.body.price,
+//       req.body.condition,
+//       req.body.tags,
+//       req.body.photo
+//     );
+//     // res.status(200).json(newclothes);
+//     res.redirect('/');
+//   } catch (e) {
+//     return res.status(400).json({ error: e });
+//   }
+// });
 
 router.route('/listings/:listingId').get(async (req, res) => {
   const listingId = req.params.listingId;
@@ -34,7 +67,6 @@ router.route('/listings/:listingId').get(async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
 
 router.route('/cart').get(async (req, res) => {
   res.render('cart', { title: 'Cart/Wishlist' });
@@ -124,12 +156,12 @@ router
   // })
   .delete(async (req, res) => {
     try {
-      const result = await clothesData.remove(req.params.listingsId);
+      const result = await clothesData.remove(req.params.clothesId);
       const deleted = !!result;
       res.status(200).json({ _id: req.params.clothesId, deleted: deleted });
     } catch (e) {
       if (e === 'Invalid ObjectId') {
-        res.status(400).json({ error: 'Invalid listing ID.' });
+        res.status(400).json({ error: 'Invalid clothes ID.' });
       } else if (e === 'clothes not found') {
         res.status(404).json({ error: 'clothes not found.' });
       } else {
@@ -138,9 +170,11 @@ router
     }
   })
   .put(async (req, res) => {
+    let id = req.params.productId;
+    let newListing = req.body;
     try {
       const updatedclothes = await clothesData.update(
-        req.params.clothesId,
+        id,
         req.body.clothesName,
         req.body.clothesDescription,
         req.body.modelNumber,
@@ -152,7 +186,7 @@ router
         req.body.dateReleased,
         req.body.discontinued
       );
-      return res.status(200).json(updatedclothes);
+      return res.json(updatedclothes);
     } catch (e) {
       if(e === 'Could not update clothes with provided id.'){
         res.status(404).json({error: 'clothes not found.'});
@@ -221,17 +255,16 @@ router
         size: Array.isArray(req.body.size) ? req.body.size : [req.body.size], // Convert to array if single value
         color: Array.isArray(req.body.color) ? req.body.color : [req.body.color],
         gender: Array.isArray(req.body.gender) ? req.body.gender : [req.body.gender],
-        priceRange: Array.isArray(req.body.priceRange) ? req.body.priceRange : [req.body.priceRange],
+        price: Array.isArray(req.body.price) ? req.body.price : [req.body.price],
         condition: Array.isArray(req.body.condition) ? req.body.condition : [req.body.condition]
     };
     console.log('Selected filters:', filters); 
-      const searchResults = await clothesData.searchByName(searchTerm,filters);
+    const searchResults = await clothesData.searchByName(searchTerm,filters);
 
       if (searchResults.length === 0) {
           return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
       }
-
-      res.render('searchResults', { title: 'Clothes Found', searchTerm, searchResults });
+      res.render('searchResults', { title: 'Clothes Found', searchResults });
   } catch (error) {
       console.log(error);
       res.status(500).render('error', { title: 'Error', error: 'Server Error' });
