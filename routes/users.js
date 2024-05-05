@@ -32,9 +32,9 @@ router.route('/search').get(async (req, res) => {
 router
   .route('/users/register')
   .get(async (req, res) => {
-    // if(req.session.user) {
-    //   res.redirect("/home");
-    // }
+    if(req.session.user) {
+      res.redirect("/home");
+    }
     return res.render("register", { title: "Register Page" });
   })
   .post(async (req, res) => {
@@ -119,6 +119,9 @@ router
 router
   .route('/users/login')
   .get(async (req, res) => {
+    if(req.session.user) {
+      res.redirect("/home");
+    }
     return res.render("login", { title: "Login Page" });
   })
   .post(async (req, res) => {
