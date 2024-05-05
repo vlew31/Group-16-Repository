@@ -296,20 +296,34 @@ export const update = async (
   return updatedclothesWithId;
 };
 
-export async function searchByName(searchTerm) {
+export async function searchByName(searchTerm,filters) {
   try {
-
-    listingId = listingId.trim();
-    if (!ObjectId.isValid(listingId)){
-      throw 'Invalid ObjectId';
-    }
-  
     const clothesCollection = await listings();
-    const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i' } }).toArray();
-
+    // const filterQuery = { title: { $regex: searchTerm,$options: 'i' } };
+    // if (filters.size) {
+    //   filterQuery.size = { $in: filters.size };
+    // }
+    // if (filters.color) {
+    //   filterQuery.color = { $in: filters.color };
+    // }
+    // if (filters.gender) {
+    //   filterQuery.gender = { $in: filters.gender };
+    // }
+    // if(filters.condition){
+    //     filterQuery.condition = {$in: filters.condition};
+    // }
+    // if(filters.priceRange){
+    //     filterQuery.priceRange = {$in: filters.priceRange};
+    // }
+    console.log(filters.color[0]);
+    const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i'} },{ color: { $regex: filters.color, $options: 'i'} }).toArray();
+    // for(let i = 0;i<filters.color.length;i++){
+    //   if()
+    // }
+    console.log(searchResults);
     return searchResults;
   } catch (error) {
-      console.error('Error searching listings by name:', error);
-      throw error;
+    console.error('Error searching listings by name:', error);
+    throw error;
   }
 }

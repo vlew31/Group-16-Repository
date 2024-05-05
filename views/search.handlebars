@@ -1,16 +1,16 @@
-<section>    
-    <form action="/search">
-    <label for="searchByName"></label>
+<section>  
+    <header>
+    <h1>Search</h1>
+  </header>  
+    <form id="searchForm" action="/searchResults" method="POST">
+    <label for="searchByName">Search by name: </label>
     <input type="text" id="searchByName" name="searchByName">
-    <input type="submit" value="Search">
-    </form>
-</section>
-
-<section class="filters">
-    <div>
-        <h3>Size:</h3>
-        <label><input type="text" name="size" id="size"></label>
-
+  <div>
+      <h3>Size:</h3>
+        <div><label><input type="checkbox" name="size" value="small"> Small</label></div>
+        <div><label><input type="checkbox" name="size" value="small"> Medium</label></div>
+        <div><label><input type="checkbox" name="size" value="large"> Large</label></div>
+        <div><label><input type="checkbox" name="size" value="other"> Other</label></div>
     </div>
     <div>
     <h3>Color:</h3>
@@ -45,58 +45,92 @@
         <div><label><input type="checkbox" name="condition" value="Refurbished"> Refurbished</label></div>
         <div><label><input type="checkbox" name="condition" value="Used"> Used</label></div>
     </div>
-</section>
-
-<section>
+    <input type="submit" value="Search">
+    </form>
+{{!-- <section class="filters"> --}}
   <section id="search-results">
-        <header>
-            <h1>Search Results</h1>
-        </header>
-        <div id="search-results-container"></div>
-    </section>
+  <div id="search-results-container">
+    {{#if searchResults.length}}
+      {{#each searchResults}}
+        <div class="listing">
+          <h2>{{title}}</h2>
+          <p><strong>Seller: </strong>{{seller}}</p>
+          <img src="{{photos.[0]}}" alt="{{title}}">
+          <p><strong>Description: </strong>{{description}}</p>
+          <p><strong>Article: </strong>{{article}}</p>
+          <p><strong>Gender: </strong>{{gender}}</p>              
+          <p><strong>Size: </strong>{{size}}</p>
+          <p><strong>Color: </strong>{{color}}</p>
+          <p><strong>Condition: </strong>{{condition}}</p>
+          <p><strong>Price: </strong>{{price}}</p>
+        </div>
+      {{/each}}
+    {{else}}
+      <p>No results found</p>
+    {{/if}}
+  </div>
+  <input type="submit" value="Search">
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const searchForm = document.getElementById('searchForm');
+      searchForm.addEventListener('submit', function(event) {
+          event.preventDefault();
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchParams = new URLSearchParams(window.location.search);
-            const searchByName = searchParams.get('searchByName');
+          const formData = new FormData(searchForm);
+          const searchParams = {};
 
-            if (searchByName) {
-                fetch(`/api/search?searchByName=${searchByName}`)
-                    .then(response => response.json())
-                    .then(searchResults => {
-                        const searchResultsContainer = document.getElementById('search-results-container');
+          // Iterate over form data to capture selected filter options
+          for (const [key, value] of formData.entries()) {
+              if (value && key !== 'searchByName') {
+                  if (!searchParams[key]) {
+                      searchParams[key] = [];
+                  }
+                  searchParams[key].push(value);
+              }
+          }
 
-                        if (searchResults.length === 0) {
-                            searchResultsContainer.innerHTML = "<p>No results found</p>";
-                            return;
-                        }
+          // Add search query to params
+          const searchByName = formData.get('searchByName');
+          if (searchByName) {
+              searchParams.searchByName = searchByName;
+          }
 
-                        searchResults.forEach(listing => {
-                            const listingDiv = document.createElement('div');
-                            listingDiv.classList.add('listing');
+          // Convert searchParams to JSON and submit the form
+          const searchParamsJSON = JSON.stringify(searchParams);
+          const hiddenField = document.createElement('input');
+          hiddenField.setAttribute('type', 'hidden');
+          hiddenField.setAttribute('name', 'filters');
+          hiddenField.setAttribute('value', searchParamsJSON);
+          searchForm.appendChild(hiddenField);
 
-                            listingDiv.innerHTML = 
-                                `<h2>${listing.title}</h2>
-                                <p><strong>Seller: </strong>${listing.seller}</p>
-                                <img src="${listing.photos[0]}" alt="${listing.title}">
-                                <p><strong>Description: </strong>${listing.description}</p>
-                                <p><strong>Article: </strong>${listing.article}</p>
-                                <p><strong>Gender: </strong>${listing.gender}</p>              
-                                <p><strong>Size: </strong>${listing.size}</p>
-                                <p><strong>Color: </strong>${listing.color}</p>
-                                <p><strong>Condition: </strong>${listing.condition}</p>
-                                <p><strong>Price: </strong>${listing.price}</p>`;
-
-                            searchResultsContainer.appendChild(listingDiv);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching search results:', error));
-            } else {
-                // If no search term is provided, display a message
-                const searchResultsContainer = document.getElementById('search-results-container');
-                searchResultsContainer.innerHTML = "<p>Please enter a search term.</p>";
-            }
-        });
-    </script>
+          searchForm.submit();
+      });
+  });
+</script>
 </section>
-
+{{!-- <section>
+  <section id="search-results">
+  <header>
+    <h1>Search Results</h1>
+  </header>
+  <div id="search-results-container">
+    {{#if searchResults.length}}
+      {{#each searchResults}}
+        <div class="listing">
+          <h2>{{title}}</h2>
+          <p><strong>Seller: </strong>{{seller}}</p>
+          <img src="{{photos.[0]}}" alt="{{title}}">
+          <p><strong>Description: </strong>{{description}}</p>
+          <p><strong>Article: </strong>{{article}}</p>
+          <p><strong>Gender: </strong>{{gender}}</p>              
+          <p><strong>Size: </strong>{{size}}</p>
+          <p><strong>Color: </strong>{{color}}</p>
+          <p><strong>Condition: </strong>{{condition}}</p>
+          <p><strong>Price: </strong>{{price}}</p>
+        </div>
+      {{/each}}
+    {{else}}
+      <p>No results found</p>
+    {{/if}}
+  </div>
+</section> --}}
