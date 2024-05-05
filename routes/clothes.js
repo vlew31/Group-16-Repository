@@ -212,19 +212,26 @@ router
     //code here for POST this is where your form will be submitting searchByName and then call your data function passing in the searchByName and then rendering the search results.
   
     try {
-      const searchTerm = req.body.searchclothesByName;
-
+      const searchTerm = req.body.searchByName;
+  
       // if (!searchTerm || searchTerm.trim() === '') {
       //     return res.status(400).render('error', { title: 'Error', error: 'Search term is required.' });
       // }
-
-      const searchResults = await clothesData.searchByName(searchTerm);
+      const filters = {
+        size: Array.isArray(req.body.size) ? req.body.size : [req.body.size], // Convert to array if single value
+        color: Array.isArray(req.body.color) ? req.body.color : [req.body.color],
+        gender: Array.isArray(req.body.gender) ? req.body.gender : [req.body.gender],
+        priceRange: Array.isArray(req.body.priceRange) ? req.body.priceRange : [req.body.priceRange],
+        condition: Array.isArray(req.body.condition) ? req.body.condition : [req.body.condition]
+    };
+    console.log('Selected filters:', filters); 
+      const searchResults = await clothesData.searchByName(searchTerm,filters);
 
       if (searchResults.length === 0) {
           return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
       }
 
-      res.render('clothesSearchResults', { title: 'Clothes Found', searchTerm, searchResults });
+      res.render('searchResults', { title: 'Clothes Found', searchTerm, searchResults });
   } catch (error) {
       console.log(error);
       res.status(500).render('error', { title: 'Error', error: 'Server Error' });
