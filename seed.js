@@ -1,8 +1,7 @@
 // This file should set up the express server as shown in the lecture code
-// import { userData, clothesData } from "./data/index.js";
+import { userData, clothesData } from "./data/index.js";
 
-import { dbConnection, closeConnection } from "./config/mongoConnection.js";
-import {registerUser, loginUser} from './data/users.js';
+import { dbConnection } from "./config/mongoConnection.js";
 //lets drop the database each time this is run
 
 const db = await dbConnection();
@@ -189,8 +188,8 @@ async function testCreateProducts() { //creates a listing
 	}
 }
 
-// await testCreateProducts();
-// await testRegisterUser();
+await testCreateProducts();
+await testRegisterUser();
 // await testRemove();
 // await testCreateReview();
 // await testGetAllReview();
