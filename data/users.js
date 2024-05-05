@@ -344,6 +344,7 @@ export const remove = async (userId) => {
   };
 
  export const update = async (
+	_id,
 	firstName,
     lastName,
     email,
@@ -353,7 +354,7 @@ export const remove = async (userId) => {
   ) => {
 
 	let updatedUser = {
-		_id: _id,
+		// _id: _id,
 		firstName: firstName,
     	lastName: lastName,
     	email: email,

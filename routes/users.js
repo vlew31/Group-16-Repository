@@ -105,7 +105,7 @@ router
         req.body.listings,
         req.body.balance,
       );
-      res.status(200).json(updatedUser);
+      return res.status(200).json(updatedUser);
     } catch (e) {
       if(e === 'could not update'){
         res.status(404).json({error: 'user not found'});
