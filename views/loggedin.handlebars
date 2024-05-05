@@ -29,7 +29,12 @@
         <a href="/users/login" id="Login" class="button">Login Info</a>
     {{/if}} --}}
 
-         <a href="/users/login" id="Login" class="button">Login Info</a>
+            <p>Welcome, {{user.firstName}} {{user.lastName}}!</p>
+            <p>Email: {{user.email}}</p>
+            <p>Username: {{user.username}}</p>
+            <p>Role: {{user.role}}</p>
+
+            <a href="/users/logout" id="Logout" class="button">Logout</a>
         <a href="/cart" id="editWalletInfo" class="button">Edit Wallet Info</a>
 
     <!-- Delete Clothing Items -->

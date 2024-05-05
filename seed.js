@@ -7,6 +7,26 @@ import { dbConnection } from "./config/mongoConnection.js";
 const db = await dbConnection();
 await db.dropDatabase();
 
+try {
+    const user = await registerUser("Patrick", 
+    "Hill",
+	"pattyhill@stevens.edu",
+    "graffixnyc", 
+    "Password!@141",
+    "Password!@141",
+    "user");
+    console.log(user);
+} catch (e) {
+    console.log(e);
+}
+
+try {
+    const login = await loginUser("graffixnyc", "Password!@141");
+    console.log(login);
+} catch (e) {
+    console.log(e);
+}
+
 let User1 = undefined;
 let User2 = undefined;
 let User3 = undefined;
