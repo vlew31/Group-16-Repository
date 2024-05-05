@@ -1,74 +1,7 @@
- //import mongo collections, bcrypt and implement the following data functions
-  import { users } from "../config/mongoCollections.js";
-  import bcrypt from "bcryptjs";
-  const saltRounds = 2;
 
-// export const registerUser = async (
-//     firstName,
-//     lastName,
-//     email,
-//     username,
-//     password,
-// 	confirmPassword,
-//     role
-// 	// listings
-//   ) => {
-// 	firstName = firstName.trim();
-// 	lastName = lastName.trim();
-//   	email = email.trim();
-// 	username = username.trim();
-// 	password = password.trim();
-// 	role = role.trim();
-// 	confirmPassword = confirmPassword.trim();
-
-// 	const lowercaseUsername = username.toLowerCase();
-// 	const usersCollection = await users();
-// 	const existingUser = await usersCollection.findOne({
-// 		username: lowercaseUsername,
-// 	});
-// 	if (existingUser) {
-// 		throw "ERR: user already exists";
-// 	}
-// 	// console.log("here2");
-
-// 	//pw
-// 	// checkIsProperLength(password, 8);
-// 	// if (
-// 	// 	/\s/.test(password) ||
-// 	// 	!/[A-Z]/.test(password) ||
-// 	// 	!/\d/.test(password) ||
-// 	// 	!/[!@#$%^&*(),.?":{}|<>]/.test(password)
-// 	// ) {
-// 	// 	throw "ERR: invalid password";
-// 	// }
-
-// 	//role
-// 	const lowercaseRole = role.toLowerCase();
-// 	if (lowercaseRole !== "admin" && lowercaseRole !== "user") {
-// 		throw "ERR: Invalid role";
-// 	}
-
-// 	//TODO! change 2 to 16 or smthing
-// 	const hashedPassword = await bcrypt.hash(password, 2);
-// 	const newUser = {
-// 		firstName: firstName.trim(),
-// 		lastName: lastName.trim(),
-//     	email: email.trim(),
-// 		username: lowercaseUsername,
-// 		password: hashedPassword,
-// 		role: lowercaseRole,
-// 		listings: []
-// 	};
-// 	const insertedUser = await usersCollection.insertOne(newUser);
-// 	console.log("users")
-// 	console.log(newUser);
-
-// 	if (insertedUser.insertedId) {
-// 		return { signupCompleted: true };
-// 	} else {
-// 		throw "ERR: Failed to register user";
-// 	}
-// };
+import { users } from "../config/mongoCollections.js";
+import bcrypt from "bcryptjs";
+import {ObjectId} from 'mongodb';
 
 export const registerUser = async (
 	firstName,
@@ -190,12 +123,26 @@ export const loginUser = async (username, password) => {
 		throw "Either the username or password is invalid";
 	}
 
+	const newUser = await usersCollection.findOne(
+		{ username: username },
+		{ projection: { password: 0 } }
+	);
+	const {
+		firstName,
+		lastName,
+   	 	email,
+		username: storedUsername,
+		role,
+		listings
+	} = newUser;
+
 	return {
-		firstName: findUser.firstName, 
-		lastName: findUser.lastName, 
-		email: findUser.email, 
-		username: findUser.username, 
-		role: findUser.role
+		firstName,
+		lastName,
+ 		email,
+		username: storedUsername,
+		role,
+		listings
 	};
 
 };
@@ -203,17 +150,36 @@ export const loginUser = async (username, password) => {
 
   export const getAll = async () => {
 
-	const userCollection = await users();
-	let userList = await userCollection.find({}).project({_id: 1, username: 1}).toArray();
-  
-	if(!userList){
-	  throw 'users not found';
-	}
-  
-	return userList;
-  };
-  
-  export const get = async (userId) => {
+  const userCollection = await users();
+  let userList = await userCollection.find({}).project({_id: 1, username: 1}).toArray();
+
+  if(!userList){
+    throw 'users not found';
+  }
+
+  return userList;
+};
+
+export const get = async (userId) => {
+  if(userId === undefined){
+    throw 'id not provided';
+  } else if(typeof userId !== 'string' || userId.trim().length === 0){
+    throw 'parameter is not a valid id';
+  } else if(!ObjectId.isValid(userId.trim())){
+    throw 'id is not a valid ObjectID'
+  } 
+  const userCollection = await users();
+  const userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
+  if(userToFind === null){
+    throw 'no user with that id';
+  }
+
+  userToFind._id = userToFind._id.toString();
+
+  return userToFind;
+};
+
+export const remove = async (userId) => {
 	if(userId === undefined){
 	  throw 'id not provided';
 	} else if(typeof userId !== 'string' || userId.trim().length === 0){
@@ -222,59 +188,40 @@ export const loginUser = async (username, password) => {
 	  throw 'id is not a valid ObjectID'
 	} 
 	const userCollection = await users();
-	const userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
-	if(userToFind === null){
-	  throw 'no user with that id';
+	const deletedUser = await userCollection.findOneAndDelete({
+	  _id: new ObjectId(userId)});
+  
+	if (!deletedUser) {
+	  throw `Could not delete the product with id ${id}`;
 	}
-  
-	userToFind._id = userToFind._id.toString();
-  
-	return userToFind;
+	return `${deletedUser.username} has been successfully deleted!`;
   };
-  
-  export const remove = async (userId) => {
-	  if(userId === undefined){
-		throw 'id not provided';
-	  } else if(typeof userId !== 'string' || userId.trim().length === 0){
-		throw 'parameter is not a valid id';
-	  } else if(!ObjectId.isValid(userId.trim())){
-		throw 'id is not a valid ObjectID'
-	  } 
-	  const userCollection = await users();
-	  const deletedUser = await userCollection.findOneAndDelete({
-		_id: new ObjectId(userId)});
-	
-	  if (!deletedUser) {
-		throw `Could not delete the product with id ${id}`;
-	  }
-	  return `${deletedUser.username} has been successfully deleted!`;
-	};
-  
-   export const update = async (
-	  firstName,
-	  lastName,
-	  email,
-	  username,
-	  password,
-	  role
-	) => {
-  
-	  let updatedUser = {
-		  _id: _id,
-		  firstName: firstName,
-		  lastName: lastName,
-		  email: email,
-		  username: username,
-		  password: password,
-		  role: role
-		  };
-  
-	  const userCollection = await users();
-	  const updated = await userCollection.updateOne({_id: new ObjectId(_id)},  {$set: updatedUser});
-	  if (!updated){
-		throw 'could not update';
-	  }
-	  const updatedUserWithId = Object.assign({ _id: _id }, updatedUser);
-  
-	  return updatedUserWithId;
-	};
+
+ export const update = async (
+	firstName,
+    lastName,
+    email,
+    username,
+    password,
+    role
+  ) => {
+
+	let updatedUser = {
+		_id: _id,
+		firstName: firstName,
+    	lastName: lastName,
+    	email: email,
+    	username: username,
+    	password: password,
+    	role: role
+		};
+
+	const userCollection = await users();
+    const updated = await userCollection.updateOne({_id: new ObjectId(_id)},  {$set: updatedUser});
+    if (!updated){
+      throw 'could not update';
+    }
+    const updatedUserWithId = Object.assign({ _id: _id }, updatedUser);
+
+    return updatedUserWithId;
+  };

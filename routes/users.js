@@ -279,21 +279,23 @@ router
         username: user.username,
         role: user.role
       }));
-      res.json(simplifiedUsers);
+      return res.json(simplifiedUsers);
     } catch (e) {
       res.status(400).json({ error: e.message });
     }
   })
   .post(async (req, res) => {
     try {
-      const { firstName, lastName, email, username, password, role } = req.body;
+      const { firstName, lastName, email, username, password, role, listings, balance } = req.body;
       const newUser = await userData.registerUser(
         firstName,
         lastName,
         email,
         username,
         password,
-        role
+        role,
+        // listings,
+        balance
       );
       return res.json(newUser);
     } catch (e) {
@@ -318,44 +320,6 @@ router
         res.status(400).json({ error: e.message });
       }
     }
-  })
-  .delete(async (req, res) => {
-    try {
-      let deletedUser = await userData.remove(req.params._id);
-      res.status(200).json({ _id: deletedUser, deleted: true });
-    } catch (e) {
-      res.status(404).json({error: e});
-    }
-  })
-  .put(async (req, res) => {
-    try {
-      const updatedUser = await userData.update(
-        req.params._id,
-        req.body.firstName,
-        req.body.lastName,
-        req.body.email,
-        req.body.username,
-        req.body.password,
-        req.body.role,
-      );
-      res.status(200).json(updatedUser);
-    } catch (e) {
-      if(e === 'could not update'){
-        res.status(404).json({error: 'user not found'});
-      } else {
-        return res.status(400).send({error: e});
-      }
-    }
-  });
-
-  router.route('/admin').get(async (req, res) => {
-    return res.render('admin', {title: "Admin Page", ...req.session.user, currentTime: new Date().toUTCString()});
-  });
-
-  router.route('/users/logout').get(async (req, res) => {
-    req.session.destroy();
-    res.clearCookie('AuthenticationState', '', { expires: new Date() });
-    return res.render("logout", {title: "Logout Page"});
   });
 
 export default router;
