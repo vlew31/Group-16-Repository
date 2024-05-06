@@ -262,7 +262,7 @@ router
     const searchResults = await clothesData.searchByName(searchTerm,filters);
 
       if (searchResults.length === 0) {
-          return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
+          return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm} or the selected filters"` });
       }
       res.render('searchResults', { title: 'Clothes Found', searchResults });
   } catch (error) {

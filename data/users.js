@@ -385,3 +385,5 @@ export const updateUser = async (
 	
 	  return validation.idToString(updatedInfo.value);
   }
+
+export const addToCart = async() => {};
