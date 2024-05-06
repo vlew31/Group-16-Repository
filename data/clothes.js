@@ -15,9 +15,9 @@ export const create = async (
   tags,
   photos
 ) => {
-//   if (!title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
-//     throw "Must pass argument for every field.";
-// }
+  if (!title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
+    throw "Must pass argument for every field.";
+}
 
   seller = seller.trim();
   title = title.trim();
@@ -28,65 +28,40 @@ export const create = async (
   gender = gender.trim();
   condition = condition.trim();
 
-  // if (
-  //   typeof clothesName !== 'string' || clothesName === '' || 
-  //   typeof clothesDescription !== 'string' || clothesDescription === '' || 
-  //   typeof modeelNumber !== 'string' || modelNumber === '' ||
-  //   typeof manufacturer !== 'string' || manufacturer === '' ||
-  //   typeof manufacturerWebsite !== 'string' || manufacturerWebsite === '' ||
-  //   typeof dateReleased !== 'string' || dateReleased === ''){
-  //     throw "All fields must be non-empty strings.";
-  // }
+  tags = tags.trim();
+  photos = photos.trim();
+  
+  if(typeof seller !== 'string' || seller.length <= 0  || typeof title !== 'string' || title.length <= 0  ||
+  typeof description !== 'string' || description.length <= 0  || typeof article !== 'string' || article.length <= 0  ||
+  typeof size !== 'string'|| size.length <= 0  || typeof color !== 'string' || color.length <= 0  ||  
+  typeof gender !== 'string'|| gender.length <= 0  || typeof condition !== 'string' || condition.length <= 0  ||
+  typeof tags !== 'string'|| tags.length <= 0  ||  typeof photos !=='string' || photos.length <= 0){
+  throw("Must be a string type")};
+  
+  if (typeof price !== 'number' || price <= 0) {throw "Price must be a positive integer.";}
+  const priceString = price.toString();
+  if (priceString.includes(".") && priceString.split(".")[1].length > 2) {throw "Invalid price.";}
 
-  // if (typeof price !== 'number' || price <= 0) {
-  //     throw "Price must be a number greater than 0";
-  // }
-
-  // const priceString = price.toString();
-  // if (priceString.includes('.') && priceString.split('.')[1].length > 2) {
-  //   throw "Price cannot have more than two decimal places";
-  // }
-
-  // if(manufacturerWebsite.substring(0,10) != 'http://www' || manufacturerWebsite.substring(manufacturerWebsite.length - 4) != '.com'){
-  //   throw "Invalid website format.";
-  // }
-
-  // if(manufacturerWebsite.length < 20){
-  //   throw "Website cannot have less than 5 characters.";
-  // }
-
-  // if (!Array.isArray(keywords) || !Array.isArray(categories) || keywords.length === 0 || categories.length === 0 || !keywords.every(keyword => typeof keyword === 'string' && keyword.trim() !== '') || !categories.every(category => typeof category === 'string' && category.trim() !== '')) {
-  //     throw "Invalid keyword or category format.";
-  // }
-
-  // const validDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-  // if (!validDate.test(dateReleased)) {
-  //     throw "Invalid date.";
-  // }
-
-  // const [month, day, year] = dateReleased.split('/').map(Number);
-
-  // const daysInMonth = new Date(year, month, 0).getDate();
-  // if (day > daysInMonth) {
-  //     throw "Invalid date.";
-  // }
-
-  // if (!Date.parse(`${month}/${day}/${year}`)) {
-  //     throw "Invalid date.";
-  // }
-
-  // const releasedDate = new Date(year, month - 1, day);
-  // const currentDate = new Date();
-
-  // if (releasedDate > currentDate) {
-  //     throw "Invalid date.";
-  // }
-
-  // if (typeof discontinued !== 'boolean') {
-  //     throw "Discontinued was not provided or is not a boolean.";
-  // }
 
   const clothesCollection = await listings();
+
+  const existingClothes = await clothesCollection.findOne({
+    seller: seller,
+    title: title,
+    description: description,
+    article: article,
+    size: size,
+    color: color,
+    gender: gender,
+    price: price,
+    condition: condition,
+    tags: tags,
+    photos: photos
+  });
+  
+  if (existingClothes) {
+    throw "Clothes already exist";
+  }
 
   const newclothes = {
     // userId: userId,
@@ -210,63 +185,6 @@ export const update = async (
   gender = gender.trim();
   condition = condition.trim();
 
-  // if (
-  //   typeof listingId !== "string" ||
-  //   typeof clothesName !== "string" || clothesName === '' ||
-  //   typeof clothesDescription !== "string" || clothesDescription === '' ||
-  //   typeof modelNumber !== "string" || modelNumber === '' ||
-  //   typeof manufacturer !== "string" || manufacturer === '' ||
-  //   typeof manufacturerWebsite !== "string" || manufacturerWebsite === '' ||
-  //   typeof dateReleased !== "string" || dateReleased === ''
-  // ) {
-  //   throw "All fields must be non-empty strings.";
-  // }
-
-  // if (!ObjectId.isValid(listingId)) {
-  //   throw "Invalid ObjectId.";
-  // }
-
-  // if (typeof price !== "number" || price <= 0) {
-  //   throw "Price must be a number greater than 0.";
-  // }
-
-  // const priceString = price.toString();
-  // if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
-  //   throw "Invalid price.";
-  // }
-
-  // if (
-  //   manufacturerWebsite.substring(0, 10) !== "http://www" ||
-  //   manufacturerWebsite.substring(manufacturerWebsite.length - 4) !== ".com" ||
-  //   manufacturerWebsite.length < 20
-  // ) {
-  //   throw "Invalid website.";
-  // }
-
-  // if (
-  //   !Array.isArray(keywords) || !Array.isArray(categories) ||
-  //   keywords.length === 0 || categories.length === 0 ||
-  //   !keywords.every(keyword => typeof keyword === 'string' && keyword.trim() !== '') ||
-  //   !categories.every(category => typeof category === 'string' && category.trim() !== '')
-  // ) {
-  //   throw "Invalid keywords or categories format.";
-  // }
-
-  // const validDate = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-  // if (!validDate.test(dateReleased)) {
-  //   throw "Invalid date.";
-  // }
-
-  // const [month, day, year] = dateReleased.split('/').map(Number);
-  // const daysInMonth = new Date(year, month, 0).getDate();
-  // if (day > daysInMonth || !Date.parse(`${month}/${day}/${year}`)) {
-  //   throw "Invalid date.";
-  // }
-
-  // if (typeof discontinued !== 'boolean') {
-  //   throw "Discontinued must be a boolean value.";
-  // }
-
   const clothesCollection = await listings();
   const updatedclothes = {
     seller: seller,
@@ -281,6 +199,28 @@ export const update = async (
     tags: tags,
     photos: photos
   };
+
+  tags = tags.trim();
+  photos = photos.trim();
+  listingId.trim();
+  
+  if(typeof listingId !== 'string' || listingId.length <= 0 || typeof seller !== 'string' || seller.length <= 0  || typeof title !== 'string' || title.length <= 0  ||
+  typeof description !== 'string' || description.length <= 0  || typeof article !== 'string' || article.length <= 0  ||
+  typeof size !== 'string'|| size.length <= 0  || typeof color !== 'string' || color.length <= 0  ||  
+  typeof gender !== 'string'|| gender.length <= 0  || typeof condition !== 'string' || condition.length <= 0  ||
+  typeof tags !== 'string'|| tags.length <= 0  ||  typeof photos !=='string' || photos.length <= 0){
+    throw("Must be a string type")
+  }
+  if (!ObjectId.isValid(listingId)) {
+    throw "Invalid ObjectId.";
+  }
+  if (typeof price !== 'number' || price <= 0) {
+    throw "Price must be a positive integer.";
+  }
+  const priceString = price.toString();
+  if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
+    throw "Invalid price.";
+  }
 
   const updateInfo = await clothesCollection.updateOne(
     { _id: new ObjectId(listingId) },
@@ -304,33 +244,16 @@ export const update = async (
 
 export async function searchByName(searchTerm,filters) {
   try {
+    const priceString = filters.price.toString();
+    if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
+      throw "Invalid price.";
+    }
     const clothesCollection = await listings();
     const searchResults = await clothesCollection.find({
       title: { $regex: searchTerm, $options: 'i' },
       size: { $in: filters.size.map(size => new RegExp(size, 'i')) },
       color: { $in: filters.color.map(color => new RegExp(color, 'i')) },
       condition: { $in: filters.condition.map(condition => new RegExp(condition, 'i')) }}).toArray();
-    // const filterQuery = { title: { $regex: searchTerm,$options: 'i' } };
-    // if (filters.size) {
-    //   filterQuery.size = { $in: filters.size };
-    // }
-    // if (filters.color) {
-    //   filterQuery.color = { $in: filters.color };
-    // }
-    // if (filters.gender) {
-    //   filterQuery.gender = { $in: filters.gender };
-    // }
-    // if(filters.condition){
-    //     filterQuery.condition = {$in: filters.condition};
-    // }
-    // if(filters.priceRange){
-    //     filterQuery.priceRange = {$in: filters.priceRange};
-    // }
-    // console.log(filters.color[0]);
-    // const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i'} },{ color: { $regex: filters.color, $options: 'i'} }).toArray();
-    // for(let i = 0;i<filters.color.length;i++){
-    //   if()
-    // }
     console.log(searchResults);
     return searchResults;
   } catch (error) {
@@ -338,11 +261,9 @@ export async function searchByName(searchTerm,filters) {
     throw error;
   }
 }
-
 export async function addToCart(listingId, arr){
   const clothesCollection = await listings();
   const listingToAdd = await clothesCollection.findOne({_id: new ObjectId(listingId)});
-
   arr.push(listingToAdd);
   return arr;
 }
