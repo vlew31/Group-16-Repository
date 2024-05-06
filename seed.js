@@ -347,11 +347,3 @@ async function testCreateProducts() { //creates a listing
 
 await testCreateProducts();
 await testRegisterUser();
-// await testRemove();
-// await testCreateReview();
-// await testGetAllReview();
-// await testGetReview();
-// await testUpdateReview();
-// await testRemoveReview();
-// await closeConnection();
-// console.log("Done!");

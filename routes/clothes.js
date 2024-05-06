@@ -9,7 +9,11 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/about').get(async (req, res) => {
-  res.render('about', { title: 'About Us' });
+  res.render('about', { title: 'Meet the Members' });
+});
+
+router.route('/mission').get(async (req, res) => {
+  res.render('mission', { title: 'Our Mission' });
 });
 
 router.route('/user').get(async (req, res) => {
