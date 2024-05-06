@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     });
 
-    function checkUpdate() {
+    function updateCreate() {
         let seller = document.getElementById('seller').value;
         let photos = document.getElementById('photos').value;
         let title = document.getElementById('title').value;
@@ -22,41 +22,45 @@ document.addEventListener('DOMContentLoaded', function () {
         let condition = document.getElementById('condition').value;
         let tags = document.getElementById('tags').value;
 
-        // if (!sellerChecker(seller)) {
-        //     alert('Invalid seller');
-        //     return false;
-        // }
+        if (!sellerChecker(seller)) {
+            alert('Invalid seller');
+            return false;
+        }
     
         if (!photosChecker(photos)) {
+            alert('Invalid photos.');
+            return false;
+        }
+    
+        if (!titleChecker(title)) {
+            alert('Invalid title.');
+            return false;
+        }
+
+        if (!descriptionChecker(description)) {
             alert('Invalid last name.');
             return false;
         }
     
-        // if (!titleChecker(title)) {
-        //     alert('Invalid title.');
-        //     return false;
-        // }
-
-        // if (!descriptionChecker(description)) {
-        //     alert('Invalid last name.');
-        //     return false;
-        // }
-    
-        // if (!articleChecker(article)) {
-        //     alert('Invalid article.');
-        //     return false;
-        // }
+        if (!articleChecker(article)) {
+            alert('Invalid article.');
+            return false;
+        }
 
         if (!priceChecker(price)) {
             alert('Invalid price.');
             return false;
         }
 
-        // if (!tagsChecker(tags)) {
-        //     alert('Invalid tags.');
-        //     return false;
-        // }
+        if (!tagsChecker(tags)) {
+            alert('Invalid tags.');
+            return false;
+        }
     
+        if (size.trim()==="") {
+            alert('Choose a condition.');
+            return false
+        }
     
         if (condition.trim()==="") {
             alert('Choose a condition.');
@@ -72,80 +76,144 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Choose a color.');
             return false
         }
-
-        if (size.trim()==="") {
-            alert('Choose a size.');
-            return false
-        }
     
         return true;
     }
     
-    // function sellerChecker(seller) {
-    //     if() {
-    //         return "Invalid seller input";
-    //       }
-    // }
+    function sellerChecker(seller) {
+        if(typeof seller !== 'string') {
+            return false;
+        }
+        seller = seller.trim();
+        if(seller.length <= 0) {
+            return false;
+        }
+        return true;
+    }
 
     function photosChecker(photos) {
-        if( photos.substring(photos.length - 4) !== ".png" ||
-        photos.substring(photos.length - 5) !== ".jpeg" ||
-        photos.substring(photos.length - 4) !== ".jpg") {
-            return "Invalid photos input";
-          }
+        if(typeof photos !== 'string') {
+            return false;
+        }
+        for (let i = 0; i < photos.length; i++) {
+            photos[i] = photos[i].trim();
+          }  
+        for (let i = 0; i < photos.length; i++) {
+            if (
+                photos[i].substring(photos[i].length - 4) !== ".png" &&
+                photos[i].substring(photos[i].length - 5) !== ".jpeg" &&
+                photos[i].substring(photos[i].length - 4) !== ".jpg"
+            )
+            return false;
+        }
+        return true;
     }
 
-    // function titleChecker(title) {
-    //     if() {
-    //         return "Invalid title input";
-    //       }
-    // }
+    function titleChecker(title) {
+        if(typeof title !== 'string') {
+            return false;
+        }
+        title = title.trim();
+        if(title.length <= 0) {
+        return false;
+        }
+        return true;
+    }
 
-    // function articleChecker(article) {
-    //     if() {
-    //         return "Invalid article input";
-    //       }
-    // }
+    function articleChecker(article) {
+        if(typeof article !== 'string') {
+            return false;
+        }
+        article = article.trim();
+        if(article.length <= 0) {
+        return false;
+        }
+        return true;
+    }
 
-    // function descriptionChecker(description) {
-    //     if() {
-    //         return "Invalid description input";
-    //       }
-    // }
+    function descriptionChecker(description) {
+        if(typeof description !== 'string') {
+            return false;
+        }
+        description = description.trim();
+        if(description.length <= 0) {
+        return false;
+        }
+        return true;
+    }
 
-    // function colorChecker(color) {
-    //     if() {
-    //         return "Invalid color input";
-    //       }
-    // }
+    function colorChecker(color) {
+        if(typeof color !== 'string') {
+            return false;
+        }
+        color = color.trim();
+        if(color.length <= 0) {
+        return false;
+        }
+        return true;
+    }
 
-    // function sizeChecker(size) {
-    //     if() {
-    //         return "Invalid name input";
-    //       }
-    // }
+    function sizeChecker(size) {
+        if(typeof size !== 'string') {
+            return false;
+        }
+        size = size.trim();
+        if(size.length <= 0) {
+            return false;
+        }
+        return true;
+    }
 
-    // function genderChecker(gender) {
-    //     if() {
-    //         return "Invalid name input";
-    //       }
-    // }
+    function genderChecker(gender) {
+        if(typeof gender !== 'string') {
+            return false;
+        }
+        gender = gender.trim();
+        if(gender.length <= 0) {
+            return false;
+        }
+        return true;
+    }
 
-    // function conditionChecker(condition) {
-    //     if() {
-    //         return "Invalid condition input";
-    //       }
-    // }
+    function conditionChecker(condition) {
+        if(typeof condition !== 'string') {
+            return false;
+        }
+        condition = condition.trim();
+        if(condition.length <= 0) {
+            return false;
+        }
+        return true;
+    }
 
     function priceChecker(price) {
-        if(!Number.isInteger(price) || price <= 0 || (priceString.includes(".") && priceString.split(".")[1].length > 2)) {
-            return "Invalid price input";
+        if(typeof price !== 'string') {
+            return false;;
+        }
+        price = price.trim();
+        if(price.length <= 0) {
+            return false;
+        }
+        if (typeof price !== 'number' || price <= 0) {
+            return false;
           }
+        //   const priceString = price.toString();
+        //   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
+        //     return "Price must be two decimals max.";
+        // }
+        return true;
     }
 
-    // function tagsChecker(tags) {
-    //     if() {
-    //         return "Invalid tags input";
-    //       }
-    // }
+    function tagsChecker(tags) {
+        if(typeof tags !== 'string') {
+            return false;
+        }
+        for (let i = 0; i < tags.length; i++) {
+            tags[i] = tags[i].trim();
+          }
+        if(tags.length <= 0) {
+        return false;
+        }
+        return true;
+    }
     

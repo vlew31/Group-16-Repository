@@ -24,8 +24,7 @@ export const create = async (
   if(typeof seller !== 'string' || typeof title !== 'string' ||
   typeof description !== 'string' || typeof article !== 'string' ||
   typeof size !== 'string'  || typeof color !== 'string' ||  
-  typeof gender !== 'string'|| typeof condition !== 'string' || 
-  typeof tags !== 'string' ||  typeof photos !=='string'){
+  typeof gender !== 'string'|| typeof condition !== 'string'){
     throw("All inputs must be a string type")
   }
 
@@ -37,14 +36,19 @@ export const create = async (
   color = color.trim();
   gender = gender.trim();
   condition = condition.trim();
-  tags = tags.trim();
-  photos = photos.trim();
+  for (let i = 0; i < tags.length; i++) {
+    tags[i] = tags[i].trim();
+  }
+  for (let i = 0; i < photos.length; i++) {
+    photos[i] = photos[i].trim();
+  }  
 
   if(seller.length <= 0  || title.length <= 0  || description.length <= 0  || article.length <= 0  ||  size.length <= 0  || 
     color.length <= 0  ||  gender.length <= 0  || condition.length <= 0  || tags.length <= 0  ||  photos.length <= 0){
     throw("All inputs must be non spaces")
   }
 
+  price = parseInt(filters.price);
   if (typeof price !== 'number' || price <= 0) {
     throw "Price must be a positive integer.";
   }
@@ -52,12 +56,14 @@ export const create = async (
   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
     throw "Price must be two decimals max.";
   }
-  if (
-    photos.substring(photos.length - 4) !== ".png" ||
-    photos.substring(photos.length - 5) !== ".jpeg" ||
-    photos.substring(photos.length - 4) !== ".jpg"
-  ) {
-    throw "Invalid photo  type.";
+  for (let i = 0; i < photos.length; i++) {
+    if (
+      photos[i].substring(photos[i].length - 4) !== ".png" &&
+      photos[i].substring(photos[i].length - 5) !== ".jpeg" &&
+      photos[i].substring(photos[i].length - 4) !== ".jpg"
+    ) {
+      throw "Invalid photo.";
+    }
   }
   const clothesCollection = await listings();
 
@@ -191,8 +197,7 @@ export const update = async (
   if(typeof seller !== 'string' || typeof title !== 'string' ||
   typeof description !== 'string' || typeof article !== 'string' ||
   typeof size !== 'string'  || typeof color !== 'string' ||  
-  typeof gender !== 'string'|| typeof condition !== 'string' || 
-  typeof tags !== 'string' ||  typeof photos !=='string'){
+  typeof gender !== 'string'|| typeof condition !== 'string'){
     throw("All inputs must be a string type")
   }
 
@@ -204,13 +209,18 @@ export const update = async (
   color = color.trim();
   gender = gender.trim();
   condition = condition.trim();
-  tags = tags.trim();
-  photos = photos.trim();
 
   if(seller.length <= 0  || title.length <= 0  || description.length <= 0  || article.length <= 0  ||  size.length <= 0  || 
     color.length <= 0  ||  gender.length <= 0  || condition.length <= 0  || tags.length <= 0  ||  photos.length <= 0){
     throw("All inputs must be non spaces")
   }
+
+  for (let i = 0; i < tags.length; i++) {
+    tags[i] = tags[i].trim();
+  }
+  for (let i = 0; i < photos.length; i++) {
+    photos[i] = photos[i].trim();
+  }  
 
   if (!Number.isInteger(price) || price <= 0) {
     throw "Price must be a positive integer.";
