@@ -298,3 +298,11 @@ export async function searchByName(searchTerm,filters) {
     throw error;
   }
 }
+
+export async function addToCart(listingId, arr){
+  const clothesCollection = await listings();
+  const listingToAdd = await clothesCollection.findOne({_id: new ObjectId(listingId)});
+
+  arr.push(listingToAdd);
+  return arr;
+}
