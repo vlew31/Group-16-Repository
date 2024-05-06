@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <header>
-    <h1>Search Results</h1>
-  </header>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <a href="/search" class="search-button">Click here to go back to search</a>
+    <title>Search Results</title>
 </head>
 <body>
+    <header>
+        <h1>Search Results</h1>
+    </header>
+
+    <a href="/search" class="search-button">Click here to go back to search</a>
+
     {{#if searchResults}}
         <ul>
             {{#each searchResults}}
@@ -17,7 +20,6 @@
                     {{#each photos}}
                         <img src="{{this}}" alt="Photo" style="max-width: 300px; max-height: 300px;">
                     {{/each}}
-                    </p>
                     <p><strong>Seller:</strong> {{seller}}</p>
                     <p><strong>Description:</strong> {{description}}</p>
                     <p><strong>Article:</strong> {{article}}</p>
