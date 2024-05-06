@@ -20,6 +20,10 @@ router.route('/upload').get(async (req, res) => {
   res.render('upload', { title: 'Upload' });
 });
 
+router.route('/easteregg').get(async (req, res) => {
+  res.render('easteregg', { title: 'Shhh' });
+});
+
 router.route('/listings/:listingId').get(async (req, res) => {
   const listingId = req.params.listingId;
 
