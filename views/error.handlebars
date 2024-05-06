@@ -1,18 +1,10 @@
-{{!-- <main>
-  <header>
-    <Title>User Error</Title>
-    <h1>User Error</h1>
-  </header>
-  <p>
-    {{error}}
-  </p>
-  <a href="/users/login">Go back to login page</a>
-</main> --}}
-
-<h1>Error</h1>
-{{#if error}}
-  <p>{{error}}</p>
-{{else}}
-  <p>An unknown error occurred.</p>
-   <a href="/home">Go back to home page</a>
-{{/if}}
+<main>
+        <header>
+            <h1>User Error</h1>
+        </header>
+        <p>
+            {{error}}
+        </p>
+        <a href="/users/login">Go Back to login page</a><br>
+        <a href="/search">Search Page</a>
+    </main>

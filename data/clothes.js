@@ -1,8 +1,3 @@
-// // This data file should export all functions using the ES6 standard as shown in the lecture code
-// import {listings,users} from '../config/mongoCollections.js';
-// import * as user from './users.js';
-// import {ObjectId} from 'mongodb';
-
 // This data file should export all functions using the ES6 standard as shown in the lecture code
 import {listings} from '../config/mongoCollections.js';
 import {ObjectId} from 'mongodb';
@@ -113,10 +108,7 @@ export const getAll = async () => {
   .toArray();
 
   if (!clothesList.length) throw 'No clothes found';
-  clothesList = clothesList.map((element) => {
-    element._id = element._id.toString();
-    return element
-  })
+
   return clothesList;
 };
 
@@ -191,7 +183,6 @@ export const update = async (
   if (!listingId || !seller || !title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
     throw "Must provide values for all fields.";
   }
-  if (!ObjectId.isValid(listingId)) throw 'invalid object ID';
 
   seller = seller.trim();
   title = title.trim();
@@ -201,6 +192,24 @@ export const update = async (
   color = color.trim();
   gender = gender.trim();
   condition = condition.trim();
+
+  
+
+  const clothesCollection = await listings();
+  const updatedclothes = {
+    seller: seller,
+    title: title,
+    description: description,
+    article: article,
+    size: size,
+    color: color,
+    gender: gender,
+    price: price,
+    condition: condition,
+    tags: tags,
+    photos: photos
+  };
+
   tags = tags.trim();
   photos = photos.trim();
   listingId.trim();
@@ -224,29 +233,6 @@ export const update = async (
   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
     throw "Invalid price.";
   }
-
-  if (
-    photos.substring(0, 10) !== "http://www" ||
-    photos.substring(photos.length - 4) !== ".com" ||
-    photos.length < 20
-  ) {
-    throw "Invalid website.";
-  }
-
-  const clothesCollection = await listings();
-  const updatedclothes = {
-    seller: seller,
-    title: title,
-    description: description,
-    article: article,
-    size: size,
-    color: color,
-    gender: gender,
-    price: price,
-    condition: condition,
-    tags: tags,
-    photos: photos
-  };
 
   const updateInfo = await clothesCollection.updateOne(
     { _id: new ObjectId(listingId) },
