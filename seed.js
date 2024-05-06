@@ -84,6 +84,9 @@ let cranberries = undefined;
 let baggyCoat = undefined;
 let floralDress = undefined;
 let floralTank = undefined;
+let sneakers = undefined;
+let redPants = undefined; 
+let greenPJs = undefined;
 
 async function testCreateProducts() { //creates a listing
 	try {
@@ -285,7 +288,62 @@ async function testCreateProducts() { //creates a listing
 		console.log("Uh-oh, not supposed to see me - 2");
 		console.log(e);
 	}
+	try {
+		sneakers = await clothesData.create(
+			"keba123",
+			"Beige & Navy Shooting Star Sneakers",
+			"Some cool sneakers I found at the thrift that I overgrew.",
+			"Sneakers",
+			"11",
+			"Brown",
+			"Male",
+			50.00,
+			"Used",
+			["Star", "Beige", "Navy Blue"],
+			["https://i.pinimg.com/736x/5c/b6/e5/5cb6e5e0fc56bbaa9f0d05ed87a11c67.jpg", "https://i.pinimg.com/736x/a8/7a/b2/a87ab23c738edfd41102c42e4dde8cf1.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		redPants = await clothesData.create(
+			"joelleAn",
+			"Red Bow Pants",
+			"Cute red pants. Super comfy",
+			"Pants",
+			"16",
+			"Red",
+			"Female",
+			32.16,
+			"Used",
+			["Ribbon", "corduroy"],
+			["https://i.pinimg.com/564x/67/a4/e8/67a4e8b879eb507a11eec1b98e5592a6.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		greenPJs = await clothesData.create(
+			"vic31",
+			"Scalloped Pajama Set",
+			"Metallic green with a plaid/floral design",
+			"PJS",
+			"Medium",
+			"Green",
+			"Female",
+			17.89,
+			"Used",
+			["Green", "Pajama Set"],
+			["https://i.pinimg.com/736x/d1/01/a8/d101a89716abdd6bc59578e7bfcee36d.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}		
 }
+
 
 await testCreateProducts();
 await testRegisterUser();
