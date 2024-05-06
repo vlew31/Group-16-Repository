@@ -3,7 +3,6 @@ import { clothesData } from '../data/index.js'
 import { listings } from '../config/mongoCollections.js';
 
 const router = express.Router();
-router.use(express.json());
 
 router.route('/').get(async (req, res) => {
   res.render('home', { title: '$waggle' });
@@ -19,9 +18,6 @@ router.route('/user').get(async (req, res) => {
 
 router.route('/upload').get(async (req, res) => {
   res.render('upload', { title: 'Upload' });
-})
-router.route('/update').get(async (req, res) => {
-  res.render('update', { title: 'Update' });
 })
 // .post(async (req, res) => {
 //   try {
@@ -70,6 +66,7 @@ router.route('/listings/:listingId').get(async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 router.route('/cart').get(async (req, res) => {
   res.render('cart', { title: 'Cart/Wishlist' });
@@ -159,12 +156,12 @@ router
   })
   .delete(async (req, res) => {
     try {
-      const result = await clothesData.remove(req.params.clothesId);
+      const result = await clothesData.remove(req.params.listingsId);
       const deleted = !!result;
       res.status(200).json({ _id: req.params.clothesId, deleted: deleted });
     } catch (e) {
       if (e === 'Invalid ObjectId') {
-        res.status(400).json({ error: 'Invalid clothes ID.' });
+        res.status(400).json({ error: 'Invalid listing ID.' });
       } else if (e === 'clothes not found') {
         res.status(404).json({ error: 'clothes not found.' });
       } else {
@@ -178,13 +175,9 @@ router
     try {
       const updatedclothes = await clothesData.update(
         id,
-        req.body.seller,
-        req.body.title,
-        req.body.description,
-        req.body.article,
-        req.body.size,
-        req.body.color,
-        req.body.gender,
+        req.body.clothesName,
+        req.body.clothesDescription,
+        req.body.modelNumber,
         req.body.price,
         req.body.condition,
         req.body.tags,

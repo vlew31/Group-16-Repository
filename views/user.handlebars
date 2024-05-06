@@ -23,22 +23,12 @@
 
     <!-- User Account -->
     <h2>User Account</h2>
-    {{!-- {{#if showLoginButton}}
-        <p>Login Info</p>
-    {{else}}
-        <a href="/users/login" id="Login" class="button">Login Info</a>
-    {{/if}} --}}
-
-        <p>Welcome, {{user.firstName}} {{user.lastName}}!</p>
-        <p>Email: {{user.email}}</p>
-        <p>Username: {{user.username}}</p>
-        <p>Role: {{user.role}}</p>
-
-        <a href="/users/logout" id="Logout" class="button">Logout</a>
-        <a href="/cart" id="editWalletInfo" class="button">Edit Wallet Info</a>
+    <p>Login Info: {{loginInfo}}</p>
+    <a href="/users/login" id="Logout" class="button">Logout</a>
+    <a href="/cart" id="editWalletInfo" class="button">Edit Wallet Info</a>
 
     <!-- Delete Clothing Items -->
-    <h2>Edit/Delete Clothing Items</h2>
+    <h2>Delete Clothing Items</h2>
     <ul>
         {{#each unsoldClothes}}
             <li>

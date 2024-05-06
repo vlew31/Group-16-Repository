@@ -1,86 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
-</head>
-<body>
-    <section>  
-        <header>
-            <h1>Search</h1>
-        </header>  
-        <form id="searchForm" action="/searchResults" method="POST">
-            <label for="searchByName">Search by name: </label>
-            <input type="text" id="searchByName" name="searchByName">
-            <div>
-                <h3>Size:</h3>
-                <div><label><input type="checkbox" name="size" value="extra small"> Extra Small</label></div>
-                <div><label><input type="checkbox" name="size" value="small"> Small</label></div>
-                <div><label><input type="checkbox" name="size" value="medium"> Medium</label></div>
-                <div><label><input type="checkbox" name="size" value="large"> Large</label></div>
-                <div><label><input type="checkbox" name="size" value="extra large"> Extra Large</label></div>
-                <div><label><input type="checkbox" name="size" value="other"> Other</label></div>
-            </div>
-            <div>
-                <h3>Color:</h3>
-                <div><label><input type="checkbox" name="color" value="Red"> Red</label></div>
-                <div><label><input type="checkbox" name="color" value="Orange"> Orange</label></div>
-                <div><label><input type="checkbox" name="color" value="Yellow"> Yellow</label></div>
-                <div><label><input type="checkbox" name="color" value="Green"> Green</label></div>
-                <div><label><input type="checkbox" name="color" value="Blue"> Blue</label></div>
-                <div><label><input type="checkbox" name="color" value="Purple"> Purple</label></div>
-                <div><label><input type="checkbox" name="color" value="White"> White</label></div>
-                <div><label><input type="checkbox" name="color" value="Black"> Black</label></div>
-                <div><label><input type="checkbox" name="color" value="Brown"> Brown</label></div>
-                <div><label><input type="checkbox" name="color" value="Other"> Other</label></div>
-            </div>
-            <div>
-                <h3>Gender:</h3>
-                <div><label><input type="checkbox" name="gender" value="Men"> Men</label></div>
-                <div><label><input type="checkbox" name="gender" value="Women"> Women</label></div>
-                <div><label><input type="checkbox" name="gender" value="Unisex"> Unisex</label></div>
-            </div>
-            <div>
-                <h3>Price Range:</h3>
-                <div><label><input type="checkbox" name="price" value="0-50"> $0 - $50</label></div>
-                <div><label><input type="checkbox" name="price" value="51-100"> $51 - $100</label></div>
-                <div><label><input type="checkbox" name="price" value="101-200"> $101 - $200</label></div>
-                <div><label><input type="checkbox" name="price" value="201"> $201+ </label></div>
-            </div>
-            <div>
-                <h3>Condition:</h3>
-                <div><label><input type="checkbox" name="condition" value="New"> New</label></div>
-                <div><label><input type="checkbox" name="condition" value="Refurbished"> Refurbished</label></div>
-                <div><label><input type="checkbox" name="condition" value="Used"> Used</label></div>
-            </div>
-            <input type="submit" value="Search">
-        </form>
-    </section>
+<section>  
+    <header>
+    <h1>Search</h1>
+  </header>  
+    <form id="searchForm" action="/searchResults" method="POST">
+    <label for="searchByName">Search by name: </label>
+    <input type="text" id="searchByName" name="searchByName">
+  <div>
+      <h3>Size:</h3>
+        <div><label><input type="checkbox" name="size" value="small"> Small</label></div>
+        <div><label><input type="checkbox" name="size" value="small"> Medium</label></div>
+        <div><label><input type="checkbox" name="size" value="large"> Large</label></div>
+        <div><label><input type="checkbox" name="size" value="other"> Other</label></div>
+    </div>
+    <div>
+    <h3>Color:</h3>
+        <div><label><input type="checkbox" name="color" value="Red"> Red</label></div>
+        <div><label><input type="checkbox" name="color" value="Orange"> Orange</label></div>
+        <div><label><input type="checkbox" name="color" value="Yellow"> Yellow</label></div>
+        <div><label><input type="checkbox" name="color" value="Green"> Green</label></div>
+        <div><label><input type="checkbox" name="color" value="Blue"> Blue</label></div>
+        <div><label><input type="checkbox" name="color" value="Purple"> Purple</label></div>
+        <div><label><input type="checkbox" name="color" value="White"> White</label></div>
+        <div><label><input type="checkbox" name="color" value="Black"> Black</label></div>
+        <div><label><input type="checkbox" name="color" value="Brown"> Brown</label></div>
+        <div><label><input type="checkbox" name="color" value="Other"> Other</label></div>
+    </div>
 
-    <section id="search-results">
-        <div id="search-results-container">
-            {{#if searchResults.length}}
-                {{#each searchResults}}
-                    <div class="listing">
-                        <h2>{{title}}</h2>
-                        <p><strong>Seller: </strong>{{seller}}</p>
-                        <img src="{{photos.[0]}}" alt="{{title}}">
-                        <p><strong>Description: </strong>{{description}}</p>
-                        <p><strong>Article: </strong>{{article}}</p>
-                        <p><strong>Gender: </strong>{{gender}}</p>              
-                        <p><strong>Size: </strong>{{size}}</p>
-                        <p><strong>Color: </strong>{{color}}</p>
-                        <p><strong>Condition: </strong>{{condition}}</p>
-                        <p><strong>Price: </strong>{{price}}</p>
-                    </div>
-                {{/each}}
-            {{else}}
-                <p>No results found</p>
-            {{/if}}
+    <div>
+        <h3>Gender:</h3>
+        <div><label><input type="checkbox" name="gender" value="Men"> Men</label></div>
+        <div><label><input type="checkbox" name="gender" value="Women"> Women</label></div>
+        <div><label><input type="checkbox" name="gender" value="Unisex"> Unisex</label></div>
+    </div>
+    <div>
+        <h3>Price Range:</h3>
+        <div><label><input type="checkbox" name="price" value="0-50"> $0 - $50</label></div>
+        <div><label><input type="checkbox" name="price" value="51-100"> $51 - $100</label></div>
+        <div><label><input type="checkbox" name="price" value="101-200"> $101 - $200</label></div>
+        <div><label><input type="checkbox" name="price" value="201"> $201+ </label></div>
+    </div>
+    <div>
+        <h3>Condition:</h3>
+        <div><label><input type="checkbox" name="condition" value="New"> New</label></div>
+        <div><label><input type="checkbox" name="condition" value="Refurbished"> Refurbished</label></div>
+        <div><label><input type="checkbox" name="condition" value="Used"> Used</label></div>
+    </div>
+    <input type="submit" value="Search">
+    </form>
+{{!-- <section class="filters"> --}}
+  <section id="search-results">
+  <div id="search-results-container">
+    {{#if searchResults.length}}
+      {{#each searchResults}}
+        <div class="listing">
+          <h2>{{title}}</h2>
+          <p><strong>Seller: </strong>{{seller}}</p>
+          <img src="{{photos.[0]}}" alt="{{title}}">
+          <p><strong>Description: </strong>{{description}}</p>
+          <p><strong>Article: </strong>{{article}}</p>
+          <p><strong>Gender: </strong>{{gender}}</p>              
+          <p><strong>Size: </strong>{{size}}</p>
+          <p><strong>Color: </strong>{{color}}</p>
+          <p><strong>Condition: </strong>{{condition}}</p>
+          <p><strong>Price: </strong>{{price}}</p>
         </div>
-        <input type="submit" value="Search">
-    </section>
-</body>
-</html>
+      {{/each}}
+    {{else}}
+      <p>No results found</p>
+    {{/if}}
+  </div>
+  <input type="submit" value="Search">
 
+</section>

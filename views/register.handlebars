@@ -1,106 +1,39 @@
-{{!-- 
-<main>
-    <h1>Create an account!</h1>
-    <form action="register" method="POST" id="signup-form">
-        <label for="firstName">First Name:</label>
-        <input type="text" name="firstName" id="firstName" placeholder="First Name"><br>
-
-        <label for="lastName">Last Name:</label>
-        <input type="text" name="lastName" id="lastName" placeholder="Last Name"><br>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" placeholder="Email"><br>
-
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" placeholder="Username"><br>
-
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" placeholder="Password"><br>
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password"><br>
-
-        <label for="role">Role</label>
-        <select name="role" id="role">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select>
-        {{#if error}}
-        <p class="inputError">{{error}}</p>
-        {{/if}}
-        <button type="submit" class="submitButton">Submit</button>
-        <a href="login">Already have an account? Click here to log-in</a>
-    </form>
-</main> --}}
-
-
-<main class="register">
-    <div class="form-wrapper">
-        <h2 class="h2-register">Register</h2>
-        <form action="/users/register" method="POST" id="signup-form">
-            <div class="input-container">
-                <div class="input-group">
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="role">Choose a Role:</label>
-                    <select name="role" id="role" required>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
+<section>
+        <div class="form-group">
+        <h2>User Registration</h2>
+        <form id="registration-form" action="/users/register" method="POST">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
             </div>
-
-            {{!-- <ul>
-                {{#each errors}}
-                <li>{{this}}</li>
-                {{/each}}
-            </ul> --}}
-            {{#if error}}
-            <p class="inputError">{{error}}</p>
-            {{/if}}
-
-            {{!-- <button type="submit" id="submitButton" onclick="disableButton()">Sign Up</button>
-            <div id="loadingIndicator">
-                <div class="loader"></div>
-                <p>Loading...</p>
-            </div> --}}
-            
-             <button type="submit" class="submitButton">Submit</button>
-
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit">Register</button>
         </form>
-
-        {{!-- <script src="/public/js/button.js"></script> --}}
-        {{!-- <button type="submit" class="submitButton">Submit</button> --}}
     </div>
-    {{!-- <hr class="separator-line"> --}}
-            {{!-- <a href="login">Already have an account? Click here to log-in</a> --}}
-        {{!-- <script src="/public/js/login.js"></script> --}}
-    <p><a href="/users/login">Already have an account? Click here to log-in</a></p>
-</main>
+</section>
