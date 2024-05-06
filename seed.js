@@ -79,6 +79,7 @@ let cartiMerch = undefined;
 let denimVest = undefined;
 let starJorts = undefined;
 let moonTee = undefined;
+let polo = undefined;
 
 async function testCreateProducts() { //creates a listing
 	try {
@@ -191,7 +192,7 @@ async function testCreateProducts() { //creates a listing
 		console.log(e);
 	}
 	try {
-		moonTee = await clothesData.create(
+		polo = await clothesData.create(
 			"missbelly",
 			"Vintage Polo Ralph Lauren Equestrian Lined Denim Trucker Jacket",
 			"This jacket is really comfortable and it's good for providing warmth.",
@@ -203,6 +204,24 @@ async function testCreateProducts() { //creates a listing
 			"Used",
 			["Equestrian", "Vintage", "Polo Ralph Lauren"],
 			["https://i.pinimg.com/736x/21/b2/14/21b21472c6fa7e602d2eb484f5d7a011.jpg", "https://i.pinimg.com/736x/50/ff/86/50ff86cbffc2d142b1d2464b858008e1.jpg", "https://i.pinimg.com/736x/26/90/f9/2690f9c611e5894de62bfec8bfb5f1e8.jpg"]
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		polo = await clothesData.create(
+			"belalipop",
+			"Customized The Cranberries ",
+			"This jacket is really comfortable and it's good for providing warmth.",
+			"Jacket",
+			"L",
+			"Blue",
+			"Unisex",
+			199.99,
+			"Used",
+			["Equestrian", "Vintage", "Polo Ralph Lauren"],
+			["https://i.pinimg.com/736x/21/b2/14/21b21472c6fa7e602d2eb484f5d7a011.jpg", "https://i.pinimg.com/736x/50/ff/86/50ff86cbffc2d142b1d2464b858008e1.jpg", "https://i.pinimg.com/736x/26/90/f9/2690f9c611e5894de62bfec8bfb5f1e8.jpg"], 
 		);
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 2");
