@@ -28,26 +28,28 @@ export const create = async (
   gender = gender.trim();
   condition = condition.trim();
 
-  tags = tags.trim();
-  photos = photos.trim();
-  
-  if(typeof seller !== 'string' || seller.length <= 0  || typeof title !== 'string' || title.length <= 0  ||
-  typeof description !== 'string' || description.length <= 0  || typeof article !== 'string' || article.length <= 0  ||
-  typeof size !== 'string'|| size.length <= 0  || typeof color !== 'string' || color.length <= 0  ||  
-  typeof gender !== 'string'|| gender.length <= 0  || typeof condition !== 'string' || condition.length <= 0  ||
-  typeof tags !== 'string'|| tags.length <= 0  ||  typeof photos !=='string' || photos.length <= 0){
-  throw("Must be a string type")};
-  
-  if (typeof price !== 'number' || price <= 0) {throw "Price must be a positive integer.";}
+  for (let i = 0; i < tags.length; i++) {
+    tags[i] = tags[i].trim();
+}
+for (let i = 0; i < photos.length; i++) {
+  photos[i] = photos[i].trim();
+}  
+  if( typeof seller !== 'string' || seller.length <= 0  || typeof title !== 'string' || title.length <= 0  ||
+typeof description !== 'string' || description.length <= 0  || typeof article !== 'string' || article.length <= 0  ||
+typeof size !== 'string'|| size.length <= 0  || tags.length <= 0  || photos.length <= 0){
+  throw("Must be a string type")
+} 
   const priceString = price.toString();
   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {throw "Invalid price.";}
 
-  if (
-    photos.substring(photos.length - 4) !== ".png" ||
-    photos.substring(photos.length - 5) !== ".jpeg" || 
-    photos.substring(photos.length - 4) !== ".jpg"
-  ) {
-    throw "Invalid photo.";
+  for (let i = 0; i < photos.length; i++) {
+    if (
+      photos[i].substring(photos[i].length - 4) !== ".png" &&
+      photos[i].substring(photos[i].length - 5) !== ".jpeg" &&
+      photos[i].substring(photos[i].length - 4) !== ".jpg"
+    ) {
+      throw "Invalid photo.";
+    }
   }
 
   const clothesCollection = await listings();
@@ -207,15 +209,17 @@ export const update = async (
     photos: photos
   };
 
-  tags = tags.trim();
-  photos = photos.trim();
+  for (let i = 0; i < tags.length; i++) {
+    tags[i] = tags[i].trim();
+}
+  for (let i = 0; i < photos.length; i++) {
+    photos[i] = photos[i].trim();
+  }
   listingId.trim();
   
   if(typeof listingId !== 'string' || listingId.length <= 0 || typeof seller !== 'string' || seller.length <= 0  || typeof title !== 'string' || title.length <= 0  ||
   typeof description !== 'string' || description.length <= 0  || typeof article !== 'string' || article.length <= 0  ||
-  typeof size !== 'string'|| size.length <= 0  || typeof color !== 'string' || color.length <= 0  ||  
-  typeof gender !== 'string'|| gender.length <= 0  || typeof condition !== 'string' || condition.length <= 0  ||
-  typeof tags !== 'string'|| tags.length <= 0  ||  typeof photos !=='string' || photos.length <= 0){
+  typeof size !== 'string'|| size.length <= 0  || tags.length <= 0  || photos.length <= 0){
     throw("Must be a string type")
   }
   if (!ObjectId.isValid(listingId)) {
