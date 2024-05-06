@@ -20,12 +20,12 @@ async function testRegisterUser(){
 			"Villanueva",
 			"ivillanu@stevens.edu",
 			"ivillanu",
-			"ivillanu123",
-			"ivillanu123",
+			"Ivillanu123!",
+			"Ivillanu123!",
 			"admin"
 		);
 	} catch(e) {
-		console.log("Uh-oh, not supposed to see me");
+		console.log("Uh-oh, not supposed to see me - 1");
 		console.log(e);
 	}
 	try {
@@ -33,13 +33,13 @@ async function testRegisterUser(){
 			"Kieron",
 			"Ampaw",
 			"fake_email@gmail.com",
-			"Keba12345", 
-			"Keba1234",
-			"Keba1234",
+			"fortnites", 
+			"Keba1234!",
+			"Keba1234!",
 			"admin"
 		);
 	} catch(e) {
-		console.log("Uh-oh, not supposed to see me");
+		console.log("Uh-oh, not supposed to see me - 2");
 		console.log(e);
 	}
 	try {
@@ -48,12 +48,12 @@ async function testRegisterUser(){
 			"Eltemsah",
 			"super_fake_email@gmail.com",
 			"Belalipop", 
-			"YeatLover",
-			"YeatLover",
+			"YeatLover1!",
+			"YeatLover1!",
 			"admin"
 		);
 	} catch(e) {
-		console.log("Uh-oh, not supposed to see me");
+		console.log("Uh-oh, not supposed to see me - 3");
 		console.log(e);
 	}
 	try {
@@ -62,12 +62,12 @@ async function testRegisterUser(){
 			"villanu",
 			"real_email@gmail.com",
 			"Missbelly", 
-			"BeaLover",
-			"BeaLover",
+			"BeaLover1!",
+			"BeaLover1!",
 			"user"
 		);
 	} catch(e) {
-		console.log("Uh-oh, not supposed to see me");
+		console.log("Uh-oh, not supposed to see me - 4");
 		console.log(e);
 	}
 }
@@ -101,7 +101,7 @@ async function testCreateProducts() { //creates a listing
 			49.99,
 			"New",
 			["Nettspend", "Underground", "Fortnite", "Merch"],
-			["https://i.pinimg.com/564x/45/7a/9e/457a9e34639bf34422a0139fccf053d3.jpg", "https://cdn1.epicgames.com/offer/fn/Blade_2560x1440_2560x1440-95718a8046a942675a0bc4d27560e2bb"]
+			["https://i.pinimg.com/564x/45/7a/9e/457a9e34639bf34422a0139fccf053d3.jpg"]
 			
 		);
 	} catch (e) {

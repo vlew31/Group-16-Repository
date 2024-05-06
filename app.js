@@ -76,6 +76,7 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
 // const staticDir = express.static(__dirname + '/public');
 
 app.use('/public', express.static('public'));
+app.use('/lsitings', express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);
@@ -157,6 +158,9 @@ app.get('/register', (req, res) => {
   res.render("register", { title: "Register Page" });
 });
 
+app.get('/update', (req, res) => {
+  res.render("update", { title: "Edit a listing" });
+});
 
 app.use('/user', (req, res, next) => {
   if (!(req.session.user)) {
@@ -180,7 +184,6 @@ app.use('/admin', (req, res, next) => {
   }
   next();
 })
-
 
 // app.use('/logout', (req, res) => {
 //     return res.redirect("/users/logout");

@@ -21,4 +21,23 @@
   </p>
   <a href="/cart" class="button">Add to Cart</a>
   <a href="/cart" class="button">Add to Wishlist</a>
+  <a href="/update/{{ listing._id }}">Update Listing</a>
+
+    {{!-- <form id="updateForm" action="/update/${listing._id}" method="POST">
+    <!-- Add hidden input fields to hold listing details -->
+    <input type="hidden" name="id" value="{{listing._id}}">
+    <input type="hidden" name="seller" value="{{listing.seller}}">
+    <input type="hidden" name="title" value="{{listing.title}}">
+    <input type="hidden" name="description" value="{{listing.description}}">
+    <input type="hidden" name="article" value="{{listing.article}}">
+    <input type="hidden" name="size" value="{{listing.size}}">
+    <input type="hidden" name="color" value="{{listing.color}}">
+    <input type="hidden" name="gender" value="{{listing.gender}}">
+    <input type="hidden" name="price" value="{{listing.price}}">
+    <input type="hidden" name="condition" value="{{listing.condition}}">
+    <input type="hidden" name="photos" value="{{listing.photos}}">
+    <input type="hidden" name="tags" value="{{tags}}">
+    <!-- Submit button -->
+    <input type="submit" class = 'button 'value="update listing">
+    </form> --}}
 </div>
