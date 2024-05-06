@@ -89,7 +89,7 @@ app.use(
     name: 'AuthState',
     secret: "some secret string!",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true
   })
 );
 
@@ -166,6 +166,10 @@ next();
   // res.render("user", { title: "User Profile" });
 })
 
+app.get('/user', (req, res) => {
+  const user = req.session.user;
+  res.render('user', { user }); // Render userProfile template and pass user data
+});
 
 app.use('/admin', (req, res, next) => {
   if (!(req.session.user)) {
@@ -178,10 +182,14 @@ app.use('/admin', (req, res, next) => {
 })
 
 
+// app.use('/logout', (req, res) => {
+//     return res.redirect("/users/logout");
+//   // next();
+// })
+
 app.use('/logout', (req, res) => {
-    return res.redirect("/users/logout");
-  // next();
-})
+  res.redirect("/users/login");
+});
 
 configRoutes(app);
 

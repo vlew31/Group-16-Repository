@@ -4,87 +4,37 @@
     </header>
 
     <main>
-    <!-- Clothes to Sell -->
-    <h2>Clothes to Sell</h2>
-    <ul>
-        {{#each clothes}}
-            <li>
-                <img src="{{photo}}" alt="{{name}}">
-                <h3>{{name}}</h3>
-                <p>{{description}}</p>
-                <p>Price: {{price}}</p>
-                <p>Condition: {{condition}}</p>
-                <p>Color: {{color}}</p>
-                <p>Size: {{size}}</p>
-                <button onclick="deleteClothes('{{id}}')">Delete</button>
-            </li>
-        {{/each}}
-    </ul>
+        <!-- Clothes to Sell -->
+        <h2>Clothes to Sell</h2>
+        <ul>
+            {{#each clothes}}
+                <li>
+                    <img src="{{photo}}" alt="{{name}}">
+                    <h3>{{name}}</h3>
+                    <p>{{description}}</p>
+                    <p>Price: {{price}}</p>
+                    <p>Condition: {{condition}}</p>
+                    <p>Color: {{color}}</p>
+                    <p>Size: {{size}}</p>
+                    <button onclick="deleteClothes('{{id}}')">Delete</button>
+                </li>
+            {{/each}}
+        </ul>
 
-    <!-- User Account -->
-    <h2>User Account</h2>
-    <p>Login Info: {{loginInfo}}</p>
-    <a href="/users/login" id="Logout" class="button">Logout</a>
-    <a href="/cart" id="editWalletInfo" class="button">Edit Wallet Info</a>
-
-    <!-- Delete Clothing Items -->
-    <h2>Delete Clothing Items</h2>
-    <ul>
-        {{#each unsoldClothes}}
-            <li>
-                <img src="{{photo}}" alt="{{name}}">
-                <h3>{{name}}</h3>
-                <p>{{description}}</p>
-                <p>Price: {{price}}</p>
-                <p>Condition: {{condition}}</p>
-                <p>Color: {{color}}</p>
-                <p>Size: {{size}}</p>
-                <button onclick="deleteClothes('{{id}}')">Delete</button>
-                <button onclick="editClothes('{{id}}')">Edit</button>
-            </li>
-        {{/each}}
-    </ul>
+        <!-- User Account -->
+        <h2>User Account</h2>
+        {{#if user}}
+            <p>Login Info:</p>
+            <p>Username: {{user.username}}</p>
+            <p>First Name: {{user.firstName}}</p>
+            <p>Last Name: {{user.lastName}}</p>
+            <p>Email: {{user.email}}</p>
+            <a href="/user/logout" class="button">Logout</a>
+            <a href="/cart/{{user._id}}" class="button">Edit Wallet Info</a>
+        {{else}}
+            <p>No user logged in.</p>
+            <a href="/users/login" class="button">Login</a>
+            <a href="/users/register" class="button">Register</a>
+        {{/if}}
     </main>
 </section>
-
-<script>
-    // Function to fetch user data
-    async function fetchUserData(userId) {
-        try {
-            const response = await fetch(`http://localhost:3000/users/${userId}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch user data');
-            }
-            const userData = await response.json();
-            displayUserData(userData);
-        } catch (error) {
-            console.error('Error fetching user data:', error);
-            // Display error message to user
-            const loginInfoContainer = document.getElementById('loginInfo');
-            loginInfoContainer.textContent = `Login Info: Error fetching user data`;
-        }
-    }
-
-    // Function to display user data in the HTML
-    function displayUserData(userData) {
-        const loginInfoContainer = document.getElementById('loginInfo');
-        loginInfoContainer.innerHTML = `
-            <p>Login Info:</p>
-            <ul>
-                <li>Username: ${userData.username}</li>
-                <li>First Name: ${userData.firstName}</li>
-                <li>Last Name: ${userData.lastName}</li>
-                <li>Email: ${userData.email}</li>
-                <li>Role: ${userData.role}</li>
-                <li>Balance: $${userData.balance}</li>
-            </ul>
-        `;
-        // Optionally, display other user data here if needed
-    }
-
-    // Call fetchUserData when the page loads
-    window.addEventListener('load', () => {
-        const userId = '6638401d099305630d635e67'; // Replace this with the actual user ID
-        fetchUserData(userId);
-    });
-</script>

@@ -9,7 +9,11 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/about').get(async (req, res) => {
-  res.render('about', { title: 'About Us' });
+  res.render('about', { title: 'Meet the Members' });
+});
+
+router.route('/mission').get(async (req, res) => {
+  res.render('mission', { title: 'Our Mission' });
 });
 
 router.route('/user').get(async (req, res) => {
@@ -32,7 +36,7 @@ router.route('/listings/:listingId').get(async (req, res) => {
     if (!listing) {
       return res.status(404).send('Listing not found');
     }
-    res.render('listing', { listing, listingId }); // Pass listingId to the template
+    res.render('listing', { listing, listingId });
   } catch (err) {
     console.error('Error fetching listing:', err);
     res.status(500).send('Internal Server Error');
@@ -113,19 +117,6 @@ router
   });
 
 router
-  // .route('/listings/:listingsId')
-  // .get(async (req, res) => {
-  //   try {
-  //     const clothes = await clothesData.get(req.params.clothesId);
-  //     res.status(200).json(clothes);
-  //   } catch (e) {
-  //     if (e === 'Invalid ObjectId') {
-  //       res.status(400).json({ error: 'Invalid clothes ID.' });
-  //     } else {
-  //       res.status(400).json({ error: e });
-  //     }
-  //   }
-  // })
   .delete(async (req, res) => {
     try {
       const result = await clothesData.remove(req.params.listingsId);
@@ -167,65 +158,12 @@ router
       return res.status(400).send({error: e});
     }
   });
-
-  // router.route('/listings/:_id').get(async (req, res) => {
-  //   try {
-  //     const clothesId = req.params._id;
-  //     const response = await axios.get(`http://localhost:3000/listings/${clothesId}`);
-  //     const clothes = response.data;
   
-  //     if (clothes.Response === 'False') {
-  //       return res.status(404).render('error', { title: 'Error', error: 'Clothes not found' });
-  //     }
-  
-  //     res.render('clothesByID', { title: listings.Title, clothes });
-  //   } catch (error) {
-  //     console.log(error);
-  //     res.status(500).render('error', { title: 'Error', error: 'Server Error' });
-  //   }
-  // });
-
-  // router.route('/searchclothes').post(async (req, res) => {
-  //   //code here for POST this is where your form will be submitting searchclothessByName and then call your data function passing in the searchclothessByName and then rendering the search results of up to 20 clothess.
-  
-  //   try {
-  //     const searchTerm = req.body.searchclothessByName;
-  
-  //     if (!searchTerm || searchTerm.trim() == '') {
-  //       return res.status(400).render('error', { title: 'Error', error: 'Search term is required.' });
-  //     }
-  
-  //     const page1 = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${searchTerm}&page=1`);
-  //     const clothess1 = page1.data.Search || [];
-  
-  //     const page2 = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${searchTerm}&page=2`);
-  //     const clothess2 = page2.data.Search || [];
-  
-  //     const clothess = clothess1.concat(clothess2);
-  
-  //     if (clothess.length === 0) {
-  //       return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
-  //   }
-  
-  //     res.render('clothesSearchResults', { title: 'clothess Found', searchTerm, clothess });
-  //   } catch (error) {
-  //     console.log(error);
-  //     res.status(500).render('error', { title: 'Error', error: 'Server Error' });
-  //   }
-  // });
-  
-  
-  router.route('/searchResults').post(async (req, res) => {
-    //code here for POST this is where your form will be submitting searchByName and then call your data function passing in the searchByName and then rendering the search results.
-  
+  router.route('/searchResults').post(async (req, res) => {  
     try {
       const searchTerm = req.body.searchByName;
-  
-      // if (!searchTerm || searchTerm.trim() === '') {
-      //     return res.status(400).render('error', { title: 'Error', error: 'Search term is required.' });
-      // }
       const filters = {
-        size: Array.isArray(req.body.size) ? req.body.size : [req.body.size], // Convert to array if single value
+        size: Array.isArray(req.body.size) ? req.body.size : [req.body.size],
         color: Array.isArray(req.body.color) ? req.body.color : [req.body.color],
         gender: Array.isArray(req.body.gender) ? req.body.gender : [req.body.gender],
         price: Array.isArray(req.body.price) ? req.body.price : [req.body.price],

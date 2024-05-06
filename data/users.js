@@ -60,15 +60,15 @@ export const registerUser = async (
   
 	const userList = await users();
 
-	// let emailChecker = await userList.findOne({ email: e });
-	// if(emailChecker) {
-	// 	throw "email taken. try again";
-	// }
+	let emailChecker = await userList.findOne({ email: e });
+	if(emailChecker) {
+		throw "email taken. try again";
+	}
 
-	// let usernameChecker = await userList.findOne({ username: u });
-	// if(usernameChecker) {
-	// 	throw "email taken. try again";
-	// }
+	let usernameChecker = await userList.findOne({ username: u });
+	if(usernameChecker) {
+		throw "email taken. try again";
+	}
   
 	let h = await bcrypt.hash(password, saltRounds);
 	let h1 = await bcrypt.hash(confirmPassword, saltRounds);

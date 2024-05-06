@@ -80,6 +80,14 @@ let cartiMerch = undefined;
 let denimVest = undefined;
 let starJorts = undefined;
 let moonTee = undefined;
+let polo = undefined;
+let cranberries = undefined; 
+let baggyCoat = undefined;
+let floralDress = undefined;
+let floralTank = undefined;
+let sneakers = undefined;
+let redPants = undefined; 
+let greenPJs = undefined;
 
 async function testCreateProducts() { //creates a listing
 	try {
@@ -192,7 +200,7 @@ async function testCreateProducts() { //creates a listing
 		console.log(e);
 	}
 	try {
-		moonTee = await clothesData.create(
+		polo = await clothesData.create(
 			"missbelly",
 			"Vintage Polo Ralph Lauren Equestrian Lined Denim Trucker Jacket",
 			"This jacket is really comfortable and it's good for providing warmth.",
@@ -209,15 +217,134 @@ async function testCreateProducts() { //creates a listing
 		console.log("Uh-oh, not supposed to see me - 2");
 		console.log(e);
 	}
+	try {
+		cranberries = await clothesData.create(
+			"belalipop",
+			"Customized The Cranberries ",
+			"Customized tee shirt of The Cranberries song, Linger!",
+			"Tee",
+			"Small",
+			"White",
+			"Female",
+			12.73,
+			"New",
+			["Cranberries", "Customized", "Linger"],
+			["https://i.pinimg.com/564x/fd/17/49/fd17493e93348aaca9fe07a3efaf852b.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		baggyCoat = await clothesData.create(
+			"dominic39",
+			"Jacket Men Vintage Baggy Coat",
+			"Zip Up Outerwear Clothing Tops Male Retro Lapel",
+			"Jacket",
+			"XL",
+			"Brown",
+			"Male",
+			49.99,
+			"Used",
+			["Retro", "Unbranded", "Collared"],
+			["https://i.pinimg.com/564x/eb/db/12/ebdb1253323572e4769a9d1cf6827ae9.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		floralDress = await clothesData.create(
+			"bealuver39",
+			"Vintage Inspired Printed Collar Camisole Maxi Dress ",
+			"Perfect for casual occasions and effortless style ",
+			"Dress",
+			"Medium",
+			"Green",
+			"Female",
+			35.99,
+			"Used",
+			["Fisdy", "Floral", "Light"],
+			["https://i.pinimg.com/736x/c9/54/1a/c9541af9705d6c6d3dfeeda185ed5d90.jpg", "https://i.pinimg.com/736x/97/4c/41/974c418ea7215d77a4abb7c34bc0381d.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		floralTank = await clothesData.create(
+			"dominic39",
+			"Floral Tank Top",
+			"Girlfriend cheated on me and she left some of her stuff here so I'm breaking up with her.",
+			"Tank Top",
+			"Medium",
+			"Green",
+			"Female",
+			10.12,
+			"Used",
+			["Olive Green", "Floral", "Embroidered"],
+			["https://i.pinimg.com/564x/2c/68/06/2c6806616a065e8c4f9e6ad1e7820659.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		sneakers = await clothesData.create(
+			"keba123",
+			"Beige & Navy Shooting Star Sneakers",
+			"Some cool sneakers I found at the thrift that I overgrew.",
+			"Sneakers",
+			"11",
+			"Brown",
+			"Male",
+			50.00,
+			"Used",
+			["Star", "Beige", "Navy Blue"],
+			["https://i.pinimg.com/736x/5c/b6/e5/5cb6e5e0fc56bbaa9f0d05ed87a11c67.jpg", "https://i.pinimg.com/736x/a8/7a/b2/a87ab23c738edfd41102c42e4dde8cf1.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		redPants = await clothesData.create(
+			"joelleAn",
+			"Red Bow Pants",
+			"Cute red pants. Super comfy",
+			"Pants",
+			"16",
+			"Red",
+			"Female",
+			32.16,
+			"Used",
+			["Ribbon", "corduroy"],
+			["https://i.pinimg.com/564x/67/a4/e8/67a4e8b879eb507a11eec1b98e5592a6.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		greenPJs = await clothesData.create(
+			"vic31",
+			"Scalloped Pajama Set",
+			"Metallic green with a plaid/floral design",
+			"PJS",
+			"Medium",
+			"Green",
+			"Female",
+			17.89,
+			"Used",
+			["Green", "Pajama Set"],
+			["https://i.pinimg.com/736x/d1/01/a8/d101a89716abdd6bc59578e7bfcee36d.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}		
 }
+
 
 await testCreateProducts();
 await testRegisterUser();
-// await testRemove();
-// await testCreateReview();
-// await testGetAllReview();
-// await testGetReview();
-// await testUpdateReview();
-// await testRemoveReview();
-// await closeConnection();
-// console.log("Done!");

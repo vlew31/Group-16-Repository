@@ -69,8 +69,9 @@ h3, h4, h5, h6 {
   color: #003049;
 }
 
-h5, h6 {
-  margin: 0;
+h5{
+  color: #457b9d;
+  font-size: 20pt;
 }
 
 h4{
@@ -163,15 +164,19 @@ footer {
   background-color: #669bbc;
   color: #003049;
   text-align: center;
-  padding: 5px 0; /* Add padding to improve visibility */
+  height: 50px; /* Adjusted height */
+  line-height: 30px; /* Match the height to center text vertically */
 }
+
 
 /* Give the main content a minimum height to push the footer down */
 main {
-  min-height: 100vh; /* Ensure the main content takes at least the full height of the viewport */
+  min-height: calc(100vh - 40px); /* Adjust 40px according to your footer height and padding */
   padding-bottom: 40px; /* Adjust 40px according to your footer height and padding */
   box-sizing: border-box; /* Ensure padding is included in the height calculation */
+  margin-bottom: 60px; /* Adjust 60px to create space for the footer */
 }
+
 
 
 .filters {
@@ -198,7 +203,7 @@ main {
 }
 
 .player img {
-  width: 100px; /* Set the width as needed */
+  width: 200px; /* Set the width as needed */
   height: auto; /* Maintain aspect ratio */
 }
 
@@ -383,8 +388,10 @@ a {
   align-items: center;
 }
 
-.player img {
-  width: 100px; /* Set the width as needed */
+.player-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: 200px; /* Set the desired width */
   height: auto; /* Maintain aspect ratio */
 }
 
@@ -446,4 +453,13 @@ a {
   height: auto;
   object-fit: contain;
   margin: 0 auto;
+}
+
+#mission-text {
+  max-width: 800px; /* Set the maximum width of the text */
+  margin: 0 auto; /* Center the text horizontally */
+  text-align: center; /* Align the text to the left */
+  padding: 0 20px; /* Add padding to the sides */
+  font-size: 18px; /* Set the font size */
+  line-height: 1.6; /* Set the line height for better readability */
 }
