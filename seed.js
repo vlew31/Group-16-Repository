@@ -80,6 +80,10 @@ let denimVest = undefined;
 let starJorts = undefined;
 let moonTee = undefined;
 let polo = undefined;
+let cranberries = undefined; 
+let baggyCoat = undefined;
+let floralDress = undefined;
+let floralTank = undefined;
 
 async function testCreateProducts() { //creates a listing
 	try {
@@ -210,18 +214,72 @@ async function testCreateProducts() { //creates a listing
 		console.log(e);
 	}
 	try {
-		polo = await clothesData.create(
+		cranberries = await clothesData.create(
 			"belalipop",
 			"Customized The Cranberries ",
-			"This jacket is really comfortable and it's good for providing warmth.",
+			"Customized tee shirt of The Cranberries song, Linger!",
+			"Tee",
+			"Small",
+			"White",
+			"Female",
+			12.73,
+			"New",
+			["Cranberries", "Customized", "Linger"],
+			["https://i.pinimg.com/564x/fd/17/49/fd17493e93348aaca9fe07a3efaf852b.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		baggyCoat = await clothesData.create(
+			"dominic39",
+			"Jacket Men Vintage Baggy Coat",
+			"Zip Up Outerwear Clothing Tops Male Retro Lapel",
 			"Jacket",
-			"L",
-			"Blue",
-			"Unisex",
-			199.99,
+			"XL",
+			"Brown",
+			"Male",
+			49.99,
 			"Used",
-			["Equestrian", "Vintage", "Polo Ralph Lauren"],
-			["https://i.pinimg.com/736x/21/b2/14/21b21472c6fa7e602d2eb484f5d7a011.jpg", "https://i.pinimg.com/736x/50/ff/86/50ff86cbffc2d142b1d2464b858008e1.jpg", "https://i.pinimg.com/736x/26/90/f9/2690f9c611e5894de62bfec8bfb5f1e8.jpg"], 
+			["Retro", "Unbranded", "Collared"],
+			["https://i.pinimg.com/564x/eb/db/12/ebdb1253323572e4769a9d1cf6827ae9.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		floralDress = await clothesData.create(
+			"bealuver39",
+			"Vintage Inspired Printed Collar Camisole Maxi Dress ",
+			"Perfect for casual occasions and effortless style ",
+			"Dress",
+			"Medium",
+			"Green",
+			"Female",
+			35.99,
+			"Used",
+			["Fisdy", "Floral", "Light"],
+			["https://i.pinimg.com/736x/c9/54/1a/c9541af9705d6c6d3dfeeda185ed5d90.jpg", "https://i.pinimg.com/736x/97/4c/41/974c418ea7215d77a4abb7c34bc0381d.jpg"] 
+		);
+	} catch (e) {
+		console.log("Uh-oh, not supposed to see me - 2");
+		console.log(e);
+	}
+	try {
+		floralTank = await clothesData.create(
+			"dominic39",
+			"Floral Tank Top",
+			"Girlfriend cheated on me and she left some of her stuff here so I'm breaking up with her.",
+			"Tank Top",
+			"Medium",
+			"Green",
+			"Female",
+			10.12,
+			"Used",
+			["Olive Green", "Floral", "Embroidered"],
+			["https://i.pinimg.com/564x/2c/68/06/2c6806616a065e8c4f9e6ad1e7820659.jpg"] 
 		);
 	} catch (e) {
 		console.log("Uh-oh, not supposed to see me - 2");
