@@ -42,6 +42,13 @@ export const create = async (
   const priceString = price.toString();
   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {throw "Invalid price.";}
 
+  if (
+    photos.substring(photos.length - 4) !== ".png" ||
+    photos.substring(photos.length - 5) !== ".jpeg" || 
+    photos.substring(photos.length - 4) !== ".jpg"
+  ) {
+    throw "Invalid photo.";
+  }
 
   const clothesCollection = await listings();
 
