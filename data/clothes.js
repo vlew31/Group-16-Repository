@@ -284,21 +284,32 @@ export const update = async (
 
   const updateInfo = await clothesCollection.updateOne(
     { _id: new ObjectId(listingId) },
-    { $set: updatedclothes }
+    { $set: updatedclothes },
+    {returnDocument: 'after'}
+
   );
 
   if (updateInfo.modifiedCount === 0) {
     throw 'Could not update clothes with provided id.';
   }
 
-  const updatedclothesWithId = { _id: listingId, ...updatedclothes };
+  // const updatedclothesWithId = { _id: listingId, ...updatedclothes };
+  if (!updateInfo) {
+    throw 'could not update product successfully';
+  }
+  updateInfo._id = updateInfo._id.toString();
 
-  return updatedclothesWithId;
+  return updateInfo;
 };
 
 export async function searchByName(searchTerm,filters) {
   try {
     const clothesCollection = await listings();
+    const searchResults = await clothesCollection.find({
+      title: { $regex: searchTerm, $options: 'i' },
+      size: { $in: filters.size.map(size => new RegExp(size, 'i')) },
+      color: { $in: filters.color.map(color => new RegExp(color, 'i')) },
+      condition: { $in: filters.condition.map(condition => new RegExp(condition, 'i')) }}).toArray();
     // const filterQuery = { title: { $regex: searchTerm,$options: 'i' } };
     // if (filters.size) {
     //   filterQuery.size = { $in: filters.size };
@@ -315,8 +326,8 @@ export async function searchByName(searchTerm,filters) {
     // if(filters.priceRange){
     //     filterQuery.priceRange = {$in: filters.priceRange};
     // }
-    console.log(filters.color[0]);
-    const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i'} },{ color: { $regex: filters.color, $options: 'i'} }).toArray();
+    // console.log(filters.color[0]);
+    // const searchResults = await clothesCollection.find({ title: { $regex: searchTerm, $options: 'i'} },{ color: { $regex: filters.color, $options: 'i'} }).toArray();
     // for(let i = 0;i<filters.color.length;i++){
     //   if()
     // }

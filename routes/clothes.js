@@ -138,8 +138,11 @@ router
     }
   })
   .put(async (req, res) => {
+    let id = req.params.productId;
+    let newListing = req.body;
     try {
       const updatedclothes = await clothesData.update(
+        id,
         req.params.clothesId,
         req.body.clothesName,
         req.body.clothesDescription,
@@ -152,7 +155,7 @@ router
         req.body.dateReleased,
         req.body.discontinued
       );
-      return res.status(200).json(updatedclothes);
+      return res.json(updatedclothes);
     } catch (e) {
       if(e === 'Could not update clothes with provided id.'){
         res.status(404).json({error: 'clothes not found.'});
@@ -221,17 +224,16 @@ router
         size: Array.isArray(req.body.size) ? req.body.size : [req.body.size], // Convert to array if single value
         color: Array.isArray(req.body.color) ? req.body.color : [req.body.color],
         gender: Array.isArray(req.body.gender) ? req.body.gender : [req.body.gender],
-        priceRange: Array.isArray(req.body.priceRange) ? req.body.priceRange : [req.body.priceRange],
+        price: Array.isArray(req.body.price) ? req.body.price : [req.body.price],
         condition: Array.isArray(req.body.condition) ? req.body.condition : [req.body.condition]
     };
     console.log('Selected filters:', filters); 
-      const searchResults = await clothesData.searchByName(searchTerm,filters);
+    const searchResults = await clothesData.searchByName(searchTerm,filters);
 
       if (searchResults.length === 0) {
           return res.status(404).render('error', { title: 'Error', error: `We're sorry, but no results were found for "${searchTerm}"` });
       }
-
-      res.render('searchResults', { title: 'Clothes Found', searchTerm, searchResults });
+      res.render('searchResults', { title: 'Clothes Found', searchResults });
   } catch (error) {
       console.log(error);
       res.status(500).render('error', { title: 'Error', error: 'Server Error' });
