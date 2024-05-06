@@ -20,9 +20,9 @@ export const create = async (
   tags,
   photos
 ) => {
-  if (!title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
-    throw "Must pass argument for every field.";
-  }
+  // if (!title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
+  //   throw "Must pass argument for every field.";
+  // }
   seller = seller.trim();
   title = title.trim();
   description = description.trim();
@@ -31,25 +31,22 @@ export const create = async (
   color = color.trim();
   gender = gender.trim();
   condition = condition.trim();
-  
-  if(typeof title !== 'string' || typeof description !== 'string'
-  || typeof article !== 'string' || typeof size !== 'string'|| typeof color !== 'string'
-  ||typeof gender !== 'string'||typeof condition !== 'string' || typeof tags !== 'string'|| typeof photos !=='string'){
-    throw("Must be a string type")
-  }
-  if (!Number.isInteger(price) || price <= 0) {
-    throw "Price must be a positive integer.";
-  }
-  if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
-    throw "Invalid price.";
-  }
-  if (
-    photos.substring(0, 10) !== "http://www" ||
-    photos.substring(manufacturerWebsite.length - 4) !== ".com" ||
-    photos.length < 20
-  ) {
-    throw "Invalid website.";
-  }
+  // if(typeof title !== 'string' || typeof description !== 'string'
+  // || typeof article !== 'string' || typeof size !== 'string'|| typeof color !== 'string'
+  // ||typeof gender !== 'string'||typeof condition !== 'string' || typeof tags !== 'object'|| typeof photos !=='object'){
+  //   throw("Must be a string type")
+  // }
+  // parseInt(price);
+  // if (price <= 0) {
+  //   throw "Price must be a positive integer.";
+  // }
+  // if (
+  //   photos.substring(0, 10) !== "http://www" ||
+  //   photos.substring(manufacturerWebsite.length - 4) !== ".com" ||
+  //   photos.length < 20
+  // ) {
+  //   throw "Invalid website.";
+  // }
   const clothesCollection = await listings();
 
   const newclothes = {
@@ -109,7 +106,6 @@ export const get = async (listingId) => {
   if (!ObjectId.isValid(listingId)){
     throw 'Invalid ObjectId';
   }
-
   const clothesCollection = await listings();
   const clothes = await clothesCollection.findOne({_id: new ObjectId(listingId)});
   if (clothes === null) throw 'clothes not found';
@@ -214,39 +210,38 @@ export const update = async (
     tags: tags,
     photos: photos
   };
-
+  console.log(updatedclothes);
+  const exist = await clothesCollection.findOne({_id: listingId});
+  console.log(exist);
   const updateInfo = await clothesCollection.updateOne(
     { _id: new ObjectId(listingId) },
     { $set: updatedclothes },
-    {returnDocument: 'after'}
   );
-
-  if (updateInfo.modifiedCount === 0) {
-    throw 'Could not update clothes with provided id.';
-  }
-  if (!updateInfo) {
-    throw 'could not update product successfully';
-  }
-  updateInfo._id = updateInfo._id.toString();
+  console.log(updateInfo);
+  // if (updateInfo.modifiedCount === 0) {
+  //   throw 'Could not update clothes with provided id.';
+  // }
+  // if (!updateInfo) {
+  //   throw 'could not update product successfully';
+  // }
   // const updatedclothesWithId = { _id: listingId, ...updatedclothes };
-  return updateInfo;
+  return updatedclothes;
 };
 
 export async function searchByName(searchTerm,filters) {
   try {
-    const priceString = filters.price.toString();
-    if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
+    if (filters.price<0) {
       throw "Invalid price.";
     }
+    const maxPrice = parseInt(filters.price)
     const clothesCollection = await listings();
     const searchResults = await clothesCollection.find({ 
       title: { $regex: searchTerm, $options: 'i' },
       size: { $in: filters.size.map(size => new RegExp(size, 'i')) },
       color: { $in: filters.color.map(color => new RegExp(color, 'i')) },
-      // price:
+      price: { $lt: maxPrice },
       condition: { $in: filters.condition.map(condition => new RegExp(condition, 'i')) }
   }).toArray();
-    console.log(searchResults);
     return searchResults;
   } catch (error) {
     console.error('Error searching listings by name:', error);
