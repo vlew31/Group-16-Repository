@@ -1,10 +1,10 @@
 //import mongo collections, bcrypt and implement the following data functions
 import { users } from "../config/mongoCollections.js";
 import bcrypt from "bcryptjs";
-const saltRounds = 2;
+let saltRounds = 2;
 import {ObjectId} from 'mongodb';
 
-export const registerUser = async (
+export let registerUser = async (
     firstName,
     lastName,
     email,
@@ -13,62 +13,62 @@ export const registerUser = async (
 	confirmPassword,
     role
   ) => {
-	if(firstName === undefined || lastName === undefined || username === undefined || password === undefined || confirmPassword === undefined || role === undefined) {
+	if(firstName === undefined || lastName === undefined || email === undefined  || username === undefined || password === undefined || confirmPassword === undefined || role === undefined) {
 		throw "all fields need to be supplied";
 	}
   
-	const fn = firstName.trim();
-	const ln = lastName.trim();
-	const u = username.trim().toLowerCase();
-	const p = password.trim();
-	const c = confirmPassword.trim();
-	const r = role.toLowerCase().trim();
-	const e = email.toLowerCase().trim();
+	let fn = firstName.trim();
+	let ln = lastName.trim();
+	let u = username.trim().toLowerCase();
+	let p = password.trim();
+	let c = confirmPassword.trim();
+	let r = role.toLowerCase().trim();
+	let e = email.toLowerCase().trim();
 
-	// const letterChecker = /^[a-zA-Z]+$/;
-	// if(typeof fn !== 'string' || fn.length < 2 || fn.length > 25 || !letterChecker.test(fn)) {
-	//   throw "invalid first name input";
-	// }
+	let letterChecker = /^[a-zA-Z]+$/;
+	if(typeof fn !== 'string' || fn.length < 2 || fn.length > 25 || !letterChecker.test(fn)) {
+	  throw "invalid first name input";
+	}
   
-	// if(typeof ln !== 'string' || ln.length < 2 || ln.length > 25 || !letterChecker.test(ln)) {
-	//   throw "invalid last name input";
-	// }
+	if(typeof ln !== 'string' || ln.length < 2 || ln.length > 25 || !letterChecker.test(ln)) {
+	  throw "invalid last name input";
+	}
 
-	// const emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-	// if(!emailTest.test(e)) {
-	// 	throw "invalid email input";
-	// }
+	let emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
+	if(!emailTest.test(e)) {
+		throw "invalid email input";
+	}
   
-	// if(typeof u !== 'string' || u.length < 5 || ln.length > 10 || !letterChecker.test(u)) {
-	//   throw "invalid username input";
-	// }
+	if(typeof u !== 'string' || u.length < 5 || !letterChecker.test(u)) {
+	  throw "invalid username input";
+	}
   
-	// const upper = /[A-Z]/;
-	// const number = /[0-9]/;
-	// const specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-	// if(typeof p !== 'string' || p.length < 8 || !upper.test(p) || !number.test(p) || !specialChar.test(p)) {
-	//   throw "invalid password input from registerUser";
-	// }
+	let upper = /[A-Z]/;
+	let number = /[0-9]/;
+	let specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+	if(typeof p !== 'string' || p.length < 8 || !upper.test(p) || !number.test(p) || !specialChar.test(p)) {
+	  throw "invalid password input";
+	}
 
-	// if(p !== c) {
-	// 	throw "passwords must match";
-	// }
+	if(p !== c) {
+		throw "passwords must match";
+	}
   
-	// if(r !== 'user' && r !== 'admin') {
-	//   throw "invalid role input";
-	// }
+	if(r !== 'user' && r !== 'admin') {
+	  throw "invalid role input";
+	}
   
-	const userList = await users();
+	let userList = await users();
 
-	// let emailChecker = await userList.findOne({ email: e });
-	// if(emailChecker) {
-	// 	throw "email taken. try again";
-	// }
+	let emailChecker = await userList.findOne({ email: e });
+	if(emailChecker) {
+		throw "email taken. try again";
+	}
 
-	// let usernameChecker = await userList.findOne({ username: u });
-	// if(usernameChecker) {
-	// 	throw "email taken. try again";
-	// }
+	let usernameChecker = await userList.findOne({ username: u });
+	if(usernameChecker) {
+		throw "email taken. try again";
+	}
   
 	let h = await bcrypt.hash(password, saltRounds);
 	let h1 = await bcrypt.hash(confirmPassword, saltRounds);
@@ -87,42 +87,48 @@ export const registerUser = async (
 	  throw "could not create an account. try again";
 	}
 
-	return { signupCompleted: true };
+	return newUser;
+	// return { signupCompleted: true };
   
 };
 
-export const loginUser = async (username, password) => {
-	const u = username.trim();
-	const p = password.trim();
+export let loginUser = async (username, password) => {
 
-	// if(u === undefined || p === undefined) {
-	// 	throw "both inputs must be supplied";
-	// }
+	if(username === undefined || password === undefined) {
+		throw "both inputs must be supplied";
+	}
 
-	// const letterChecker = /^[a-zA-Z]+$/;
-	// if(typeof u !== 'string' || u.length < 5 || u.length > 10 || !letterChecker.test(u)) {
-	// 	throw "invalid username input";
-	// }
+	let u = username.trim();
+	let p = password.trim();
 
-	// const upper = /[A-Z]/;
-	// const number = /[0-9]/;
-	// const specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-	// if(typeof p !== 'string' || p.length < 8 || !upper.test(p) || !number.test(p) || !specialChar.test(p)) {
-	// 	throw "invalid password input from loginUser";
-	// }
+	if(u.length <= 0|| p.length <= 0) {
+		throw "both inputs must be supplied";
+	}
 
-	const userList = await users();
-	const findUser = await userList.findOne({ username: u });
+	let letterChecker = /^[a-zA-Z]+$/;
+	if(typeof u !== 'string' || u.length < 5  || !letterChecker.test(u)) {
+	  throw "invalid username input";
+	}
 
-	// if (!findUser) {
-	// 	throw "Either the username or password is invalid";
-	// }
+	let upper = /[A-Z]/;
+	let number = /[0-9]/;
+	let specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+	if(typeof p !== 'string' || p.length < 8 || !upper.test(p) || !number.test(p) || !specialChar.test(p)) {
+		throw "invalid password input";
+	}
+
+	let userList = await users();
+	let findUser = await userList.findOne({ username: u });
+
+	if (!findUser) {
+		throw "Either the username or password is invalid";
+	}
 
 	let pass = await bcrypt.compare(password, findUser.password);
 
-	// if (!pass) {
-	// 	throw "Either the username or password is invalid";
-	// }
+	if (!pass) {
+		throw "Either the username or password is invalid";
+	}
 
 	return {
 		firstName: findUser.firstName, 
@@ -132,22 +138,24 @@ export const loginUser = async (username, password) => {
 		role: findUser.role
 	};
 
+	// return { loginCompleted: true };
+
 };
 
-export const getUser= async (username) => {
-	const u = username.trim();
+export let getUser= async (username) => {
+	let u = username.trim();
 
 	if(u === undefined) {
 		throw "input must be supplied";
 	}
 
-	const letterChecker = /^[a-zA-Z]+$/;
+	let letterChecker = /^[a-zA-Z]+$/;
 	if(typeof u !== 'string' || u.length < 5 || u.length > 10 || !letterChecker.test(u)) {
 		throw "invalid username input";
 	}
 
-	const userList = await users();
-	const findUser = await userList.findOne({ username: u });
+	let userList = await users();
+	let findUser = await userList.findOne({ username: u });
 
 	if (!findUser) {
 		throw "Either the username or password is invalid";
@@ -163,9 +171,9 @@ export const getUser= async (username) => {
 
 } 
 
-export const getAll = async () => {
+export let getAll = async () => {
 
-  const userCollection = await users();
+  let userCollection = await users();
   let userList = await userCollection.find({}).project({_id: 1, username: 1}).toArray();
 
   if(!userList){
@@ -175,7 +183,7 @@ export const getAll = async () => {
   return userList;
 };
 
-export const get = async (userId) => {
+export let get = async (userId) => {
   if(userId === undefined){
     throw 'id not provided';
   } else if(typeof userId !== 'string' || userId.trim().length === 0){
@@ -183,8 +191,8 @@ export const get = async (userId) => {
   } else if(!ObjectId.isValid(userId.trim())){
     throw 'id is not a valid ObjectID'
   } 
-  const userCollection = await users();
-  const userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
+  let userCollection = await users();
+  let userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
   if(userToFind === null){
     throw 'no user with that id';
   }
@@ -193,3 +201,34 @@ export const get = async (userId) => {
   
   return userToFind;
 };
+
+
+// export let remove = async (userId) => {
+// 	if (!userId){
+// 	  throw 'clothes not found';
+// 	} 
+// 	if (typeof userId !== 'string'){
+// 	  throw 'Id must be a string';
+// 	} 
+
+// 	userId = userId.trim();
+// 	if (userId.length === 0){
+// 	  throw 'id cannot be an empty string or just spaces';
+// 	}
+  
+// 	if (!ObjectId.isValid(userId)){
+// 	  throw 'Invalid ObjectId';
+// 	} 
+  
+// 	let usersCollection = await users();
+// 	let deletionInfo = await usersCollection.findOneAndDelete({
+// 	  _id: new ObjectId(userId)
+// 	});
+  
+// 	if (!deletionInfo) {
+// 	  throw `Could not delete clothes with id of ${userId}`;
+// 	}
+  
+// 	return `${deletionInfo.username} has been successfully deleted!`;
+// 	//prints "undefined has been successfully deleted!"
+//   };

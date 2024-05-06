@@ -1,7 +1,7 @@
 // This file should set up the express server as shown in the lecture code
 import { userData, clothesData } from "./data/index.js";
 
-import { create, getAll, get, remove, searchByName, update} from "./data/clothes.js";
+import { registerUser, loginUser } from "./data/users.js";
 
 import { dbConnection } from "./config/mongoConnection.js";
 //lets drop the database each time this is run
@@ -10,46 +10,78 @@ const db = await dbConnection();
 await db.dropDatabase();
 
 try {
-    const user = await create("Patrick", 
-    "y2k Zipup Hoodie",
-	"baggy fit, washing machine safe, worn twice",
-    "hoodie", 
-    "medium",
-    "black",
-    "men",
-	15.60,
-	"good",
-	"y2k, comfy, baggy",
-	"http://www.fgdsjakla.com"
+    const user = await registerUser("patty",
+		"hill",
+		"phill@stevens.edu",
+		"hillybilly",
+		"Password1!",
+		"Password1!",
+		"user"
 	);
     console.log(user);
 } catch (e) {
     console.log(e);
 }
+
 try {
-    const user1 = await create("hillybilly", 
-    "harry potter cape",
-	"official merch from universal, house ravenclaw",
-    "cape", 
-    "large",
-    "black and blue",
-    "kids",
-	13.67,
-	"new",
-	"potterhead, ravenclaw, wizardry",
-	"http://www.fegrfedhakla.com"
+    const user = await registerUser("joelle",
+		"an",
+		"jan@stevens.edu",
+		"infraredcamera",
+		"Password1!",
+		"Password1!",
+		"user"
 	);
-    console.log(user1);
+    console.log(user);
 } catch (e) {
     console.log(e);
 }
 
 try {
-    const allClothes = await getAll();
-    console.log(allClothes); // Check if this logs anything
-  } catch (error) {
-    console.error(error); // Log any errors that occur
-  }
+    const user = await loginUser(
+		"infraredcamera",
+		"Password1!",
+	);
+    console.log(user);
+} catch (e) {
+    console.log(e);
+}
+
+try {
+    const user = await loginUser(
+		"hillybilly",
+		"Password1!",
+	);
+    console.log(user);
+} catch (e) {
+    console.log(e);
+}
+
+
+// try {
+//     const user1 = await create("hillybilly", 
+//     "harry potter cape",
+// 	"official merch from universal, house ravenclaw",
+//     "cape", 
+//     "large",
+//     "black and blue",
+//     "kids",
+// 	13.67,
+// 	"new",
+// 	"potterhead, ravenclaw, wizardry",
+// 	"http://www.fegrfedhakla.com"
+// 	);
+//     console.log(user1);
+// } catch (e) {
+//     console.log(e);
+// }
+
+// try {
+//     const allClothes = await getAll();
+//     console.log(allClothes); // Check if this logs anything
+//   } catch (error) {
+//     console.error(error); // Log any errors that occur
+//   }
 
 //   try {
 //     const allClothes = await getAll();
@@ -69,27 +101,27 @@ try {
 //     console.error(error); // Log any errors that occur
 //   }
 
-try {
-    const allClothes = await getAll();
-    const fid = allClothes[0]._id
-    const user = await update(
-    fid, 
-    "Patrick", 
-    "y2k Zipup Hoodie",
-	"baggy fit, washing machine safe, worn twice",
-    "hoodie", 
-    "medium",
-    "black",
-    "women",
-	15.60,
-	"good",
-	"y2k, comfy, baggy",
-	"http://www.fgdsjakla.com"
-	);
-    console.log(user);
-} catch (e) {
-    console.log(e);
-}
+// try {
+//     const allClothes = await getAll();
+//     const fid = allClothes[0]._id
+//     const user = await update(
+//     fid, 
+//     "Patrick", 
+//     "y2k Zipup Hoodie",
+// 	"baggy fit, washing machine safe, worn twice",
+//     "hoodie", 
+//     "medium",
+//     "black",
+//     "women",
+// 	15.60,
+// 	"good",
+// 	"y2k, comfy, baggy",
+// 	"http://www.fgdsjakla.com"
+// 	);
+//     console.log(user);
+// } catch (e) {
+//     console.log(e);
+// }
 
 // try {
 //     const user = await registerUser("Patrick", 
