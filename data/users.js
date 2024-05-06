@@ -25,38 +25,38 @@ export const registerUser = async (
 	const r = role.toLowerCase().trim();
 	const e = email.toLowerCase().trim();
 
-	// const letterChecker = /^[a-zA-Z]+$/;
-	// if(typeof fn !== 'string' || fn.length < 2 || fn.length > 25 || !letterChecker.test(fn)) {
-	//   throw "invalid first name input";
-	// }
+	const letterChecker = /^[a-zA-Z]+$/;
+	if(typeof fn !== 'string' || fn.length < 2 || fn.length > 25 || !letterChecker.test(fn)) {
+	  throw "invalid first name input";
+	}
   
-	// if(typeof ln !== 'string' || ln.length < 2 || ln.length > 25 || !letterChecker.test(ln)) {
-	//   throw "invalid last name input";
-	// }
+	if(typeof ln !== 'string' || ln.length < 2 || ln.length > 25 || !letterChecker.test(ln)) {
+	  throw "invalid last name input";
+	}
 
-	// const emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-	// if(!emailTest.test(e)) {
-	// 	throw "invalid email input";
-	// }
+	const emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	if(!emailTest.test(e)) {
+		throw "invalid email input";
+	}
   
-	// if(typeof u !== 'string' || u.length < 5 || ln.length > 10 || !letterChecker.test(u)) {
-	//   throw "invalid username input";
-	// }
+	if(typeof u !== 'string' || u.length < 5 || u.length > 10 || !letterChecker.test(u)) {
+	  throw "invalid username input";
+	}
   
-	// const upper = /[A-Z]/;
-	// const number = /[0-9]/;
-	// const specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-	// if(typeof p !== 'string' || p.length < 8 || !upper.test(p) || !number.test(p) || !specialChar.test(p)) {
-	//   throw "invalid password input from registerUser";
-	// }
+	const upper = /[A-Z]/;
+	const number = /[0-9]/;
+	const specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+	if(typeof p !== 'string' || p.length < 8 || !upper.test(p) || !number.test(p) || !specialChar.test(p)) {
+	  throw "invalid password input from registerUser";
+	}
 
-	// if(p !== c) {
-	// 	throw "passwords must match";
-	// }
+	if(p !== c) {
+		throw "passwords must match";
+	}
   
-	// if(r !== 'user' && r !== 'admin') {
-	//   throw "invalid role input";
-	// }
+	if(r !== 'user' && r !== 'admin') {
+	  throw "invalid role input";
+	}
   
 	const userList = await users();
 
@@ -67,7 +67,7 @@ export const registerUser = async (
 
 	let usernameChecker = await userList.findOne({ username: u });
 	if(usernameChecker) {
-		throw "email taken. try again";
+		throw "username taken. try again";
 	}
   
 	let h = await bcrypt.hash(password, saltRounds);
