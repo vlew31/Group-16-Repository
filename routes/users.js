@@ -1,10 +1,9 @@
 import { Router } from 'express';
 // import * as userData from '../data/users.js';
+const router = Router();
 import { userData } from '../data/index.js'
 import { registerUser, loginUser, getUser, getAll } from "../data/users.js";
 import xss from 'xss';
-
-const router = Router();
 
 router.route('/').get(async (req, res) => {
   res.render('home', { title: '$waggle' });
@@ -18,7 +17,7 @@ router.route('/user').get(async (req, res) => {
     if (!req.session.user) {
       return res.redirect('/users/login'); 
     }
-    return res.render('user', { title: 'User Profile', user: req.session.user}); 
+    return res.render('/user', { title: 'User Profile', user: req.session.user}); 
   });
 
 router.route('/upload').get(async (req, res) => {
@@ -37,7 +36,8 @@ router
   .route('/users/register')
   .get(async (req, res) => {
     if(req.session.user) {
-      res.redirect("/home");
+      // res.redirect("home");
+      res.render('home', { title: '$waggle' });
     }
     return res.render("register", { title: "Register Page" });
   })
@@ -113,8 +113,16 @@ router
         throw {code: 400, error: "invalid role input"};
       }
       const user = await registerUser(firstName, lastName, email, username, password, confirmPassword, role);
-      if (user.signupCompleted) {
-        return res.redirect('/users/login');
+      if (user.insertedUser) {
+        let finder = await userData.loginUser(username, password);
+        req.session.user  = {
+          firstName: finder.firstName,
+          lastName: finder.lastName,
+          email: finder.email,
+          userName: finder.username,
+          role: finder.role
+        };
+        return res.redirect('/users=');
       }
       else {
         return res.status(500).render('error: Could not register user');

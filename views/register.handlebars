@@ -36,7 +36,7 @@
 <main class="register">
     <div class="form-wrapper">
         <h2 class="h2-register">Register</h2>
-        <form action="/users/register" method="POST" id="registration-form">
+        <form action="/users/register" method="POST" id="signup-form">
             <div class="input-container">
                 <div class="input-group">
                     <label for="firstName">First Name:</label>
@@ -77,11 +77,14 @@
                 </div>
             </div>
 
-            <ul>
+            {{!-- <ul>
                 {{#each errors}}
                 <li>{{this}}</li>
                 {{/each}}
-            </ul>
+            </ul> --}}
+            {{#if error}}
+            <p class="inputError">{{error}}</p>
+            {{/if}}
 
             {{!-- <button type="submit" id="submitButton" onclick="disableButton()">Sign Up</button>
             <div id="loadingIndicator">
