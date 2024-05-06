@@ -112,7 +112,7 @@ router
       );
       return res.redirect('/'); 
     } catch (e) {
-      return res.status(400).json({ error: e });
+      res.send(`<script>alert("${e || 'Invalid login. Please try again.'}"); window.location.href = "/upload";</script>`);
     }
   });
 
