@@ -79,7 +79,7 @@ router.route('/users/register')
         role);
       res.render('login', { title: 'Log in' });
     } catch (error) {
-      res.send(`<script>alert("${error || 'Invalid login. Please try again.'}"); window.location.href = "/user/register";</script>`);
+      res.send(`<script>alert("${error || 'Invalid login. Please try again.'}"); window.location.href = "/users/register";</script>`);
     }
   });
 
