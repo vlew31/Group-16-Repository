@@ -2,6 +2,7 @@
 import { userData, clothesData } from "./data/index.js";
 
 import { registerUser, loginUser } from "./data/users.js";
+import { create, getAll, remove, update } from "./data/clothes.js";
 
 import { dbConnection } from "./config/mongoConnection.js";
 //lets drop the database each time this is run
@@ -9,72 +10,90 @@ import { dbConnection } from "./config/mongoConnection.js";
 const db = await dbConnection();
 await db.dropDatabase();
 
-try {
-    const user = await registerUser("patty",
-		"hill",
-		"phill@stevens.edu",
-		"hillybilly",
-		"Password1!",
-		"Password1!",
-		"user"
-	);
-    console.log(user);
-} catch (e) {
-    console.log(e);
-}
-
-try {
-    const user = await registerUser("joelle",
-		"an",
-		"jan@stevens.edu",
-		"infraredcamera",
-		"Password1!",
-		"Password1!",
-		"user"
-	);
-    console.log(user);
-} catch (e) {
-    console.log(e);
-}
-
-try {
-    const user = await loginUser(
-		"infraredcamera",
-		"Password1!",
-	);
-    console.log(user);
-} catch (e) {
-    console.log(e);
-}
-
-try {
-    const user = await loginUser(
-		"hillybilly",
-		"Password1!",
-	);
-    console.log(user);
-} catch (e) {
-    console.log(e);
-}
-
-
 // try {
-//     const user1 = await create("hillybilly", 
-//     "harry potter cape",
-// 	"official merch from universal, house ravenclaw",
-//     "cape", 
-//     "large",
-//     "black and blue",
-//     "kids",
-// 	13.67,
-// 	"new",
-// 	"potterhead, ravenclaw, wizardry",
-// 	"http://www.fegrfedhakla.com"
+//     const user = await registerUser("patty",
+// 		"hill",
+// 		"phill@stevens.edu",
+// 		"hillybilly",
+// 		"Password1!",
+// 		"Password1!",
+// 		"user"
 // 	);
-//     console.log(user1);
+//     console.log(user);
 // } catch (e) {
 //     console.log(e);
 // }
+
+// try {
+//     const user = await registerUser("joelle",
+// 		"an",
+// 		"jan@stevens.edu",
+// 		"infraredcamera",
+// 		"Password1!",
+// 		"Password1!",
+// 		"user"
+// 	);
+//     console.log(user);
+// } catch (e) {
+//     console.log(e);
+// }
+
+// try {
+//     const user = await loginUser(
+// 		"infraredcamera",
+// 		"Password1!",
+// 	);
+//     console.log(user);
+// } catch (e) {
+//     console.log(e);
+// }
+
+// try {
+//     const user = await loginUser(
+// 		"hillybilly",
+// 		"Password1!",
+// 	);
+//     console.log(user);
+// } catch (e) {
+//     console.log(e);
+// }
+
+
+try {
+    const user1 = await create("hillybilly", 
+    "harry potter cape",
+	"official merch from universal, house ravenclaw",
+    "cape", 
+    "large",
+    "black and blue",
+    "kids",
+	13.67,
+	"new",
+	"potterhead, ravenclaw, wizardry",
+	"http://www.fegrfedhakla.com"
+	);
+    console.log(user1);
+} catch (e) {
+    console.log(e);
+}
+// try {
+// 	    const user = await create(
+// 	    "Patrick", 
+// 	    "y2k Zipup Hoodie",
+// 		"baggy fit, washing machine safe, worn twice",
+// 	    "hoodie", 
+// 	    "medium",
+// 	    "black",
+// 	    "women",
+// 		15.60,
+// 		"good",
+// 		"y2k, comfy, baggy",
+// 		"http://www.fgdsjakla.com"
+// 		);
+// 	    console.log(user);
+// 	} catch (e) {
+// 	    console.log(e);
+// 	}
 
 // try {
 //     const allClothes = await getAll();
@@ -106,14 +125,14 @@ try {
 //     const fid = allClothes[0]._id
 //     const user = await update(
 //     fid, 
-//     "Patrick", 
+//     "pattyb", 
 //     "y2k Zipup Hoodie",
-// 	"baggy fit, washing machine safe, worn twice",
+// 	"tight fit, washing machine safe, worn twice",
 //     "hoodie", 
 //     "medium",
 //     "black",
 //     "women",
-// 	15.60,
+// 	22.60,
 // 	"good",
 // 	"y2k, comfy, baggy",
 // 	"http://www.fgdsjakla.com"

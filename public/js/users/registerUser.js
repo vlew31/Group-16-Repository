@@ -61,15 +61,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function nameChecker(name) {
-        return /^[a-zA-Z\s]+$/.test(name) && name.length >= 1 && name.length <= 25;
+        if(typeof name !== 'string' || name.length < 2 || !letterChecker.test(name)) {
+            return "Invalid name input";
+          }
     }
     
     function emailChecker(email) {
-        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        let emailTest = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
+        if(!emailTest.test(email)) {
+            return "invalid email input";
+        }
     }
     
     function passwordChecker(password) {
-        let passwordTest = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/;
-        return passwordTest.test(password);
+        let upper = /[A-Z]/;
+        let number = /[0-9]/;
+        let specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+        if(typeof password !== 'string' || password.length > 7 || !upper.test(password) || !number.test(password) || !specialChar.test(password)) {
+        return "invalid password input";
+        }
     }

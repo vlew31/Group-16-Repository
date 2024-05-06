@@ -183,24 +183,24 @@ export let getAll = async () => {
   return userList;
 };
 
-export let get = async (userId) => {
-  if(userId === undefined){
-    throw 'id not provided';
-  } else if(typeof userId !== 'string' || userId.trim().length === 0){
-    throw 'parameter is not a valid id';
-  } else if(!ObjectId.isValid(userId.trim())){
-    throw 'id is not a valid ObjectID'
-  } 
-  let userCollection = await users();
-  let userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
-  if(userToFind === null){
-    throw 'no user with that id';
-  }
+// export let get = async (userId) => {
+//   if(userId === undefined){
+//     throw 'id not provided';
+//   } else if(typeof userId !== 'string' || userId.trim().length === 0){
+//     throw 'parameter is not a valid id';
+//   } else if(!ObjectId.isValid(userId.trim())){
+//     throw 'id is not a valid ObjectID'
+//   } 
+//   let userCollection = await users();
+//   let userToFind = await userCollection.findOne({_id: new ObjectId(userId)});
+//   if(userToFind === null){
+//     throw 'no user with that id';
+//   }
 
-  userToFind._id = userToFind._id.toString();
+//   userToFind._id = userToFind._id.toString();
   
-  return userToFind;
-};
+//   return userToFind;
+// };
 
 
 // export let remove = async (userId) => {

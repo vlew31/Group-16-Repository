@@ -123,7 +123,7 @@ app.use('/admin', (req, res, next) => {
 
 
 app.use('/logout', (req, res) => {
-    return res.redirect("/users/logout");
+    return res.redirect("/users/login");
   // next();
 })
 
