@@ -60,28 +60,28 @@ router.route('/users/register')
     return res.render("register", { title: "Register Page" });
   })
   .post(async (req, res) => {
-  try {
-    const {
-      firstName,
-      lastName,
-      email,
-      username,
-      password,
-      confirmPassword,
-      role } = req.body;
-    const result = await registerUser(
-      firstName,
-      lastName,
-      email,
-      username,
-      password,
-      confirmPassword,
-      role);
-    res.render('login', { title: 'Log in' });
-  } catch (error) {
-    res.send(`<script>alert("${error || 'Invalid login. Please try again.'}"); window.location.href = "/user/register";</script>`);
-  }
-});
+    try {
+      const {
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        confirmPassword,
+        role } = req.body;
+      const result = await registerUser(
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        confirmPassword,
+        role);
+      res.render('login', { title: 'Log in' });
+    } catch (error) {
+      res.send(`<script>alert("${error || 'Invalid login. Please try again.'}"); window.location.href = "/user/register";</script>`);
+    }
+  });
 
 
 router.route('/users/login')
