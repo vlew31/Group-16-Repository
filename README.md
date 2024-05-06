@@ -19,7 +19,7 @@ Make sure your system has node.js, then proceed to the following instructions:
 
 ## Usage
 
-You will initially be greeted to the Home page which displays all of the site's listings. From there you can click on items you are interested in to view addition details like more pictures and tags, and have the option to edit or delete their listings.
+You will initially be greeted to the Home page which displays all of the site's listings. From there you can click on items you are interested in to view addition details like more pictures and tags, and have the option to edit or delete their listings. You also have the option to "Add to Cart" or "Add to Wishlist" which redirects the user to the Cart page.
 
 Through the navigation bar at the top, you can go to the Search page. From there you can search for specific items by name, and/or select filters, which will limit the search results to only those which fall under the selected filters.
 
