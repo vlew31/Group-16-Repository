@@ -79,7 +79,7 @@ router.route('/users/register')
       role);
     res.render('login', { title: 'Log in' });
   } catch (error) {
-      res.status(400).json({ error: error.toString() });
+    res.send('<script>alert("Invalid registration. Please try again."); window.location.href = "/user/register";</script>');
   }
 });
 
@@ -115,7 +115,7 @@ router.route('/users/login')
       res.redirect("/user"); // Redirect to user profile page
       return user;
   } catch (error) {
-      res.status(400).json({ error: error.toString() });
+      res.send('<script>alert("Invalid login. Please try again."); window.location.href = "/user/login";</script>');
   }
 });
 
