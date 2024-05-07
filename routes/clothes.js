@@ -61,6 +61,7 @@ router.route('/update/:listingId')
 })
 .put(async (req, res) => {
   try {
+    console.log(req.body);
     const listingId = req.params.listingId;
     const updatedListing = await clothesData.update(
       listingId,
@@ -76,10 +77,15 @@ router.route('/update/:listingId')
       req.body.tags,
       req.body.photos
     );
-    res.render('home', { title: '$waggle' });
+    return res.redirect('/');
+    // return res.json(updatedListing);
   } catch (e) {
-    res.render('home', { title: '$waggle' });
-}});
+    if(e === 'Could not update clothes with provided id.'){
+      res.status(404).json({error: 'clothes not found.'});
+    }
+    return res.status(400).send({error: e});
+  }
+});
 
 
 router.route('/cart').get(async (req, res) => {
@@ -155,10 +161,60 @@ router
   });
 
 
+  // router.route('/listings/:listingId')
+  // .post(async (req, res) => {
+  //   try {
+  //     console.log(req.body);
+  //     const listingId = req.params.listingId;
+  //     const updatedListing = await clothesData.update(
+  //       listingId,
+  //       req.body.seller,
+  //       req.body.title,
+  //       req.body.description,
+  //       req.body.article,
+  //       req.body.size,
+  //       req.body.color,
+  //       req.body.gender,
+  //       req.body.price,
+  //       req.body.condition,
+  //       req.body.tags,
+  //       req.body.photos
+  //     );
+  //     return res.redirect('/');
+  //     // return res.json(updatedListing);
+  //   } catch (e) {
+  //     if(e === 'Could not update clothes with provided id.'){
+  //       res.status(404).json({error: 'clothes not found.'});
+  //     }
+  //     return res.status(400).send({error: e});
+  //   }
+  // });
+
   router.route('/listings/:listingId')
-  .put(async (req, res) => {
+  .post(async (req, res) => {
     try {
+      console.log(req.body);
       const listingId = req.params.listingId;
+      
+      let photoUrls = [];
+      let tagArray = [];
+
+      if (typeof req.body.photos === 'string' && req.body.photos.includes(',')) {
+        photoUrls = req.body.photos.split(',');
+      } else if (typeof req.body.photos === 'string') {
+        photoUrls.push(req.body.photos);
+      } else if (Array.isArray(req.body.photos)) {
+        photoUrls = req.body.photos;
+      }
+
+      if (typeof req.body.tags === 'string' && req.body.tags.includes(',')) {
+        tagArray = req.body.tags.split(',');
+      } else if (typeof req.body.tags === 'string') {
+        tagArray.push(req.body.tags);
+      } else if (Array.isArray(req.body.tags)) {
+        tagArray = req.body.tags;
+      }
+
       const updatedListing = await clothesData.update(
         listingId,
         req.body.seller,
@@ -170,17 +226,19 @@ router
         req.body.gender,
         req.body.price,
         req.body.condition,
-        req.body.tags,
-        req.body.photos
+        tagArray,
+        photoUrls
       );
-      return res.json(updatedListing);
+      return res.redirect('/');
+      // return res.json(updatedListing);
     } catch (e) {
-      if(e === 'Could not update clothes with provided id.'){
-        res.status(404).json({error: 'clothes not found.'});
+      if(e === 'Could not update clothes with provided id.') {
+        res.status(404).json({error: 'Clothes not found.'});
       }
       return res.status(400).send({error: e});
     }
-  })
+  });
+
 
   router
   .route('/listings/:listingId')
