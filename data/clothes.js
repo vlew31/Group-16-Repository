@@ -58,7 +58,7 @@ export const create = async (
     size: size,
     color: color,
     gender: gender,
-    price: price,
+    price: parseFloat(price),
     condition: condition,
     tags: tags,
     photos: photos,
@@ -233,7 +233,7 @@ export async function searchByName(searchTerm,filters) {
     if (filters.price<0) {
       throw "Invalid price.";
     }
-    const maxPrice = parseInt(filters.price)
+    const maxPrice = parseFloat(filters.price)
     const clothesCollection = await listings();
     const searchResults = await clothesCollection.find({ 
       title: { $regex: searchTerm, $options: 'i' },

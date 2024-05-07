@@ -3,33 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listings</title>
-    <!-- Add any other metadata or links to CSS/JS files here -->
+    <title>{{ title }}</title>
 </head>
 <body>
-    <div class="listing">
-        <h4>{{ listing.title }}</h4>
-        <div class="photos-container">
-            {{#each listing.photos}}
-                <img class="small-photo" src="{{ this }}" alt="Listing Photo">
-            {{/each}}
-        </div>
-        <p><span class="key">Seller:</span> <span class="value">{{ listing.seller }}</span></p>
-        <p><span class="key">Description:</span> <span class="value">{{ listing.description }}</span></p>
-        <p><span class="key">Article:</span> <span class="value">{{ listing.article }}</span></p>
-        <p><span class="key">Size:</span> <span class="value">{{ listing.size }}</span></p>
-        <p><span class="key">Color:</span> <span class="value">{{ listing.color }}</span></p>
-        <p><span class="key">Gender:</span> <span class="value">{{ listing.gender }}</span></p>
-        <p><span class="key">Price:</span> <span class="value">${{ listing.price }}</span></p>
-        <p><span class="key">Condition:</span> <span class="value">{{ listing.condition }}</span></p>
-        <p><span class="key">Comments:</span> <span class="value">{{ listing.comments }}</span></p>
-        <p><span class="key">Tags:</span> 
-            {{#each listing.tags}}
-                <span class="tag">{{ this }}</span>
-            {{/each}}
-        </p>
-        <a href="/cart" class="button">Add to Cart</a>
-    </div>
+    <h2>{{ listing.title }}</h2>
+    {{#each listing.photos}}
+        <img src="{{this}}" alt="Photo" style="max-width: 300px; max-height: 300px;">
+    {{/each}}
+    <p><strong>id:</strong> {{ listing._id }}</p>
+    <p><strong>Seller:</strong> {{ listing.seller }}</p>
+    <p><strong>Description:</strong> {{ listing.description }}</p>
+    <p><strong>Article:</strong> {{ listing.article }}</p>
+    <p><strong>Size:</strong> {{ listing.size }}</p>
+    <p><strong>Color:</strong> {{ listing.color }}</p>
+    <p><strong>Gender:</strong> {{ listing.gender }}</p>
+    <p><strong>Price:</strong> ${{ listing.price }}</p>
+    <p><strong>Condition:</strong> {{ listing.condition }}</p>
+    <p><strong>Tags:</strong> {{#each listing.tags}}{{ this }}, {{/each}}</p>
+    <p><strong>Comments:</strong> {{#if listing.comments.length}}{{#each listing.comments}}{{ this }}, {{/each}}{{else}} No comments{{/if}}</p>
+    <p><strong>Rating:</strong> {{ listing.rating }}</p>
+    <a href="/cart" class="button">Add to Cart</a>
+    {{!-- <a href="/update" class="button">update listing</a> --}}
+    {{!-- <form id="updateForm" action="/update" method="POST">
+      <!-- Add hidden input fields to hold listing details -->
+      <input type="hidden" name="id" value="{{listing._id}}">
+      <input type="hidden" name="title" value="{{listing.title}}">
+      <input type="hidden" name="photos" value="{{listing.photos}}">
+      <input type="hidden" name="description" value="{{listing.description}}">
+      <input type="hidden" name="article" value="{{listing.article}}">
+      <input type="hidden" name="size" value="{{listing.size}}">
+      <input type="hidden" name="color" value="{{listing.color}}">
+      <input type="hidden" name="gender" value="{{listing.gender}}">
+      <input type="hidden" name="price" value="{{listing.price}}">
+      <input type="hidden" name="condition" value="{{listing.condition}}">
+      <input type="hidden" name="tags" value="{{listing.tags}}">
+      <!-- Submit button --> --}}
+      <form id="updateForm" action="/update" method="POST">
+        <!-- Add hidden input fields to hold listing details -->
+        <input type="hidden" name="id" value="{{listing._id}}">
+        <input type="hidden" name="seller" value="{{listing.seller}}">
+        <input type="hidden" name="title" value="{{listing.title}}">
+        <input type="hidden" name="description" value="{{listing.description}}">
+        <input type="hidden" name="article" value="{{listing.article}}">
+        <input type="hidden" name="size" value="{{listing.size}}">
+        <input type="hidden" name="color" value="{{listing.color}}">
+        <input type="hidden" name="gender" value="{{listing.gender}}">
+        <input type="hidden" name="price" value="{{listing.price}}">
+        <input type="hidden" name="condition" value="{{listing.condition}}">
+        <input type="hidden" name="photos" value="{{listing.photos}}">
+        <input type="hidden" name="tags" value="{{tags}}">
+        <!-- Submit button -->
+        <input type="submit" class = 'button 'value="update listing">
+        </form>
+  </form>
 </body>
 </html>
-

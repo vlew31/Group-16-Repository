@@ -1,12 +1,16 @@
 <section class="upload-section">
     <header class="upload-header">
-        <h1 class="upload-heading-1">Create a Listing:</h1>
+        <h1 class="upload-heading-1">Edit Your Listings:</h1>
     </header>
 
-    <h2>Upload Clothing Items</h2>
-    <form id="uploadForm" action="/listings" method="POST">
+    <h2>Edit </h2>
+    {{!-- <p><strong>id:</strong> {{ listing._id }}</p> --}}
+    <form id="updateForm" action="/update" method="PUT">
+        <label for="id" class="upload-label">id:</label>
+        <input type="text" name="id" id="id"class="upload-input">
+
         <label for="seller" class="upload-label">Seller:</label>
-        <input type="text" name="seller" id="seller" required class="upload-input">
+        <input type="text" name="seller" id="seller"class="upload-input">
 
         <label for="photos" class="upload-label">Photos (Urls split by commas):</label>
         <input type="photos" name="photos" id="photos" required class="upload-input">
@@ -64,9 +68,9 @@
 
         <label for="tags" class="upload-label">Tags (Split by commas):</label>
         <input type="tags" name="tags" id="tags" required class="upload-input">
+        <input type="hidden" name="id" value="{{ listing.id }}">
 
-
-        <button type="submit" class="upload-submit">Upload</button>
+        <button type="submit" class="upload-submit">Confirm Edit</button>
     </form>
 </section>
 
