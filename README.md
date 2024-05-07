@@ -32,3 +32,7 @@ The User Profile page initially prompts users to log in. If the user does not al
 The next tab is the Cart/Wallet. There users can view the totals of their carts, wishlists, and the funds in their wallets. Users can add their wishlists to their cart which will clear their wishlists and update the total of their cart. If users have enough funds in their wallets, they can checkout their cart which will clear the cart and subtract the corresponding funds from their wallets. If they do not have enough funds they are notified, and have the option to add additional funds to their wallet.
 
 The last tab is an easter egg, implemented using AJAX. If you type in the secret password, you are greeted with a fun little message! Hint: It rhymes with kwaggle.
+
+## Repository Link
+
+https://github.com/vlew31/Group-16-Repository.git 
