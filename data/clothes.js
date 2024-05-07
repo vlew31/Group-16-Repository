@@ -341,18 +341,24 @@ export const update = async (
 //   return updateInfo;
 // };
 
-export async function searchByName(searchTerm,filters) {
+export async function searchByName(searchTerm, filters) {
   try {
-    const priceString = filters.price.toString();
-    if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
-      throw "Invalid price.";
-    }
     const clothesCollection = await listings();
+    let priceQuery = {};
+
+    if (filters.price !== undefined && parseFloat(filters.price) >= 0) {
+      const maxPrice = parseFloat(filters.price);
+      priceQuery = { price: { $lte: maxPrice } };
+    }
+
     const searchResults = await clothesCollection.find({
       title: { $regex: searchTerm, $options: 'i' },
       size: { $in: filters.size.map(size => new RegExp(size, 'i')) },
       color: { $in: filters.color.map(color => new RegExp(color, 'i')) },
-      condition: { $in: filters.condition.map(condition => new RegExp(condition, 'i')) }}).toArray();
+      condition: { $in: filters.condition.map(condition => new RegExp(condition, 'i')) },
+      ...priceQuery
+    }).toArray();
+
     console.log(searchResults);
     return searchResults;
   } catch (error) {
@@ -360,6 +366,34 @@ export async function searchByName(searchTerm,filters) {
     throw error;
   }
 }
+
+
+// export async function searchByName(searchTerm,filters) {
+//   try {
+//     // const priceString = filters.price.toString();
+//     // if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
+//     //   throw "Invalid price.";
+//     // }
+//     const maxPrice = parseFloat(filters.price);
+//     if(maxPrice<0){
+//       throw "Invalid price.";
+//     }
+//     const clothesCollection = await listings();
+//     const searchResults = await clothesCollection.find({
+//       title: { $regex: searchTerm, $options: 'i' },
+//       size: { $in: filters.size.map(size => new RegExp(size, 'i')) },
+//       color: { $in: filters.color.map(color => new RegExp(color, 'i')) },
+      
+//       price: {$lt: maxPrice},
+      
+//       condition: { $in: filters.condition.map(condition => new RegExp(condition, 'i')) }}).toArray();
+//     console.log(searchResults);
+//     return searchResults;
+//   } catch (error) {
+//     console.error('Error searching listings by name:', error);
+//     throw error;
+//   }
+// }
 export async function addToCart(listingId, arr){
   const clothesCollection = await listings();
   const listingToAdd = await clothesCollection.findOne({_id: new ObjectId(listingId)});

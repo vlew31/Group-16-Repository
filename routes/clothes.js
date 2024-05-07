@@ -323,7 +323,6 @@ router
         price: Array.isArray(req.body.price) ? req.body.price : [req.body.price],
         condition: Array.isArray(req.body.condition) ? req.body.condition : [req.body.condition]
     };
-    console.log('Selected filters:', filters); 
     const searchResults = await clothesData.searchByName(searchTerm,filters);
 
       if (searchResults.length === 0) {
