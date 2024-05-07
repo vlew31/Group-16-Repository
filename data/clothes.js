@@ -45,15 +45,15 @@ typeof size !== 'string'|| size.length <= 0  || tags.length <= 0  || photos.leng
   const priceString = price.toString();
   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {throw "Invalid price.";}
 
-  for (let i = 0; i < photos.length; i++) {
-    if (
-      photos[i].substring(photos[i].length - 4) !== ".png" &&
-      photos[i].substring(photos[i].length - 5) !== ".jpeg" &&
-      photos[i].substring(photos[i].length - 4) !== ".jpg"
-    ) {
-      throw "Invalid photo.";
-    }
-  }
+  // for (let i = 0; i < photos.length; i++) {
+  //   if (
+  //     photos[i].substring(photos[i].length - 4) !== ".png" &&
+  //     photos[i].substring(photos[i].length - 5) !== ".jpeg" &&
+  //     photos[i].substring(photos[i].length - 4) !== ".jpg"
+  //   ) {
+  //     throw "Invalid photo.";
+  //   }
+  // }
 
   const clothesCollection = await listings();
 
