@@ -54,7 +54,8 @@ router.route('/update/:listingId')
     if (!listing) {
       return res.status(404).send('Listing not found');
     }
-    res.render('update', { listing, listingId });
+    // res.render('update', { listing, listingId });
+    res.render('update', { title: 'Edit listing', listing, listingId });
   } catch (err) {
     console.error('Error fetching listing:', err);
     res.status(500).send('Internal Server Error');

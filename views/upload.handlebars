@@ -9,7 +9,7 @@
         <input type="text" name="seller" id="seller" required class="upload-input">
 
         <label for="photos" class="upload-label">Photos (Urls split by commas):</label>
-        <input type="photos" name="photos" id="photos" required class="upload-input">
+        <input type="text" name="photos" id="photos" required class="upload-input">
 
         <label for="title" class="upload-label">Title:</label>
         <input type="text" name="title" id="title" required class="upload-input">
@@ -21,7 +21,7 @@
         <input type="text" name="size" id="size" required class="upload-input">
         <label for="color" class="upload-label">Color:</label>
         <select name="color" id="color" required class="upload-select">
-            <option>Select One</option>
+            <option value="" selected>Select One</option>
             <option value="red">Red</option>
             <option value="orange">Orange</option>
             <option value="yellow">Yellow</option>
@@ -35,18 +35,18 @@
         </select>
         <label for="gender" class="upload-label">Gender:</label>
         <select name="gender" id="gender" required class="upload-select">
-            <option>Select One</option>
+            <option value="" selected>Select One</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="unisex">Unisex</option>
         </select>
 
         <label for="price" class="upload-label">Price:</label>
-        <input type="float" name="price" id="price" min="0" max="999999.99" step="0.01" oninput="this.value = parseFloat(this.value).toFixed(2);" required class="upload-input">
+        <input type="number" name="price" id="price" min="0" max="999999.99" step="0.01" oninput="this.value = parsenumber(this.value).toFixed(2);" required class="upload-input">
 
         <label for="condition" class="upload-label">Condition:</label>
         <select name="condition" id="condition" required class="upload-select">
-            <option>Select One</option>
+            <option value="" selected>Select One</option>
             <option value="new">New</option>
             <option value="used">Refurbished</option>
             <option value="used">Used</option>
@@ -57,7 +57,7 @@
 
 
         <label for="tags" class="upload-label">Tags (Split by commas):</label>
-        <input type="tags" name="tags" id="tags" required class="upload-input">
+        <input type="text" name="tags" id="tags" required class="upload-input">
 
 
         <button type="submit" class="upload-submit">Upload</button>

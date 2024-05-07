@@ -172,7 +172,7 @@ next();
 
 app.get('/user', (req, res) => {
   const user = req.session.user;
-  res.render('user', { user }); // Render userProfile template and pass user data
+  res.render('user', { title: 'User Profile', user }); // Render userProfile template and pass user data
 });
 
 app.use('/admin', (req, res, next) => {
