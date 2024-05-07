@@ -76,7 +76,7 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
 // const staticDir = express.static(__dirname + '/public');
 
 app.use('/public', express.static('public'));
-app.use('/lsitings', express.static('public'));
+app.use('/listings', express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);

@@ -34,11 +34,11 @@ export const create = async (
 for (let i = 0; i < photos.length; i++) {
   photos[i] = photos[i].trim();
 }  
-  if( typeof seller !== 'string' || seller.length <= 0  || typeof title !== 'string' || title.length <= 0  ||
-typeof description !== 'string' || description.length <= 0  || typeof article !== 'string' || article.length <= 0  ||
-typeof size !== 'string'|| size.length <= 0  || tags.length <= 0  || photos.length <= 0){
-  throw("Must be a string type")
-} 
+//   if( typeof seller !== 'string' || seller.length <= 0  || typeof title !== 'string' || title.length <= 0  ||
+// typeof description !== 'string' || description.length <= 0  || typeof article !== 'string' || article.length <= 0  ||
+// typeof size !== 'string'|| size.length <= 0  || tags.length <= 0  || photos.length <= 0){
+//   throw("Must be a string type")
+// } 
   const priceString = price.toString();
   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {throw "Invalid price.";}
 
@@ -191,14 +191,14 @@ export const update = async (
   gender = gender.trim();
   condition = condition.trim();
   
-  if(typeof title !== 'string' || typeof description !== 'string'
-  || typeof article !== 'string' || typeof size !== 'string'|| typeof color !== 'string'
-  ||typeof gender !== 'string'||typeof condition !== 'string' || typeof tags !== 'string'|| typeof photos !=='string'){
-    throw("Must be a string type")
-  }
-  if (!Number.isInteger(price) || price <= 0) {
-    throw "Price must be a positive integer.";
-  }
+  // if(typeof title !== 'string' || typeof description !== 'string'
+  // || typeof article !== 'string' || typeof size !== 'string'|| typeof color !== 'string'
+  // ||typeof gender !== 'string'||typeof condition !== 'string' || typeof tags !== 'string'|| typeof photos !=='string'){
+  //   throw("Must be a string type")
+  // }
+  // if (!Number.isInteger(price) || price < 0) {
+  //   throw "Price must be a positive integer.";
+  // }
 
   if (!ObjectId.isValid(listingId)) {
     throw "Invalid ObjectId.";
@@ -232,9 +232,9 @@ export const update = async (
     photos: photos
   };
   console.log(updatedclothes);
-  const exist = await clothesCollection.findOne({_id: listingId});
-  console.log(exist);
-  console.log(updatedclothes);
+  // const exist = await clothesCollection.findOne({_id: listingId});
+  // console.log(exist);
+  // console.log(updatedclothes);
   const exist = await clothesCollection.findOne({_id: listingId});
   console.log(exist);
   const updateInfo = await clothesCollection.updateOne(
