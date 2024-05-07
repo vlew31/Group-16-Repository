@@ -53,7 +53,7 @@ export const create = async (
   }
 
   price = parseFloat(filters.price);
-  if ( || price <= 0) {
+  if (typeof price !== 'number' || price <= 0) {
     throw "Price must be a positive integer.";
   }
   const priceString = price.toString();

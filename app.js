@@ -101,6 +101,9 @@ app.get('/register', (req, res) => {
   res.render("register", { title: "Register Page" });
 });
 
+app.get('/upload', (req, res) => {
+  res.render("upload", { title: "upload Page" });
+});
 
 app.use('/user', (req, res, next) => {
   if (!(req.session.user)) {
