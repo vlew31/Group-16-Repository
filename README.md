@@ -33,6 +33,6 @@ The next tab is the Cart/Wallet. There users can view the totals of their carts,
 
 The last tab is an easter egg, implemented using AJAX. If you type in the secret password, you are greeted with a fun little message! Hint: It rhymes with kwaggle.
 
-## Repository Link
+## Github Repository
 
 https://github.com/vlew31/Group-16-Repository.git 
