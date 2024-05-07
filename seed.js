@@ -25,7 +25,7 @@ async function testRegisterUser(){
 			"admin"
 		);
 	} catch(e) {
-		console.log("Uh-oh, not supposed to see me");
+		console.log("Uh-oh, not supposed to see me - 1");
 		console.log(e);
 	}
 	try {
@@ -33,13 +33,13 @@ async function testRegisterUser(){
 			"Kieron",
 			"Ampaw",
 			"fake_email@gmail.com",
-			"Keba12345", 
+			"fortnites", 
 			"Keba1234!",
 			"Keba1234!",
 			"admin"
 		);
 	} catch(e) {
-		console.log("Uh-oh, not supposed to see me");
+		console.log("Uh-oh, not supposed to see me - 2");
 		console.log(e);
 	}
 	try {
@@ -53,7 +53,7 @@ async function testRegisterUser(){
 			"admin"
 		);
 	} catch(e) {
-		console.log("Uh-oh, not supposed to see me");
+		console.log("Uh-oh, not supposed to see me - 3");
 		console.log(e);
 	}
 	try {
@@ -67,7 +67,7 @@ async function testRegisterUser(){
 			"user"
 		);
 	} catch(e) {
-		console.log("Uh-oh, not supposed to see me");
+		console.log("Uh-oh, not supposed to see me - 4");
 		console.log(e);
 	}
 }

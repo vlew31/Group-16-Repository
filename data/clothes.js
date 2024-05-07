@@ -234,6 +234,9 @@ export const update = async (
   console.log(updatedclothes);
   const exist = await clothesCollection.findOne({_id: listingId});
   console.log(exist);
+  console.log(updatedclothes);
+  const exist = await clothesCollection.findOne({_id: listingId});
+  console.log(exist);
   const updateInfo = await clothesCollection.updateOne(
     { _id: new ObjectId(listingId) },
     { $set: updatedclothes },

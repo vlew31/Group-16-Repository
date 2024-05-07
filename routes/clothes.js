@@ -1,6 +1,7 @@
 import express from 'express';
 import { clothesData } from '../data/index.js'
 import { listings } from '../config/mongoCollections.js';
+import { update } from '../data/clothes.js';
 
 const router = express.Router();
 
@@ -28,7 +29,7 @@ router.route('/easteregg').get(async (req, res) => {
   res.render('easteregg', { title: 'Shhh' });
 });
 
-router.route('/listings/:listingId').get(async (req, res) => {
+router.route('/listing/:listingId').get(async (req, res) => {
   const listingId = req.params.listingId;
 
   try {
@@ -40,6 +41,49 @@ router.route('/listings/:listingId').get(async (req, res) => {
   } catch (err) {
     console.error('Error fetching listing:', err);
     res.status(500).send('Internal Server Error');
+  }
+});
+
+router.route('/update/:listingId')
+.get(async (req, res) => {
+  const listingId = req.params.listingId;
+
+  try {
+    const listing = await clothesData.get(listingId);
+    if (!listing) {
+      return res.status(404).send('Listing not found');
+    }
+    res.render('update', { listing, listingId });
+  } catch (err) {
+    console.error('Error fetching listing:', err);
+    res.status(500).send('Internal Server Error');
+  }
+})
+.put(async (req, res) => {
+  try {
+    console.log(req.body);
+    const listingId = req.params.listingId;
+    const updatedListing = await clothesData.update(
+      listingId,
+      req.body.seller,
+      req.body.title,
+      req.body.description,
+      req.body.article,
+      req.body.size,
+      req.body.color,
+      req.body.gender,
+      req.body.price,
+      req.body.condition,
+      req.body.tags,
+      req.body.photos
+    );
+    return res.redirect('/');
+    // return res.json(updatedListing);
+  } catch (e) {
+    if(e === 'Could not update clothes with provided id.'){
+      res.status(404).json({error: 'clothes not found.'});
+    }
+    return res.status(400).send({error: e});
   }
 });
 
@@ -116,7 +160,100 @@ router
     }
   });
 
-router
+
+  // router.route('/listings/:listingId')
+  // .post(async (req, res) => {
+  //   try {
+  //     console.log(req.body);
+  //     const listingId = req.params.listingId;
+  //     const updatedListing = await clothesData.update(
+  //       listingId,
+  //       req.body.seller,
+  //       req.body.title,
+  //       req.body.description,
+  //       req.body.article,
+  //       req.body.size,
+  //       req.body.color,
+  //       req.body.gender,
+  //       req.body.price,
+  //       req.body.condition,
+  //       req.body.tags,
+  //       req.body.photos
+  //     );
+  //     return res.redirect('/');
+  //     // return res.json(updatedListing);
+  //   } catch (e) {
+  //     if(e === 'Could not update clothes with provided id.'){
+  //       res.status(404).json({error: 'clothes not found.'});
+  //     }
+  //     return res.status(400).send({error: e});
+  //   }
+  // });
+
+  router.route('/listings/:listingId')
+  .post(async (req, res) => {
+    try {
+      console.log(req.body);
+      const listingId = req.params.listingId;
+      
+      let photoUrls = [];
+      let tagArray = [];
+
+      if (typeof req.body.photos === 'string' && req.body.photos.includes(',')) {
+        photoUrls = req.body.photos.split(',');
+      } else if (typeof req.body.photos === 'string') {
+        photoUrls.push(req.body.photos);
+      } else if (Array.isArray(req.body.photos)) {
+        photoUrls = req.body.photos;
+      }
+
+      if (typeof req.body.tags === 'string' && req.body.tags.includes(',')) {
+        tagArray = req.body.tags.split(',');
+      } else if (typeof req.body.tags === 'string') {
+        tagArray.push(req.body.tags);
+      } else if (Array.isArray(req.body.tags)) {
+        tagArray = req.body.tags;
+      }
+
+      const updatedListing = await clothesData.update(
+        listingId,
+        req.body.seller,
+        req.body.title,
+        req.body.description,
+        req.body.article,
+        req.body.size,
+        req.body.color,
+        req.body.gender,
+        req.body.price,
+        req.body.condition,
+        tagArray,
+        photoUrls
+      );
+      return res.redirect('/');
+      // return res.json(updatedListing);
+    } catch (e) {
+      if(e === 'Could not update clothes with provided id.') {
+        res.status(404).json({error: 'Clothes not found.'});
+      }
+      return res.status(400).send({error: e});
+    }
+  });
+
+
+  router
+  .route('/listings/:listingId')
+  .get(async (req, res) => {
+    try {
+      const listingId = req.params.listingId;
+      const listing = await clothesData.get(listingId);
+      if (!listing) {
+        return res.status(404).json({ error: 'Listing not found' });
+      }
+      res.json(listing);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }})
   .delete(async (req, res) => {
     try {
       const result = await clothesData.remove(req.params.listingsId);
@@ -131,33 +268,50 @@ router
       return res.status(400).json({ error: e});
       }
     }
-  })
-  .put(async (req, res) => {
-    let id = req.params.productId;
-    let newListing = req.body;
-    try {
-      const updatedclothes = await clothesData.update(
-        id,
-        req.params.clothesId,
-        req.body.clothesName,
-        req.body.clothesDescription,
-        req.body.modelNumber,
-        req.body.price,
-        req.body.manufacturer,
-        req.body.manufacturerWebsite,
-        req.body.keywords,
-        req.body.categories,
-        req.body.dateReleased,
-        req.body.discontinued
-      );
-      return res.json(updatedclothes);
-    } catch (e) {
-      if(e === 'Could not update clothes with provided id.'){
-        res.status(404).json({error: 'clothes not found.'});
-      }
-      return res.status(400).send({error: e});
-    }
   });
+
+// router
+//   .delete(async (req, res) => {
+//     try {
+//       const result = await clothesData.remove(req.params.listingsId);
+//       const deleted = !!result;
+//       res.status(200).json({ _id: req.params.clothesId, deleted: deleted });
+//     } catch (e) {
+//       if (e === 'Invalid ObjectId') {
+//         res.status(400).json({ error: 'Invalid listing ID.' });
+//       } else if (e === 'clothes not found') {
+//         res.status(404).json({ error: 'clothes not found.' });
+//       } else {
+//       return res.status(400).json({ error: e});
+//       }
+//     }
+//   })
+//   .put(async (req, res) => {
+//     let id = req.params.productId;
+//     let newListing = req.body;
+//     try {
+//       const updatedclothes = await clothesData.update(
+//         id,
+//         req.params.clothesId,
+//         req.body.clothesName,
+//         req.body.clothesDescription,
+//         req.body.modelNumber,
+//         req.body.price,
+//         req.body.manufacturer,
+//         req.body.manufacturerWebsite,
+//         req.body.keywords,
+//         req.body.categories,
+//         req.body.dateReleased,
+//         req.body.discontinued
+//       );
+//       return res.json(updatedclothes);
+//     } catch (e) {
+//       if(e === 'Could not update clothes with provided id.'){
+//         res.status(404).json({error: 'clothes not found.'});
+//       }
+//       return res.status(400).send({error: e});
+//     }
+//   });
   
   router.route('/searchResults').post(async (req, res) => {  
     try {
