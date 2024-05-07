@@ -27,6 +27,9 @@ export const create = async (
   typeof gender !== 'string'|| typeof condition !== 'string'){
     throw("All inputs must be a string type")
   }
+  if(!Array.isArray(tags) || !Array.isArray(photos)) {
+    throw ("Must be and array")
+  }
 
   seller = seller.trim();
   title = title.trim();
@@ -36,6 +39,7 @@ export const create = async (
   color = color.trim();
   gender = gender.trim();
   condition = condition.trim();
+
   for (let i = 0; i < tags.length; i++) {
     tags[i] = tags[i].trim();
   }
@@ -48,8 +52,8 @@ export const create = async (
     throw("All inputs must be non spaces")
   }
 
-  price = parseInt(filters.price);
-  if (typeof price !== 'number' || price <= 0) {
+  price = parseFloat(filters.price);
+  if ( || price <= 0) {
     throw "Price must be a positive integer.";
   }
   const priceString = price.toString();
@@ -199,6 +203,10 @@ export const update = async (
   typeof size !== 'string'  || typeof color !== 'string' ||  
   typeof gender !== 'string'|| typeof condition !== 'string'){
     throw("All inputs must be a string type")
+  }
+
+  if(!Array.isArray(tags) || !Array.isArray(photos)) {
+    throw ("Must be and array")
   }
 
   seller = seller.trim();

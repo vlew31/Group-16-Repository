@@ -92,13 +92,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function photosChecker(photos) {
-        if(typeof photos !== 'string') {
+        if(!Array.isArray(photos)) {
             return false;
         }
         for (let i = 0; i < photos.length; i++) {
             photos[i] = photos[i].trim();
-          }  
-        for (let i = 0; i < photos.length; i++) {
             if (
                 photos[i].substring(photos[i].length - 4) !== ".png" &&
                 photos[i].substring(photos[i].length - 5) !== ".jpeg" &&
@@ -194,25 +192,25 @@ document.addEventListener('DOMContentLoaded', function () {
         if(price.length <= 0) {
             return false;
         }
-        if (typeof price !== 'number' || price <= 0) {
+        if (typeof price !== 'float' || price <= 0) {
             return false;
           }
-        //   const priceString = price.toString();
-        //   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
-        //     return "Price must be two decimals max.";
-        // }
+          const priceString = price.toString();
+          if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
+            return false;
+        }
         return true;
     }
 
     function tagsChecker(tags) {
-        if(typeof tags !== 'string') {
+        if(!Array.isArray(tags)) {
             return false;
         }
         for (let i = 0; i < tags.length; i++) {
             tags[i] = tags[i].trim();
-          }
-        if(tags.length <= 0) {
-        return false;
+            if (typeof tags[i] !== 'string' || tags[i].trim().length === 0) {
+                return false; // Invalid tag format
+            }
         }
         return true;
     }
