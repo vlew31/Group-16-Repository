@@ -29,6 +29,30 @@
 <script>
     let walletBalance = 0;
 
+    // Function to fetch the wallet balance of a specific user from the server
+    async function fetchWalletBalance(userId) {
+        try {
+            const response = await fetch(`http://localhost:3000/users/6636ac25ecdee6803ea547f9`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch wallet balance');
+            }
+            const userData = await response.json();
+            walletBalance = userData.balance; // Assuming the response contains the user's wallet balance
+            updateWalletBalance();
+        } catch (error) {
+            console.error('Error fetching wallet balance:', error);
+        }
+    }
+
+    function updateWalletBalance() {
+        document.getElementById("walletBalance").innerText = "$" + walletBalance.toFixed(2);
+    }
+
+    // Call fetchWalletBalance with the specific user's ID
+    fetchWalletBalance("6636ac25ecdee6803ea547f9");
+    updateWalletBalance();
+
+
    function addFunds() {
     const fundsToAdd = parseFloat(document.getElementById("addFundsInput").value);
     if (!isNaN(fundsToAdd) && fundsToAdd >= 0) {

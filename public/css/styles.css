@@ -196,13 +196,13 @@ main {
   background-color: #8ecae6;
 }
 
-.player {
+.mission-text {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.player img {
+.mission-text img {
   width: 200px; /* Set the width as needed */
   height: auto; /* Maintain aspect ratio */
 }
@@ -455,7 +455,7 @@ a {
   margin: 0 auto;
 }
 
-#mission-text {
+.mission-text {
   max-width: 800px; /* Set the maximum width of the text */
   margin: 0 auto; /* Center the text horizontally */
   text-align: center; /* Align the text to the left */

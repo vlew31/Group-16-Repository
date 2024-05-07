@@ -1,6 +1,16 @@
 <section>
+    <h2>Easter Egg</h2>
+    <form id="searchForm">
+        <input type="text" id="searchInput" name="searchInput" placeholder="Type here...">
+        <input type="submit" value="Search">
+    </form>
+
+    <div id="result"></div>
+</section>
+
+
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 <script>
 $(document).ready(function(){
     $("#searchForm").submit(function(event){
@@ -14,13 +24,3 @@ $(document).ready(function(){
     });
 });
 </script>
-</head>
-<body>
-
-<form id="searchForm">
-    <input type="text" id="searchInput" name="searchInput" placeholder="Type here...">
-    <input type="submit" value="Search">
-</form>
-
-<div id="result"></div>
-</section>
