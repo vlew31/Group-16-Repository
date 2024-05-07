@@ -135,30 +135,30 @@ export const get = async (listingId) => {
 };
 
 export const remove = async (listingId) => {
-  if (!listingId){
-    throw 'clothes not found';
-  } 
-  if (typeof listingId !== 'string'){
-    throw 'Id must be a string';
-  } 
-  if (listingId.trim().length === 0){
-    throw 'id cannot be an empty string or just spaces';
-  }
+  // if (!listingId){
+  //   throw 'clothes not found';
+  // } 
+  // if (typeof listingId !== 'string'){
+  //   throw 'Id must be a string';
+  // } 
+  // if (listingId.trim().length === 0){
+  //   throw 'id cannot be an empty string or just spaces';
+  // }
 
   listingId = listingId.trim();
 
-  if (!ObjectId.isValid(listingId)){
-    throw 'Invalid ObjectId';
-  } 
+  // if (!ObjectId.isValid(listingId)){
+  //   throw 'Invalid ObjectId';
+  // } 
 
   const clothesCollection = await listings();
   const deletionInfo = await clothesCollection.findOneAndDelete({
     _id: new ObjectId(listingId)
   });
 
-  if (!deletionInfo) {
-    throw `Could not delete clothes with id of ${listingId}`;
-  }
+  // if (!deletionInfo) {
+  //   throw `Could not delete clothes with id of ${listingId}`;
+  // }
 
   return `${deletionInfo.clothesName} has been successfully deleted!`;
 };
