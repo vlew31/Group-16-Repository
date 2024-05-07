@@ -142,6 +142,7 @@ app.use('/login', (req, res, next) => {
 })
 
 
+
 // app.use('/register', (req, res, next) => {
 //   if (req.session.user) {
 //       if (req.session.user.role === "admin") {
@@ -172,7 +173,7 @@ next();
 
 app.get('/user', (req, res) => {
   const user = req.session.user;
-  res.render('user', { user }); // Render userProfile template and pass user data
+  res.render('user', {  title: 'User Profile', user: req.session.user}) // Render userProfile template and pass user data
 });
 
 app.use('/admin', (req, res, next) => {

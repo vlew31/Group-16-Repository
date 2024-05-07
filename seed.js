@@ -50,8 +50,6 @@ async function testRegisterUser(){
 			"Belalipop", 
 			"YeatLover1!",
 			"YeatLover1!",
-			"YeatLover1!",
-			"YeatLover1!",
 			"admin"
 		);
 	} catch(e) {
