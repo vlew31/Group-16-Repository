@@ -1,10 +1,10 @@
 <section class="upload-section">
     <header class="upload-header">
-        <h1 class="upload-heading-1">Create a Listing:</h1>
+        <h1 class="upload-heading-1">Edit a Listing:</h1>
     </header>
 
-    <h2>Upload Clothing Items</h2>
-    <form id="uploadForm" action="/listings" method="POST">
+    <h2>Update Clothing Items</h2>
+    <form id="updateform" action="/listings/{{ listing._id }}" method="POST">
         <label for="seller" class="upload-label">Seller:</label>
         <input type="text" name="seller" id="seller" required class="upload-input">
 
@@ -40,7 +40,7 @@
             <option value="female">Female</option>
             <option value="unisex">Unisex</option>
         </select>
-
+        
         <label for="price" class="upload-label">Price:</label>
         <input type="number" name="price" id="price" min="0" max="999999.99" step="0.01" oninput="this.value = parsenumber(this.value).toFixed(2);" required class="upload-input">
 
@@ -52,20 +52,15 @@
             <option value="used">Used</option>
         </select>
 
-        {{!-- <label for="tags" class="upload-label">Tags (comma-separated):</label>
-        <input type="text" name="tags" id="tags" class="upload-input"> --}}
-
-
         <label for="tags" class="upload-label">Tags (Split by commas):</label>
         <input type="text" name="tags" id="tags" required class="upload-input">
-
 
         <button type="submit" class="upload-submit">Upload</button>
     </form>
 </section>
 
 <script>
-document.getElementById('uploadForm').addEventListener('submit', function(event) {
+document.getElementById('updateform').addEventListener('submit', function(event) {
     const colorSelect = document.getElementById('color');
     const selectedColor = colorSelect.value;
 
@@ -75,7 +70,7 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
     const conditionSelect = document.getElementById('condition');
     const selectedCondition = conditionSelect.value;
 
-    const photoInput = document.getElementById('photo');
+    const photoInput = document.getElementById('photos');
     const photoLinks = photoInput.value.split(',').map(link => link.trim());
 
     const tagsInput = document.getElementById('tags');

@@ -13,16 +13,30 @@ router.route('/about').get(async (req, res) => {
   res.render('about', { title: 'About Us' });
 });
 
-router.route('/user').get(async (req, res) => {
-    if (!req.session.user) {
-      return res.redirect('/users/login'); 
-    }
-    return res.render('/user', { title: 'User Profile', user: req.session.user}); 
-  });
+// router.route('/user').get(async (req, res) => {
+//     if (!req.session.user) {
+//       return res.redirect('/users/login'); 
+//     }
+//     return res.render('/user', { title: 'User Profile', user: req.session.user}); 
+//   });
 
-router.route('/upload').get(async (req, res) => {
-  res.render('upload', { title: 'Upload' });
-});
+// router.route('/upload').get(async (req, res) => {
+//   res.render('upload', { title: 'Upload' });
+// });
+router.route('/user')
+  .get(async (req, res) => {
+    if (!req.session.user) {
+      return res.redirect('/users/login');
+    }
+    return res.render('user', { title: 'User Profile', user: req.session.user });
+  })
+  .post(async (req, res) => {
+    try {
+      // Handle POST request if needed
+    } catch (e) {
+      return res.status(400).json({ error: e.message });
+    }
+  });
 
 router.route('/cart').get(async (req, res) => {
   res.render('cart', { title: 'Cart/Wishlist' });
@@ -46,28 +60,28 @@ router.route('/users/register')
     return res.render("register", { title: "Register Page" });
   })
   .post(async (req, res) => {
-  try {
-    const {
-      firstName,
-      lastName,
-      email,
-      username,
-      password,
-      confirmPassword,
-      role } = req.body;
-    const result = await registerUser(
-      firstName,
-      lastName,
-      email,
-      username,
-      password,
-      confirmPassword,
-      role);
-    res.render('login', { title: 'Log in' });
-  } catch (error) {
-      res.status(400).json({ error: error.toString() });
-  }
-});
+    try {
+      const {
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        confirmPassword,
+        role } = req.body;
+      const result = await registerUser(
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        confirmPassword,
+        role);
+      res.render('login', { title: 'Log in' });
+    } catch (error) {
+      res.send(`<script>alert("${error || 'Invalid login. Please try again.'}"); window.location.href = "/users/register";</script>`);
+    }
+  });
 
 
 router.route('/users/login')
@@ -83,15 +97,28 @@ router.route('/users/login')
     return res.status(500).render('error');
     }
   })
-  .post(async (req, res) => {
+//   .post(async (req, res) => {
+//   try {
+//       const { username, password } = req.body;
+//       const user = await loginUser(username, password);
+//       res.render('user', { title: 'User Profile' });
+//   } catch (error) {
+//       res.status(400).json({ error: error.toString() });
+//   }
+// });
+.post(async (req, res) => {
   try {
       const { username, password } = req.body;
       const user = await loginUser(username, password);
-      res.render('user', { title: 'User Profile' });
+      req.session.user = user; // Set user information in session
+      console.log(user);
+      res.redirect("/user"); // Redirect to user profile page
+      return user;
   } catch (error) {
-      res.status(400).json({ error: error.toString() });
-  }
+    res.send(`<script>alert("${error.message || 'Invalid login. Please try again.'}"); window.location.href = "/user/login";</script>`);
+}
 });
+
 
 
 // router
@@ -343,8 +370,9 @@ router.route('/users/login')
       //   password,
       //   role
       // );
-      const user = await userData.getUser(req.session.user.username)
-      return res.json(user);
+      // const user = await userData.getUser(req.session.user.username)
+      // return res.json(user);
+      return res.render('user', { title: 'User Profile', user: req.session.user });
     } catch (e) {
       return res.status(400).json({ error: e.message });
     }
@@ -369,11 +397,15 @@ router
     }
   });
 
-  router.route('/users/logout').get(async (req, res) => {
-    // req.session.destroy();
-    // res.clearCookie('AuthenticationState', '', { expires: new Date() });
-    res.render('login', { title: 'Log in' });
-  });
+router.route('/user/logout').get(async (req, res) => {
+  req.session.destroy();
+  return res.redirect('/users/login');
+});
+
+// router.route('/search').get(async (req, res) => {
+//   res.render('search', { title: 'Search Results' });
+// });
+
 
 export default router;
 
