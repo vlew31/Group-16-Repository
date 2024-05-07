@@ -43,12 +43,8 @@ typeof size !== 'string'|| size.length <= 0  || tags.length <= 0  || photos.leng
   if (priceString.includes(".") && priceString.split(".")[1].length > 2) {throw "Invalid price.";}
 
   for (let i = 0; i < photos.length; i++) {
-    if (
-      photos[i].substring(photos[i].length - 4) !== ".png" &&
-      photos[i].substring(photos[i].length - 5) !== ".jpeg" &&
-      photos[i].substring(photos[i].length - 4) !== ".jpg"
-    ) {
-      throw "Invalid photo.";
+    if (!photos[i].startsWith("https://")) {
+      throw "Invalid photo URL. URLs must start with 'https://'.";
     }
   }
 
@@ -184,6 +180,7 @@ export const update = async (
   if (!listingId || !seller || !title || !description || !article || !size || !color || !gender || !price || !condition || !tags || !photos) {
     throw "Must provide values for all fields.";
   }
+  if (!ObjectId.isValid(listingId)) throw 'invalid object ID';
 
   seller = seller.trim();
   title = title.trim();
@@ -193,6 +190,32 @@ export const update = async (
   color = color.trim();
   gender = gender.trim();
   condition = condition.trim();
+  
+  if(typeof title !== 'string' || typeof description !== 'string'
+  || typeof article !== 'string' || typeof size !== 'string'|| typeof color !== 'string'
+  ||typeof gender !== 'string'||typeof condition !== 'string' || typeof tags !== 'string'|| typeof photos !=='string'){
+    throw("Must be a string type")
+  }
+  if (!Number.isInteger(price) || price <= 0) {
+    throw "Price must be a positive integer.";
+  }
+
+  if (!ObjectId.isValid(listingId)) {
+    throw "Invalid ObjectId.";
+  }
+
+  const priceString = price.toString();
+  if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
+    throw "Invalid price.";
+  }
+
+  if (
+    photos.substring(0, 10) !== "http://www" ||
+    photos.substring(manufacturerWebsite.length - 4) !== ".com" ||
+    photos.length < 20
+  ) {
+    throw "Invalid website.";
+  }
 
   const clothesCollection = await listings();
   const updatedclothes = {
@@ -208,49 +231,22 @@ export const update = async (
     tags: tags,
     photos: photos
   };
-
-  for (let i = 0; i < tags.length; i++) {
-    tags[i] = tags[i].trim();
-}
-  for (let i = 0; i < photos.length; i++) {
-    photos[i] = photos[i].trim();
-  }
-  listingId.trim();
-  
-  if(typeof listingId !== 'string' || listingId.length <= 0 || typeof seller !== 'string' || seller.length <= 0  || typeof title !== 'string' || title.length <= 0  ||
-  typeof description !== 'string' || description.length <= 0  || typeof article !== 'string' || article.length <= 0  ||
-  typeof size !== 'string'|| size.length <= 0  || tags.length <= 0  || photos.length <= 0){
-    throw("Must be a string type")
-  }
-  if (!ObjectId.isValid(listingId)) {
-    throw "Invalid ObjectId.";
-  }
-  if (typeof price !== 'number' || price <= 0) {
-    throw "Price must be a positive integer.";
-  }
-  const priceString = price.toString();
-  if (priceString.includes(".") && priceString.split(".")[1].length > 2) {
-    throw "Invalid price.";
-  }
-
+  console.log(updatedclothes);
+  const exist = await clothesCollection.findOne({_id: listingId});
+  console.log(exist);
   const updateInfo = await clothesCollection.updateOne(
     { _id: new ObjectId(listingId) },
     { $set: updatedclothes },
-    {returnDocument: 'after'}
-
   );
-
+  console.log(updateInfo);
   if (updateInfo.modifiedCount === 0) {
     throw 'Could not update clothes with provided id.';
   }
-
-  // const updatedclothesWithId = { _id: listingId, ...updatedclothes };
   if (!updateInfo) {
     throw 'could not update product successfully';
   }
-  updateInfo._id = updateInfo._id.toString();
-
-  return updateInfo;
+  const updatedclothesWithId = { _id: listingId, ...updatedclothes };
+  return updatedclothes;
 };
 
 export async function searchByName(searchTerm,filters) {

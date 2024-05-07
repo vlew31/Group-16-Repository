@@ -182,4 +182,101 @@ router
   }
 });
 
+
+
+router.route('/update/:listingId')
+.get(async (req, res) => {
+  const listingId = req.params.listingId;
+
+  try {
+    const listing = await clothesData.get(listingId);
+    if (!listing) {
+      return res.status(404).send('Listing not found');
+    }
+    res.render('update', { listing, listingId });
+  } catch (err) {
+    console.error('Error fetching listing:', err);
+    res.status(500).send('Internal Server Error');
+  }
+})
+.put(async (req, res) => {
+  try {
+    const listingId = req.params.listingId;
+    const updatedListing = await clothesData.update(
+      listingId,
+      req.body.seller,
+      req.body.title,
+      req.body.description,
+      req.body.article,
+      req.body.size,
+      req.body.color,
+      req.body.gender,
+      req.body.price,
+      req.body.condition,
+      req.body.tags,
+      req.body.photos
+    );
+    res.render('home', { title: '$waggle' });
+  } catch (e) {
+    res.render('home', { title: '$waggle' });
+}});
+
+
+router.route('/listings/:listingId')
+  .put(async (req, res) => {
+    try {
+      const listingId = req.params.listingId;
+      const updatedListing = await clothesData.update(
+        listingId,
+        req.body.seller,
+        req.body.title,
+        req.body.description,
+        req.body.article,
+        req.body.size,
+        req.body.color,
+        req.body.gender,
+        req.body.price,
+        req.body.condition,
+        req.body.tags,
+        req.body.photos
+      );
+      return res.json(updatedListing);
+    } catch (e) {
+      if(e === 'Could not update clothes with provided id.'){
+        res.status(404).json({error: 'clothes not found.'});
+      }
+      return res.status(400).send({error: e});
+    }
+  })
+
+  router
+  .route('/listings/:listingId')
+  .get(async (req, res) => {
+    try {
+      const listingId = req.params.listingId;
+      const listing = await clothesData.get(listingId);
+      if (!listing) {
+        return res.status(404).json({ error: 'Listing not found' });
+      }
+      res.json(listing);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }})
+  .delete(async (req, res) => {
+    try {
+      const result = await clothesData.remove(req.params.listingsId);
+      const deleted = !!result;
+      res.status(200).json({ _id: req.params.clothesId, deleted: deleted });
+    } catch (e) {
+      if (e === 'Invalid ObjectId') {
+        res.status(400).json({ error: 'Invalid listing ID.' });
+      } else if (e === 'clothes not found') {
+        res.status(404).json({ error: 'clothes not found.' });
+      } else {
+      return res.status(400).json({ error: e});
+      }
+    }
+  });
+
 export default router;
